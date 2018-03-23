@@ -46,6 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cryptography\AES.cs" />
+    <Compile Include="Cryptography\Hasher.cs" />
     <Compile Include="Mainframe.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -112,6 +114,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\chooseAnImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Steganography\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
