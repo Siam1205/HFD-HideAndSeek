@@ -24,7 +24,9 @@
 		/// </summary>
 		private void InitializeComponent() {
 			this.carrierImageGroupBox = new System.Windows.Forms.GroupBox();
+			this.carrierImagePictureBox = new System.Windows.Forms.PictureBox();
 			this.stegoImageGroupBox = new System.Windows.Forms.GroupBox();
+			this.stegoImagePictureBox = new System.Windows.Forms.PictureBox();
 			this.lsbsComboBox = new System.Windows.Forms.ComboBox();
 			this.lsbsLabel = new System.Windows.Forms.Label();
 			this.infCarrierCapacityLabel = new System.Windows.Forms.Label();
@@ -59,15 +61,13 @@
 			this.showStegoImageBitplanesButton = new System.Windows.Forms.Button();
 			this.loadStegoImageButton = new System.Windows.Forms.Button();
 			this.logoPictureBox = new System.Windows.Forms.PictureBox();
-			this.stegoImagePictureBox = new System.Windows.Forms.PictureBox();
-			this.carrierImagePictureBox = new System.Windows.Forms.PictureBox();
 			this.clearCarrierAndMessageButton = new System.Windows.Forms.Button();
 			this.clearStegoButton = new System.Windows.Forms.Button();
 			this.carrierImageGroupBox.SuspendLayout();
-			this.stegoImageGroupBox.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.stegoImagePictureBox)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.carrierImagePictureBox)).BeginInit();
+			this.stegoImageGroupBox.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.stegoImagePictureBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// carrierImageGroupBox
@@ -84,6 +84,18 @@
 			this.carrierImageGroupBox.TabStop = false;
 			this.carrierImageGroupBox.Text = "Carrier image";
 			// 
+			// carrierImagePictureBox
+			// 
+			this.carrierImagePictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.carrierImagePictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.carrierImagePictureBox.Image = global::HSF_HideAndSeek.Properties.Resources.chooseAnImage;
+			this.carrierImagePictureBox.Location = new System.Drawing.Point(3, 22);
+			this.carrierImagePictureBox.Name = "carrierImagePictureBox";
+			this.carrierImagePictureBox.Size = new System.Drawing.Size(474, 275);
+			this.carrierImagePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+			this.carrierImagePictureBox.TabIndex = 1;
+			this.carrierImagePictureBox.TabStop = false;
+			// 
 			// stegoImageGroupBox
 			// 
 			this.stegoImageGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -98,6 +110,16 @@
 			this.stegoImageGroupBox.TabIndex = 0;
 			this.stegoImageGroupBox.TabStop = false;
 			this.stegoImageGroupBox.Text = "Stego image";
+			// 
+			// stegoImagePictureBox
+			// 
+			this.stegoImagePictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.stegoImagePictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.stegoImagePictureBox.Location = new System.Drawing.Point(3, 22);
+			this.stegoImagePictureBox.Name = "stegoImagePictureBox";
+			this.stegoImagePictureBox.Size = new System.Drawing.Size(474, 275);
+			this.stegoImagePictureBox.TabIndex = 0;
+			this.stegoImagePictureBox.TabStop = false;
 			// 
 			// lsbsComboBox
 			// 
@@ -435,7 +457,7 @@
 			this.loadCarrierButton.Name = "loadCarrierButton";
 			this.loadCarrierButton.Size = new System.Drawing.Size(119, 30);
 			this.loadCarrierButton.TabIndex = 1;
-			this.loadCarrierButton.Text = "Load Carrier";
+			this.loadCarrierButton.Text = "Load carrier";
 			this.loadCarrierButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.loadCarrierButton.UseVisualStyleBackColor = true;
 			// 
@@ -478,32 +500,9 @@
 			this.logoPictureBox.TabIndex = 3;
 			this.logoPictureBox.TabStop = false;
 			// 
-			// stegoImagePictureBox
-			// 
-			this.stegoImagePictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.stegoImagePictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.stegoImagePictureBox.Location = new System.Drawing.Point(3, 22);
-			this.stegoImagePictureBox.Name = "stegoImagePictureBox";
-			this.stegoImagePictureBox.Size = new System.Drawing.Size(474, 275);
-			this.stegoImagePictureBox.TabIndex = 0;
-			this.stegoImagePictureBox.TabStop = false;
-			// 
-			// carrierImagePictureBox
-			// 
-			this.carrierImagePictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.carrierImagePictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.carrierImagePictureBox.Image = global::HSF_HideAndSeek.Properties.Resources.chooseAnImage;
-			this.carrierImagePictureBox.Location = new System.Drawing.Point(3, 22);
-			this.carrierImagePictureBox.Name = "carrierImagePictureBox";
-			this.carrierImagePictureBox.Size = new System.Drawing.Size(474, 275);
-			this.carrierImagePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-			this.carrierImagePictureBox.TabIndex = 1;
-			this.carrierImagePictureBox.TabStop = false;
-			// 
 			// clearCarrierAndMessageButton
 			// 
 			this.clearCarrierAndMessageButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.clearCarrierAndMessageButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.clearCarrierAndMessageButton.Location = new System.Drawing.Point(277, 323);
 			this.clearCarrierAndMessageButton.Name = "clearCarrierAndMessageButton";
 			this.clearCarrierAndMessageButton.Size = new System.Drawing.Size(29, 30);
@@ -514,7 +513,6 @@
 			// clearStegoButton
 			// 
 			this.clearStegoButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.clearStegoButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.clearStegoButton.Location = new System.Drawing.Point(808, 323);
 			this.clearStegoButton.Name = "clearStegoButton";
 			this.clearStegoButton.Size = new System.Drawing.Size(29, 30);
@@ -524,8 +522,9 @@
 			// 
 			// Mainframe
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+			this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.ClientSize = new System.Drawing.Size(1002, 611);
 			this.Controls.Add(this.clearStegoButton);
 			this.Controls.Add(this.clearCarrierAndMessageButton);
@@ -571,10 +570,10 @@
 			this.Text = "HSF - Hide and Seek";
 			this.Load += new System.EventHandler(this.mainframe_Load);
 			this.carrierImageGroupBox.ResumeLayout(false);
-			this.stegoImageGroupBox.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.stegoImagePictureBox)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.carrierImagePictureBox)).EndInit();
+			this.stegoImageGroupBox.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.stegoImagePictureBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
