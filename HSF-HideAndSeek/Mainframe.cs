@@ -1,4 +1,6 @@
-﻿using System;
+﻿using HSF_HideAndSeek.Helper;
+using HSF_HideAndSeek.Steganography;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,6 +12,14 @@ using System.Windows.Forms;
 
 namespace HSF_HideAndSeek {
 	public partial class Mainframe : Form {
+
+		private FileManager fm = FileManager.Instance;
+		private Embedder embedder = Embedder.Instance;
+
+		private Bitmap carrierImage;
+		private Bitmap stegoImage;
+		private byte[] message;
+
 		public Mainframe() {
 			InitializeComponent();
 		}
@@ -47,6 +57,26 @@ namespace HSF_HideAndSeek {
 			this.saveMesssageButton.Image = (Image) (new Bitmap(HSF_HideAndSeek.Properties.Resources.save, new Size(21, 21)));
 
 			this.helpButton.Image = (Image) (new Bitmap(HSF_HideAndSeek.Properties.Resources.help_1, new Size(21, 21)));
+		}
+
+		private void loadCarrierButton_Click(object sender, EventArgs e) {
+			OpenFileDialog ofd = new OpenFileDialog();
+			ofd.InitialDirectory = @"C:\";
+			ofd.Multiselect = false;
+			ofd.RestoreDirectory = true;
+			ofd.CheckPathExists = true;
+			ofd.CheckFileExists = true;
+			ofd.Title = "Please select a carrier image file";
+			ofd.Filter = "Image files (*.bmp, *.gif, *.jpg, *.jpeg, *.jfif, *.png) | *.bmp; *.gif; *.jpg; *.jpeg; *.jfif; *.png";
+			ofd.ShowDialog();
+			carrierImage = fm.ReadImageFile(ofd.FileName, false);
+			carrierImagePictureBox.Image = carrierImage;
+		}
+
+		private void clearCarrierAndMessageButton_Click(object sender, EventArgs e) {
+			carrierImage = null;
+			message = null;
+			carrierImagePictureBox.Image = HSF_HideAndSeek.Properties.Resources.chooseAnImage;
 		}
 	}
 }

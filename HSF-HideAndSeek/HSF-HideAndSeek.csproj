@@ -48,6 +48,11 @@
   <ItemGroup>
     <Compile Include="Cryptography\AES.cs" />
     <Compile Include="Cryptography\Hasher.cs" />
+    <Compile Include="Exceptions\MessageNameTooBigException.cs" />
+    <Compile Include="Exceptions\WrongPixelFormatException.cs" />
+    <Compile Include="Helper\Converter.cs" />
+    <Compile Include="Helper\Extensions.cs" />
+    <Compile Include="Helper\FileManager.cs" />
     <Compile Include="Mainframe.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -56,6 +61,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Steganography\Embedder.cs" />
     <EmbeddedResource Include="Mainframe.resx">
       <DependentUpon>Mainframe.cs</DependentUpon>
     </EmbeddedResource>
@@ -115,9 +121,7 @@
   <ItemGroup>
     <None Include="Resources\chooseAnImage.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Steganography\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="Resources\help_1.ico" />
   </ItemGroup>
