@@ -43,7 +43,7 @@ namespace HSF_HideAndSeek.Helper {
 		/// <exception cref="System.Security.SecurityException"></exception>
 		/// <exception cref="NotSupportedException"></exception>
 		/// <returns></returns>
-		public byte[] ReadMessage(string path) {
+		public byte[] ReadMessageFile(string path) {
 			return File.ReadAllBytes(path);
 		}
 
@@ -103,5 +103,14 @@ namespace HSF_HideAndSeek.Helper {
 			} // using
 		} // method
 
+		/// <summary>
+		/// Returns a long variable storing the size of a file specified by a path in bytes
+		/// </summary>
+		/// <param name="path"></param>
+		/// <returns></returns>
+		public long getFileSizeInBytes(string path) {
+			long len = new FileInfo(path).Length;
+			return len;
+		}
 	}
 }

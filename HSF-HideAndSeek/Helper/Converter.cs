@@ -174,5 +174,20 @@ namespace HSF_HideAndSeek.Helper {
 			float kiloBytes = bytes / 1024;
 			return Math.Round(kiloBytes, 5);
 		}
+
+		/// <summary>
+		/// Converts a double value of bytes into its human readable string representation
+		/// </summary>
+		/// <param name="len"></param>
+		/// <returns></returns>
+		public static string BytesToHumanReadableString(double len) {
+			string[] sizes = { "B", "KB", "MB", "GB", "TB" };
+			int order = 0;
+			while (len >= 1024 && order < sizes.Length - 1) {
+				order++;
+				len = len / 1024;
+			}
+			return String.Format("{0:0.##} {1}", len, sizes[order]);
+		}
 	}
 }
