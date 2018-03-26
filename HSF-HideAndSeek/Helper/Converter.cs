@@ -36,14 +36,14 @@ namespace HSF_HideAndSeek.Helper {
 		}
 
 		/// <summary>
-		/// Converts an int object to it's binary string representation and fills it with a
+		/// Converts a long object to it's binary string representation and fills it with a
 		/// specified amount of zeros to the left
 		/// </summary>
 		/// <param name="decimalNumber"></param>
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="ArgumentOutOfRangeException"></exception>
 		/// <returns></returns>
-		public static string DecimalToBinary(int decimalNumber, int zeroPadding) {
+		public static string DecimalToBinary(long decimalNumber, int zeroPadding) {
 			if (zeroPadding != 0) {
 				return Convert.ToString(decimalNumber, 2).PadLeft(zeroPadding, '0');
 			} else {

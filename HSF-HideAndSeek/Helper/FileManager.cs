@@ -47,7 +47,6 @@ namespace HSF_HideAndSeek.Helper {
 			return File.ReadAllBytes(path);
 		}
 
-
 		/// <summary>
 		/// Loads an image without creating a memory-mapped file
 		/// which creates a lock to the file referenced to by the path argument
@@ -108,9 +107,66 @@ namespace HSF_HideAndSeek.Helper {
 		/// </summary>
 		/// <param name="path"></param>
 		/// <returns></returns>
-		public long getFileSizeInBytes(string path) {
-			long len = new FileInfo(path).Length;
-			return len;
+		public uint getFileSizeInBytes(string path) {
+			return (uint) new FileInfo(path).Length;
+		}
+
+		/// <summary>
+		/// Write a message file to the specified path
+		/// </summary>
+		/// <param name="message"></param>
+		/// <param name="path"></param>
+		/// <exception cref="ArgumentException"></exception>
+		/// <exception cref="ArgumentNullException"></exception>
+		/// <exception cref="ArgumentOutOfRangeException"></exception>
+		/// <exception cref="PathTooLongException"></exception>
+		/// <exception cref="IOException"></exception>
+		/// <exception cref="FileNotFoundException"></exception>
+		/// <exception cref="PathTooLongException"></exception>
+		/// <exception cref="DirectoryNotFoundException"></exception>
+		/// <exception cref="NotSupportedException"></exception>
+		/// <exception cref="System.Security.SecurityException"></exception>
+		/// <exception cref="ObjectDisposedException"></exception>
+		public void WriteMessageFile(byte[] message, string path) {
+			using (var fs = new FileStream(path, FileMode.Create)) {
+				fs.Write(message, 0, message.Length);
+			}
+		}
+
+		/// <summary>
+		/// Writes a stego image to the given path
+		/// </summary>
+		/// <param name="stegoImage"></param>
+		/// <param name="path"></param>
+		/// <exception cref="ArgumentException"></exception>
+		/// <exception cref="ArgumentNullException"></exception>
+		/// <exception cref="ArgumentOutOfRangeException"></exception>
+		/// <exception cref="PathTooLongException"></exception>
+		/// <exception cref="IOException"></exception>
+		/// <exception cref="FileNotFoundException"></exception>
+		/// <exception cref="PathTooLongException"></exception>
+		/// <exception cref="DirectoryNotFoundException"></exception>
+		/// <exception cref="NotSupportedException"></exception>
+		/// <exception cref="System.Security.SecurityException"></exception>
+		/// <exception cref="System.Runtime.InteropServices.ExternalException"></exception>
+		public void WriteStegoImage(Bitmap stegoImage, string path) {
+
+			// Retrieve the image extension from the destination path
+			string extension = Path.GetExtension(path);
+
+			// Set the image format used to write the stego file
+			ImageFormat format;
+			switch (extension) {
+				case ".bmp":
+					format = ImageFormat.Bmp;
+					break;
+				default:
+					format = ImageFormat.Png;
+					break;
+			}
+			using (FileStream fs = new FileStream(path, FileMode.Create)) {
+				stegoImage.Save(fs, format);
+			}
 		}
 	}
 }

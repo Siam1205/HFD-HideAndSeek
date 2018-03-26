@@ -49,6 +49,7 @@
     <Compile Include="Cryptography\AES.cs" />
     <Compile Include="Cryptography\Hasher.cs" />
     <Compile Include="Exceptions\MessageNameTooBigException.cs" />
+    <Compile Include="Exceptions\MessageTooBixException.cs" />
     <Compile Include="Exceptions\WrongPixelFormatException.cs" />
     <Compile Include="Helper\Converter.cs" />
     <Compile Include="Helper\Extensions.cs" />
@@ -61,7 +62,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Steganography\DataStructures\StegoImage.cs" />
     <Compile Include="Steganography\Embedder.cs" />
+    <Compile Include="Steganography\DataStructures\StegoMessage.cs" />
     <EmbeddedResource Include="Mainframe.resx">
       <DependentUpon>Mainframe.cs</DependentUpon>
     </EmbeddedResource>
@@ -121,7 +124,9 @@
   <ItemGroup>
     <None Include="Resources\chooseAnImage.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\star.ico" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="Resources\help_1.ico" />
   </ItemGroup>

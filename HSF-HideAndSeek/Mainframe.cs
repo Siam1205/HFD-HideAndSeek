@@ -1,5 +1,7 @@
-﻿using HSF_HideAndSeek.Helper;
+﻿using HSF_HideAndSeek.Cryptography;
+using HSF_HideAndSeek.Helper;
 using HSF_HideAndSeek.Steganography;
+using HSF_HideAndSeek.Steganography.DataStructures;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,6 +9,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -18,30 +21,23 @@ namespace HSF_HideAndSeek {
 		private FileManager fm = FileManager.Instance;
 		private Embedder embedder = Embedder.Instance;
 
-		// Variables for the carrier image
-		private Bitmap carrier;
-		private string carrierName;
-		private long carrierSizeInBytes = 0;
-		private long carrierCapacityInBytes = 0;
-
-		// Variables for the stego image
-		private Bitmap stegoImage;
-		private string stegoImageName;
-		private long stegoImageSizeInBytes = 0;
-
-		// Variables for the message
-		private byte[] message;
-		private string messageName;
-		private long messageSizeInBytes = 0;
+		// Main data structures
+		private StegoImage carrier;
+		private StegoImage stegoImage;
+		private StegoMessage message;
 
 		// File extensions and its filter for the OpenFileDialog class
 		private readonly List<string> imageExtensions = new List<string> { ".bmp", ".jpg", ".jpeg", ".jfif", ".gif", ".png" };
-		private readonly string imageExtensionsFilter = "" +
+		private readonly string carrierExtensionsFilter = "" +
 				"Image files (*.bmp, *.gif, *.jpg, *.jpeg, *.jfif, *.png) | *.bmp; *.gif; *.jpg; *.jpeg; *.jfif; *.png; |" +
 				"BMP files (*.bmp) | *.bmp; |" +
 				"GIF files (*.gif) | *.gif; |" +
 				"PNG files (*.png) | *.png; |" +
 				"JPEG files (*.jpg, *.jpeg, *.jfif)| *.jpg; *.jpeg; *.jfif;";
+		private readonly string stegoImageExtensionsFilter = "" +
+				"Image files (*.bmp, *.png) | *.bmp; *.png; |" +
+				"BMP files (*.bmp) | *.bmp; |" +
+				"PNG files (*.png) | *.png;";
 		private readonly string messageExtensionsFilter = "" +
 				"All Files (*.*) | *.*; |" +
 				"Image files (*.bmp, *.gif, *.jpg, *.jpeg, *.jfif, *.png) | *.bmp; *.gif; *.jpg; *.jpeg; *.jfif; *.png; |" +
@@ -65,22 +61,24 @@ namespace HSF_HideAndSeek {
 			if (File.Exists(path)) {
 				if (imageExtensions.Contains(Path.GetExtension(path).ToLowerInvariant())) {
 
-					// Fill variables
-					carrier = fm.ReadImageFile(path, false);
-					carrierName = Path.GetFileName(path);
-					carrierSizeInBytes = fm.getFileSizeInBytes(path);
-					carrierCapacityInBytes = embedder.CalculateCapacity(carrier);
+					// Generate carrier image object
+					carrier = new StegoImage(
+						fm.ReadImageFile(path, false),
+						Path.GetFileName(path),
+						fm.getFileSizeInBytes(path)
+					);
 
 					// Display image
-					carrierImagePictureBox.Image = carrier;
+					carrierImagePictureBox.Image = carrier.Image;
 
 					// Fill labels with data
-					carrierNameLabel.Text = carrierName;
-					carrierSizeLabel.Text = Converter.BytesToHumanReadableString(carrierSizeInBytes);
-					carrierCapacityLabel.Text = Converter.BytesToHumanReadableString(carrierCapacityInBytes);
+					carrierNameLabel.Text = carrier.Name;
+					carrierSizeLabel.Text = Converter.BytesToHumanReadableString(carrier.SizeInBytes);
+					carrierCapacityLabel.Text = Converter.BytesToHumanReadableString(
+						embedder.CalculateCapacity(carrier, (byte) bppComboBox.SelectedIndex));
 
-					// Check wheter embedding is possible
-					isEmbeddingPossible();
+					// Check GUI components
+					checkEverything();
 				}
 			}
 		}
@@ -93,17 +91,22 @@ namespace HSF_HideAndSeek {
 			if (File.Exists(path)) {
 				if (imageExtensions.Contains(Path.GetExtension(path).ToLowerInvariant())) {
 
-					// Fill variables
-					stegoImage = fm.ReadImageFile(path, false);
-					stegoImageName = Path.GetFileName(path);
-					stegoImageSizeInBytes = fm.getFileSizeInBytes(path);
+					// Generate stego image object
+					stegoImage = new StegoImage(
+						fm.ReadImageFile(path, false),
+						Path.GetFileName(path),
+						fm.getFileSizeInBytes(path)
+					);
 
 					// Display image
-					stegoImagePictureBox.Image = stegoImage;
+					stegoImagePictureBox.Image = stegoImage.Image;
 
 					// Fill labels with data
-					stegoImageNameLabel.Text = stegoImageName;
-					stegoImageSizeLabel.Text = Converter.BytesToHumanReadableString(stegoImageSizeInBytes);
+					stegoImageNameLabel.Text = stegoImage.Name;
+					stegoImageSizeLabel.Text = Converter.BytesToHumanReadableString(stegoImage.SizeInBytes);
+
+					// Check GUI components
+					checkEverything();
 				}
 			}
 		}
@@ -115,17 +118,18 @@ namespace HSF_HideAndSeek {
 		private void loadMessage(string path) {
 			if (File.Exists(path)) {
 
-				// Fill variables
-				message = fm.ReadMessageFile(path);
-				messageName = Path.GetFileName(path);
-				messageSizeInBytes = fm.getFileSizeInBytes(path);
+				// Generate message object
+				message = new StegoMessage(
+					Path.GetFileName(path),
+					fm.ReadMessageFile(path)
+				);
 
 				// Fill labels with data
-				messageNameLabel.Text = messageName;
-				messageSizeLabel.Text = Converter.BytesToHumanReadableString(messageSizeInBytes);
+				messageNameLabel.Text = message.Name;
+				messageSizeLabel.Text = Converter.BytesToHumanReadableString(message.FullSizeInBytes);
 
-				// Check wheter embedding is possible
-				isEmbeddingPossible();
+				// Check GUI components
+				checkEverything();
 			}
 		}
 
@@ -134,23 +138,19 @@ namespace HSF_HideAndSeek {
 		/// </summary>
 		private void clearCarrierImage() {
 
-			// Reset variables
+			// Reset carrier image object
 			carrier = null;
-			carrierName = "";
-			carrierSizeInBytes = 0;
-			carrierCapacityInBytes = 0;
 
 			// Remove image
 			carrierImagePictureBox.Image = null;
-			//carrierImagePictureBox.Image = HSF_HideAndSeek.Properties.Resources.chooseAnImage;
 
 			// Remove data from labels
 			carrierNameLabel.Text = defaultLabelValue;
 			carrierSizeLabel.Text = defaultLabelValue;
 			carrierCapacityLabel.Text = defaultLabelValue;
 
-			// Check wheter embedding is possible
-			isEmbeddingPossible();
+			// Check GUI components
+			checkEverything();
 		}
 
 		/// <summary>
@@ -158,18 +158,18 @@ namespace HSF_HideAndSeek {
 		/// </summary>
 		private void clearStegoImage() {
 
-			// Reset variables
+			// Reset stego image object
 			stegoImage = null;
-			stegoImageName = "";
-			stegoImageSizeInBytes = 0;
 
 			// Remove image
 			stegoImagePictureBox.Image = null;
-			//stegoImagePictureBox.Image = HSF_HideAndSeek.Properties.Resources.chooseAnImage;
 
 			// Remove data from labels
 			stegoImageNameLabel.Text = defaultLabelValue;
 			stegoImageSizeLabel.Text = defaultLabelValue;
+
+			// Check GUI components
+			checkEverything();
 		}
 
 		/// <summary>
@@ -177,50 +177,15 @@ namespace HSF_HideAndSeek {
 		/// </summary>
 		private void clearMessage() {
 
-			// Reset variables
+			// Reset message object
 			message = null;
-			messageName = "";
-			messageSizeInBytes = 0;
 
 			// Remove data from labels
 			messageNameLabel.Text = defaultLabelValue;
 			messageSizeLabel.Text = defaultLabelValue;
 
-			isEmbeddingPossible();
-		}
-
-		/// <summary>
-		/// Check whether all requirements are set to hide a message
-		/// </summary>
-		/// <returns></returns>
-		private bool isEmbeddingPossible() {
-			if (carrier == null || message == null) {
-				hideMessageButton.Enabled = false;
-				return false;
-			}
-			if (carrierCapacityInBytes < messageSizeInBytes) {
-				hideMessageButton.Enabled = false;
-				messageSizeLabel.ForeColor = Color.Red;
-				return false;
-			}
-
-			messageSizeLabel.ForeColor = Color.Black;
-			hideMessageButton.Enabled = true;
-			return true;
-		}
-
-		/// <summary>
-		/// Check whether all requirements are set to extract a message
-		/// </summary>
-		/// <returns></returns>
-		private bool isExtractionPossible() {
-			if (stegoImage == null) {
-				extractMesssageButton.Enabled = false;
-				return false;
-			}
-
-			extractMesssageButton.Enabled = true;
-			return true;
+			// Check GUI components
+			checkEverything();
 		}
 
 		/// <summary>
@@ -231,8 +196,8 @@ namespace HSF_HideAndSeek {
 		private void mainframe_Load(object sender, EventArgs e) {
 
 			// Selected bits per pixel combo box
-			lsbsComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-			lsbsComboBox.SelectedIndex = 0;
+			bppComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+			bppComboBox.SelectedIndex = 0;
 
 			// Load button images
 			this.loadCarrierButton.Image = (Image) (new Bitmap(HSF_HideAndSeek.Properties.Resources.load, new Size(22, 22)));
@@ -249,15 +214,17 @@ namespace HSF_HideAndSeek {
 			this.decryptMessageButton.Image = (Image) (new Bitmap(HSF_HideAndSeek.Properties.Resources.leftArrow, new Size(22, 22)));
 
 			this.hideMessageButton.Image = (Image) (new Bitmap(HSF_HideAndSeek.Properties.Resources.rightArrow, new Size(22, 22)));
-			this.extractMesssageButton.Image = (Image) (new Bitmap(HSF_HideAndSeek.Properties.Resources.leftArrow, new Size(22, 22)));
+			this.extractMessageButton.Image = (Image) (new Bitmap(HSF_HideAndSeek.Properties.Resources.leftArrow, new Size(22, 22)));
 
 			this.saveStegoImageButton.Image = (Image) (new Bitmap(HSF_HideAndSeek.Properties.Resources.save, new Size(21, 21)));
-			this.saveMesssageButton.Image = (Image) (new Bitmap(HSF_HideAndSeek.Properties.Resources.save, new Size(21, 21)));
+			this.saveMessageButton.Image = (Image) (new Bitmap(HSF_HideAndSeek.Properties.Resources.save, new Size(21, 21)));
 
-			this.helpButton.Image = (Image) (new Bitmap(HSF_HideAndSeek.Properties.Resources.help_1, new Size(21, 21)));
+			this.helpButton.Image = (Image) (new Bitmap(HSF_HideAndSeek.Properties.Resources.help_1, new Size(50, 50)));
+
+			this.rateButton.Image = (Image) (new Bitmap(HSF_HideAndSeek.Properties.Resources.star, new Size(22, 22)));
 		}
 
-		#region Button click events
+		#region Events and listeners
 		private void loadCarrierButton_Click(object sender, EventArgs e) {
 			OpenFileDialog ofd = new OpenFileDialog();
 			ofd.InitialDirectory = @"C:\";
@@ -265,7 +232,7 @@ namespace HSF_HideAndSeek {
 			ofd.CheckPathExists = true;
 			ofd.CheckFileExists = true;
 			ofd.Title = "Please select a carrier image file";
-			ofd.Filter = imageExtensionsFilter;
+			ofd.Filter = carrierExtensionsFilter;
 			ofd.ShowDialog();
 			loadCarrierImage(ofd.FileName);
 		}
@@ -289,7 +256,7 @@ namespace HSF_HideAndSeek {
 			ofd.CheckPathExists = true;
 			ofd.CheckFileExists = true;
 			ofd.Title = "Please select a stego image file";
-			ofd.Filter = imageExtensionsFilter;
+			ofd.Filter = stegoImageExtensionsFilter;
 			ofd.ShowDialog();
 			loadStegoImage(ofd.FileName);
 		}
@@ -301,6 +268,249 @@ namespace HSF_HideAndSeek {
 
 		private void clearStegoButton_Click(object sender, EventArgs e) {
 			clearStegoImage();
+		}
+
+		private void encryptMessageButton_Click(object sender, EventArgs e) {
+			encryptMessageButton.Text = "Encrypting ...";
+			encryptMessageButton.Enabled = false;
+			System.Threading.Thread.Sleep(150);
+			try {
+				message.Payload = AES.Encrypt(message.Payload, encryptionKeyTextbox.Text);
+				messageSizeLabel.Text = Converter.BytesToHumanReadableString(message.FullSizeInBytes);
+			} catch (CryptographicException) {
+				MessageBox.Show(
+					"Could not encrypt the message.",
+					"Error!",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Error
+				);
+			}
+			encryptMessageButton.Text = "Encrypt message";
+			encryptMessageButton.Enabled = true;
+		}
+
+		private void hideMessageButton_Click(object sender, EventArgs e) {
+			hideMessageButton.Text = "Hiding ...";
+			hideMessageButton.Enabled = false;
+
+			// Generate stego image
+			if (stegoPasswordTextbox.Equals("") || stegoPasswordTextbox.Text.Equals(null)) {
+				stegoImage = embedder.HideMessage(
+					carrier,
+					message,
+					null,
+					bppComboBox.SelectedIndex + 1,
+					true
+				);
+			} else {
+				stegoImage = embedder.HideMessage(
+					carrier,
+					message,
+					stegoPasswordTextbox.Text,
+					bppComboBox.SelectedIndex + 1,
+					true
+				);
+			}
+
+			// Fill labels with data
+			stegoImageNameLabel.Text = stegoImage.Name;
+			stegoImageSizeLabel.Text = defaultLabelValue; // TODO: Change this
+
+			// Display image
+			stegoImagePictureBox.Image = stegoImage.Image;
+
+			// Enable the buttons
+			hideMessageButton.Text = "Hide message";
+			checkEverything();
+		}
+
+		private void extractMesssageButton_Click(object sender, EventArgs e) {
+			extractMessageButton.Text = "Extracting ...";
+			extractMessageButton.Enabled = false;
+			message = embedder.ExtractMessage(stegoImage);
+
+			// Fill labels with data
+			messageNameLabel.Text = message.Name;
+			messageSizeLabel.Text = Converter.BytesToHumanReadableString(message.FullSizeInBytes);
+
+			// Enable the buttons
+			extractMessageButton.Text = "Extract message";
+			checkEverything();
+		}
+
+		private void decryptMessageButton_Click(object sender, EventArgs e) {
+			decryptMessageButton.Text = "Decrypting ...";
+			decryptMessageButton.Enabled = false;
+			try {
+				message.Payload = AES.Decrypt(message.Payload, encryptionKeyTextbox.Text);
+				messageSizeLabel.Text = Converter.BytesToHumanReadableString(message.FullSizeInBytes);
+			} catch (CryptographicException) {
+				MessageBox.Show(
+					"Could not decrypt the message (with the given key).",
+					"Error!",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Error
+				);
+			}
+			decryptMessageButton.Text = "Decrypt message";
+			decryptMessageButton.Enabled = true;
+		}
+
+		private void rateButton_Click(object sender, EventArgs e) {
+			rateButton.Text = "Rating ...";
+			rateButton.Enabled = false;
+
+			rateButton.Text = "Rate carrier";
+			rateButton.Enabled = true;
+		}
+
+		private void showStegoImageBitplanesButton_Click(object sender, EventArgs e) {
+			showStegoImageBitplanesButton.Text = "Generating bit planes ...";
+			showStegoImageBitplanesButton.Enabled = false;
+
+			showStegoImageBitplanesButton.Text = "Show stego image bit planes";
+			showStegoImageBitplanesButton.Enabled = true;
+		}
+
+		private void helpButton_Click(object sender, EventArgs e) {
+
+		}
+
+		private void encryptionKeyTextbox_TextChanged(object sender, EventArgs e) {
+			checkEncryption();
+		}
+
+		private void showCarrierBitplanesButton_Click(object sender, EventArgs e) {
+			showCarrierBitplanesButton.Text = "Generating bit planes ...";
+			showCarrierBitplanesButton.Enabled = false;
+
+			showCarrierBitplanesButton.Text = "Show carrier bit planes";
+			showCarrierBitplanesButton.Enabled = true;
+		}
+
+		private void saveStegoImageButton_Click(object sender, EventArgs e) {
+			SaveFileDialog sfd = new SaveFileDialog();
+			sfd.Title = "Save the stego image";
+			sfd.FileName = stegoImage.Name;
+			sfd.Filter = stegoImageExtensionsFilter;
+			sfd.ShowDialog();
+			fm.WriteStegoImage(stegoImage.Image, sfd.FileName);
+		}
+
+		private void saveMessageButton_Click(object sender, EventArgs e) {
+			SaveFileDialog sfd = new SaveFileDialog();
+			sfd.Title = "Save the message file";
+			sfd.FileName = message.Name;
+			sfd.Filter = messageExtensionsFilter;
+			sfd.ShowDialog();
+			fm.WriteMessageFile(message.Payload, sfd.FileName);
+		}
+
+		private void bppComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+
+		}
+		#endregion
+
+		#region GUI component checker methods
+
+		/// <summary>
+		/// Wrapper for all check-methods
+		/// </summary>
+		private void checkEverything() {
+			checkEncryption();
+			checkEmbedding();
+			checkExtraction();
+			checkSavingMessage();
+			checkSavingStegoImage();
+		}
+
+		/// <summary>
+		/// Check whether all requirements are set to hide a message
+		/// </summary>
+		/// <returns></returns>
+		private bool checkEmbedding() {
+			if (carrier == null || message == null) {
+				bppComboBox.Enabled = false;
+				hideMessageButton.Enabled = false;
+				return false;
+			}
+
+			// TODO: Pimp this
+			if (embedder.CalculateCapacity(carrier, 1) < message.FullSizeInBytes) {
+				hideMessageButton.Enabled = false;
+				messageSizeLabel.ForeColor = Color.Red;
+				return false;
+			}
+
+			messageSizeLabel.ForeColor = Color.Black;
+			bppComboBox.Enabled = true;
+			hideMessageButton.Enabled = true;
+			return true;
+		}
+
+		/// <summary>
+		/// Check whether all requirements are set to extract a message
+		/// </summary>
+		/// <returns></returns>
+		private bool checkExtraction() {
+			if (stegoImage == null) {
+				bppComboBox.Enabled = false;
+				extractMessageButton.Enabled = false;
+				return false;
+			}
+
+			bppComboBox.Enabled = true;
+			extractMessageButton.Enabled = true;
+			return true;
+		}
+
+		/// <summary>
+		/// Check whether all requirements are set to encrypt or decrypt a message
+		/// </summary>
+		/// <returns></returns>
+		private bool checkEncryption() {
+			if (message == null) {
+				encryptMessageButton.Enabled = false;
+				decryptMessageButton.Enabled = false;
+				return false;
+			}
+
+			if (encryptionKeyTextbox.Text.Equals("")) {
+				encryptMessageButton.Enabled = false;
+				decryptMessageButton.Enabled = false;
+				return false;
+			}
+
+			encryptMessageButton.Enabled = true;
+			decryptMessageButton.Enabled = true;
+			return true;
+		}
+
+		/// <summary>
+		/// Check whether all requirements are set to save a stego image to the drive
+		/// </summary>
+		/// <returns></returns>
+		private bool checkSavingStegoImage() {
+			if (stegoImage == null) {
+				saveStegoImageButton.Enabled = false;
+				return false;
+			}
+
+			saveStegoImageButton.Enabled = true;
+			return true;
+		}
+
+		/// <summary>
+		/// Check whether all requirements are set to save a message file to the drive
+		/// </summary>
+		/// <returns></returns>
+		private bool checkSavingMessage() {
+			if (message == null) {
+				saveMessageButton.Enabled = false;
+				return false;
+			}
+			saveMessageButton.Enabled = true;
+			return true;
 		}
 		#endregion
 	}

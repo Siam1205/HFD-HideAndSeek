@@ -27,19 +27,19 @@
 			this.carrierImagePictureBox = new System.Windows.Forms.PictureBox();
 			this.stegoImageGroupBox = new System.Windows.Forms.GroupBox();
 			this.stegoImagePictureBox = new System.Windows.Forms.PictureBox();
-			this.lsbsComboBox = new System.Windows.Forms.ComboBox();
+			this.bppComboBox = new System.Windows.Forms.ComboBox();
 			this.lsbsLabel = new System.Windows.Forms.Label();
-			this.stegoKeyTextbox = new System.Windows.Forms.TextBox();
-			this.stegoKeyLabel = new System.Windows.Forms.Label();
+			this.stegoPasswordTextbox = new System.Windows.Forms.TextBox();
+			this.stegoPasswordLabel = new System.Windows.Forms.Label();
 			this.encryptionKeyTextbox = new System.Windows.Forms.TextBox();
 			this.encryptionKeyLabel = new System.Windows.Forms.Label();
 			this.showCarrierBitplanesButton = new System.Windows.Forms.Button();
 			this.decryptMessageButton = new System.Windows.Forms.Button();
 			this.encryptMessageButton = new System.Windows.Forms.Button();
-			this.saveMesssageButton = new System.Windows.Forms.Button();
+			this.saveMessageButton = new System.Windows.Forms.Button();
 			this.saveStegoImageButton = new System.Windows.Forms.Button();
 			this.loadMessageButton = new System.Windows.Forms.Button();
-			this.extractMesssageButton = new System.Windows.Forms.Button();
+			this.extractMessageButton = new System.Windows.Forms.Button();
 			this.hideMessageButton = new System.Windows.Forms.Button();
 			this.loadCarrierButton = new System.Windows.Forms.Button();
 			this.showStegoImageBitplanesButton = new System.Windows.Forms.Button();
@@ -55,8 +55,8 @@
 			this.stegoImageNameLabel = new System.Windows.Forms.Label();
 			this.infMessageSizeLabel = new System.Windows.Forms.Label();
 			this.infStegoImageSizeLabel = new System.Windows.Forms.Label();
-			this.infDetectionProbabilityLabel = new System.Windows.Forms.Label();
-			this.detectionProbabilityLabel = new System.Windows.Forms.Label();
+			this.infCarrierRatingLabel = new System.Windows.Forms.Label();
+			this.carrierRatingLabel = new System.Windows.Forms.Label();
 			this.infStegoImageNameLabel = new System.Windows.Forms.Label();
 			this.messageSizeLabel = new System.Windows.Forms.Label();
 			this.carrierNameLabel = new System.Windows.Forms.Label();
@@ -64,12 +64,17 @@
 			this.carrierSizeLabel = new System.Windows.Forms.Label();
 			this.messageNameLabel = new System.Windows.Forms.Label();
 			this.helpButton = new System.Windows.Forms.Button();
+			this.radioTableLayout = new System.Windows.Forms.TableLayoutPanel();
+			this.pixelFirstRadio = new System.Windows.Forms.RadioButton();
+			this.bitPlaneFirstRadio = new System.Windows.Forms.RadioButton();
+			this.rateButton = new System.Windows.Forms.Button();
 			this.logoPictureBox = new System.Windows.Forms.PictureBox();
 			this.carrierImageGroupBox.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.carrierImagePictureBox)).BeginInit();
 			this.stegoImageGroupBox.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.stegoImagePictureBox)).BeginInit();
 			this.informationTableLayout.SuspendLayout();
+			this.radioTableLayout.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -130,13 +135,12 @@
 			this.stegoImagePictureBox.TabIndex = 0;
 			this.stegoImagePictureBox.TabStop = false;
 			// 
-			// lsbsComboBox
+			// bppComboBox
 			// 
-			this.lsbsComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.lsbsComboBox.Enabled = false;
-			this.lsbsComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-			this.lsbsComboBox.FormattingEnabled = true;
-			this.lsbsComboBox.Items.AddRange(new object[] {
+			this.bppComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.bppComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+			this.bppComboBox.FormattingEnabled = true;
+			this.bppComboBox.Items.AddRange(new object[] {
             "3 bpp",
             "6 bpp",
             "9 bpp",
@@ -144,56 +148,56 @@
             "15 bpp",
             "18 bpp",
             "21 bpp"});
-			this.lsbsComboBox.Location = new System.Drawing.Point(548, 658);
-			this.lsbsComboBox.Margin = new System.Windows.Forms.Padding(4);
-			this.lsbsComboBox.Name = "lsbsComboBox";
-			this.lsbsComboBox.Size = new System.Drawing.Size(163, 28);
-			this.lsbsComboBox.TabIndex = 10;
+			this.bppComboBox.Location = new System.Drawing.Point(538, 584);
+			this.bppComboBox.Margin = new System.Windows.Forms.Padding(4);
+			this.bppComboBox.Name = "bppComboBox";
+			this.bppComboBox.Size = new System.Drawing.Size(181, 28);
+			this.bppComboBox.TabIndex = 10;
+			this.bppComboBox.SelectedIndexChanged += new System.EventHandler(this.bppComboBox_SelectedIndexChanged);
 			// 
 			// lsbsLabel
 			// 
 			this.lsbsLabel.AutoSize = true;
-			this.lsbsLabel.Location = new System.Drawing.Point(544, 638);
+			this.lsbsLabel.Location = new System.Drawing.Point(535, 564);
 			this.lsbsLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.lsbsLabel.Name = "lsbsLabel";
 			this.lsbsLabel.Size = new System.Drawing.Size(130, 17);
 			this.lsbsLabel.TabIndex = 8;
 			this.lsbsLabel.Text = "Bits per pixel (bpp):";
 			// 
-			// stegoKeyTextbox
+			// stegoPasswordTextbox
 			// 
-			this.stegoKeyTextbox.Enabled = false;
-			this.stegoKeyTextbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-			this.stegoKeyTextbox.Location = new System.Drawing.Point(548, 595);
-			this.stegoKeyTextbox.Margin = new System.Windows.Forms.Padding(4);
-			this.stegoKeyTextbox.Name = "stegoKeyTextbox";
-			this.stegoKeyTextbox.Size = new System.Drawing.Size(163, 26);
-			this.stegoKeyTextbox.TabIndex = 9;
+			this.stegoPasswordTextbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+			this.stegoPasswordTextbox.Location = new System.Drawing.Point(638, 524);
+			this.stegoPasswordTextbox.Margin = new System.Windows.Forms.Padding(4);
+			this.stegoPasswordTextbox.Name = "stegoPasswordTextbox";
+			this.stegoPasswordTextbox.Size = new System.Drawing.Size(181, 26);
+			this.stegoPasswordTextbox.TabIndex = 9;
 			// 
-			// stegoKeyLabel
+			// stegoPasswordLabel
 			// 
-			this.stegoKeyLabel.AutoSize = true;
-			this.stegoKeyLabel.Location = new System.Drawing.Point(544, 575);
-			this.stegoKeyLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-			this.stegoKeyLabel.Name = "stegoKeyLabel";
-			this.stegoKeyLabel.Size = new System.Drawing.Size(113, 17);
-			this.stegoKeyLabel.TabIndex = 0;
-			this.stegoKeyLabel.Text = "Stego password:";
+			this.stegoPasswordLabel.AutoSize = true;
+			this.stegoPasswordLabel.Location = new System.Drawing.Point(638, 503);
+			this.stegoPasswordLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			this.stegoPasswordLabel.Name = "stegoPasswordLabel";
+			this.stegoPasswordLabel.Size = new System.Drawing.Size(113, 17);
+			this.stegoPasswordLabel.TabIndex = 0;
+			this.stegoPasswordLabel.Text = "Stego password:";
 			// 
 			// encryptionKeyTextbox
 			// 
-			this.encryptionKeyTextbox.Enabled = false;
 			this.encryptionKeyTextbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-			this.encryptionKeyTextbox.Location = new System.Drawing.Point(548, 478);
+			this.encryptionKeyTextbox.Location = new System.Drawing.Point(434, 524);
 			this.encryptionKeyTextbox.Margin = new System.Windows.Forms.Padding(4);
 			this.encryptionKeyTextbox.Name = "encryptionKeyTextbox";
-			this.encryptionKeyTextbox.Size = new System.Drawing.Size(163, 26);
+			this.encryptionKeyTextbox.Size = new System.Drawing.Size(181, 26);
 			this.encryptionKeyTextbox.TabIndex = 7;
+			this.encryptionKeyTextbox.TextChanged += new System.EventHandler(this.encryptionKeyTextbox_TextChanged);
 			// 
 			// encryptionKeyLabel
 			// 
 			this.encryptionKeyLabel.AutoSize = true;
-			this.encryptionKeyLabel.Location = new System.Drawing.Point(544, 458);
+			this.encryptionKeyLabel.Location = new System.Drawing.Point(434, 503);
 			this.encryptionKeyLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.encryptionKeyLabel.Name = "encryptionKeyLabel";
 			this.encryptionKeyLabel.Size = new System.Drawing.Size(105, 17);
@@ -214,27 +218,29 @@
 			this.showCarrierBitplanesButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.showCarrierBitplanesButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.showCarrierBitplanesButton.UseVisualStyleBackColor = true;
+			this.showCarrierBitplanesButton.Click += new System.EventHandler(this.showCarrierBitplanesButton_Click);
 			// 
 			// decryptMessageButton
 			// 
 			this.decryptMessageButton.Enabled = false;
 			this.decryptMessageButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.decryptMessageButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.decryptMessageButton.Location = new System.Drawing.Point(638, 404);
+			this.decryptMessageButton.Location = new System.Drawing.Point(434, 449);
 			this.decryptMessageButton.Margin = new System.Windows.Forms.Padding(4);
 			this.decryptMessageButton.Name = "decryptMessageButton";
 			this.decryptMessageButton.Size = new System.Drawing.Size(181, 38);
 			this.decryptMessageButton.TabIndex = 12;
 			this.decryptMessageButton.Text = "Decrypt message";
-			this.decryptMessageButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.decryptMessageButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.decryptMessageButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.decryptMessageButton.UseVisualStyleBackColor = true;
+			this.decryptMessageButton.Click += new System.EventHandler(this.decryptMessageButton_Click);
 			// 
 			// encryptMessageButton
 			// 
 			this.encryptMessageButton.Enabled = false;
 			this.encryptMessageButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.encryptMessageButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.encryptMessageButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.encryptMessageButton.Location = new System.Drawing.Point(434, 404);
 			this.encryptMessageButton.Margin = new System.Windows.Forms.Padding(4);
 			this.encryptMessageButton.Name = "encryptMessageButton";
@@ -242,23 +248,25 @@
 			this.encryptMessageButton.TabIndex = 6;
 			this.encryptMessageButton.Text = "Encrypt message";
 			this.encryptMessageButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.encryptMessageButton.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+			this.encryptMessageButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.encryptMessageButton.UseVisualStyleBackColor = true;
+			this.encryptMessageButton.Click += new System.EventHandler(this.encryptMessageButton_Click);
 			// 
-			// saveMesssageButton
+			// saveMessageButton
 			// 
-			this.saveMesssageButton.Enabled = false;
-			this.saveMesssageButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.saveMesssageButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.saveMesssageButton.Location = new System.Drawing.Point(638, 709);
-			this.saveMesssageButton.Margin = new System.Windows.Forms.Padding(4);
-			this.saveMesssageButton.Name = "saveMesssageButton";
-			this.saveMesssageButton.Size = new System.Drawing.Size(181, 38);
-			this.saveMesssageButton.TabIndex = 14;
-			this.saveMesssageButton.Text = "Save message";
-			this.saveMesssageButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.saveMesssageButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.saveMesssageButton.UseVisualStyleBackColor = true;
+			this.saveMessageButton.Enabled = false;
+			this.saveMessageButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.saveMessageButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.saveMessageButton.Location = new System.Drawing.Point(638, 709);
+			this.saveMessageButton.Margin = new System.Windows.Forms.Padding(4);
+			this.saveMessageButton.Name = "saveMessageButton";
+			this.saveMessageButton.Size = new System.Drawing.Size(181, 38);
+			this.saveMessageButton.TabIndex = 14;
+			this.saveMessageButton.Text = "Save message";
+			this.saveMessageButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.saveMessageButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.saveMessageButton.UseVisualStyleBackColor = true;
+			this.saveMessageButton.Click += new System.EventHandler(this.saveMessageButton_Click);
 			// 
 			// saveStegoImageButton
 			// 
@@ -270,10 +278,11 @@
 			this.saveStegoImageButton.Name = "saveStegoImageButton";
 			this.saveStegoImageButton.Size = new System.Drawing.Size(181, 38);
 			this.saveStegoImageButton.TabIndex = 11;
-			this.saveStegoImageButton.Text = "Save stego";
+			this.saveStegoImageButton.Text = "Save stego image";
 			this.saveStegoImageButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.saveStegoImageButton.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
 			this.saveStegoImageButton.UseVisualStyleBackColor = true;
+			this.saveStegoImageButton.Click += new System.EventHandler(this.saveStegoImageButton_Click);
 			// 
 			// loadMessageButton
 			// 
@@ -290,35 +299,37 @@
 			this.loadMessageButton.UseVisualStyleBackColor = true;
 			this.loadMessageButton.Click += new System.EventHandler(this.loadMessageButton_Click);
 			// 
-			// extractMesssageButton
+			// extractMessageButton
 			// 
-			this.extractMesssageButton.Enabled = false;
-			this.extractMesssageButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.extractMesssageButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.extractMesssageButton.Location = new System.Drawing.Point(638, 522);
-			this.extractMesssageButton.Margin = new System.Windows.Forms.Padding(4);
-			this.extractMesssageButton.Name = "extractMesssageButton";
-			this.extractMesssageButton.Size = new System.Drawing.Size(181, 38);
-			this.extractMesssageButton.TabIndex = 13;
-			this.extractMesssageButton.Text = "Extract message";
-			this.extractMesssageButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.extractMesssageButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.extractMesssageButton.UseVisualStyleBackColor = true;
+			this.extractMessageButton.Enabled = false;
+			this.extractMessageButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.extractMessageButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.extractMessageButton.Location = new System.Drawing.Point(638, 449);
+			this.extractMessageButton.Margin = new System.Windows.Forms.Padding(4);
+			this.extractMessageButton.Name = "extractMessageButton";
+			this.extractMessageButton.Size = new System.Drawing.Size(181, 38);
+			this.extractMessageButton.TabIndex = 13;
+			this.extractMessageButton.Text = "Extract message";
+			this.extractMessageButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.extractMessageButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.extractMessageButton.UseVisualStyleBackColor = true;
+			this.extractMessageButton.Click += new System.EventHandler(this.extractMesssageButton_Click);
 			// 
 			// hideMessageButton
 			// 
 			this.hideMessageButton.Enabled = false;
 			this.hideMessageButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.hideMessageButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.hideMessageButton.Location = new System.Drawing.Point(434, 522);
+			this.hideMessageButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.hideMessageButton.Location = new System.Drawing.Point(638, 404);
 			this.hideMessageButton.Margin = new System.Windows.Forms.Padding(4);
 			this.hideMessageButton.Name = "hideMessageButton";
 			this.hideMessageButton.Size = new System.Drawing.Size(181, 38);
 			this.hideMessageButton.TabIndex = 8;
 			this.hideMessageButton.Text = "Hide message";
 			this.hideMessageButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.hideMessageButton.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+			this.hideMessageButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.hideMessageButton.UseVisualStyleBackColor = true;
+			this.hideMessageButton.Click += new System.EventHandler(this.hideMessageButton_Click);
 			// 
 			// loadCarrierButton
 			// 
@@ -341,27 +352,28 @@
 			this.showStegoImageBitplanesButton.Enabled = false;
 			this.showStegoImageBitplanesButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.showStegoImageBitplanesButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.showStegoImageBitplanesButton.Location = new System.Drawing.Point(968, 449);
+			this.showStegoImageBitplanesButton.Location = new System.Drawing.Point(859, 449);
 			this.showStegoImageBitplanesButton.Margin = new System.Windows.Forms.Padding(4);
 			this.showStegoImageBitplanesButton.Name = "showStegoImageBitplanesButton";
 			this.showStegoImageBitplanesButton.Size = new System.Drawing.Size(270, 38);
 			this.showStegoImageBitplanesButton.TabIndex = 17;
 			this.showStegoImageBitplanesButton.Text = "Show stego image bit planes";
-			this.showStegoImageBitplanesButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.showStegoImageBitplanesButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.showStegoImageBitplanesButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.showStegoImageBitplanesButton.UseVisualStyleBackColor = true;
+			this.showStegoImageBitplanesButton.Click += new System.EventHandler(this.showStegoImageBitplanesButton_Click);
 			// 
 			// loadStegoImageButton
 			// 
 			this.loadStegoImageButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.loadStegoImageButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.loadStegoImageButton.Location = new System.Drawing.Point(1054, 404);
+			this.loadStegoImageButton.Location = new System.Drawing.Point(859, 404);
 			this.loadStegoImageButton.Margin = new System.Windows.Forms.Padding(4);
 			this.loadStegoImageButton.Name = "loadStegoImageButton";
-			this.loadStegoImageButton.Size = new System.Drawing.Size(184, 38);
+			this.loadStegoImageButton.Size = new System.Drawing.Size(226, 38);
 			this.loadStegoImageButton.TabIndex = 16;
 			this.loadStegoImageButton.Text = "Load stego image";
-			this.loadStegoImageButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.loadStegoImageButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.loadStegoImageButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.loadStegoImageButton.UseVisualStyleBackColor = true;
 			this.loadStegoImageButton.Click += new System.EventHandler(this.loadStegoImageButton_Click);
@@ -381,7 +393,7 @@
 			// clearStegoButton
 			// 
 			this.clearStegoButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.clearStegoButton.Location = new System.Drawing.Point(1010, 404);
+			this.clearStegoButton.Location = new System.Drawing.Point(1093, 404);
 			this.clearStegoButton.Margin = new System.Windows.Forms.Padding(4);
 			this.clearStegoButton.Name = "clearStegoButton";
 			this.clearStegoButton.Size = new System.Drawing.Size(36, 38);
@@ -403,8 +415,8 @@
 			this.informationTableLayout.Controls.Add(this.stegoImageNameLabel, 1, 6);
 			this.informationTableLayout.Controls.Add(this.infMessageSizeLabel, 0, 4);
 			this.informationTableLayout.Controls.Add(this.infStegoImageSizeLabel, 0, 7);
-			this.informationTableLayout.Controls.Add(this.infDetectionProbabilityLabel, 0, 5);
-			this.informationTableLayout.Controls.Add(this.detectionProbabilityLabel, 1, 5);
+			this.informationTableLayout.Controls.Add(this.infCarrierRatingLabel, 0, 5);
+			this.informationTableLayout.Controls.Add(this.carrierRatingLabel, 1, 5);
 			this.informationTableLayout.Controls.Add(this.infStegoImageNameLabel, 0, 6);
 			this.informationTableLayout.Controls.Add(this.messageSizeLabel, 1, 4);
 			this.informationTableLayout.Controls.Add(this.carrierNameLabel, 1, 0);
@@ -531,31 +543,31 @@
 			this.infStegoImageSizeLabel.Text = "Stego image size:";
 			this.infStegoImageSizeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// infDetectionProbabilityLabel
+			// infCarrierRatingLabel
 			// 
-			this.infDetectionProbabilityLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.infDetectionProbabilityLabel.AutoSize = true;
-			this.infDetectionProbabilityLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.infDetectionProbabilityLabel.Location = new System.Drawing.Point(4, 161);
-			this.infDetectionProbabilityLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-			this.infDetectionProbabilityLabel.Name = "infDetectionProbabilityLabel";
-			this.infDetectionProbabilityLabel.Size = new System.Drawing.Size(145, 18);
-			this.infDetectionProbabilityLabel.TabIndex = 0;
-			this.infDetectionProbabilityLabel.Text = "Detection probability:";
-			this.infDetectionProbabilityLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.infCarrierRatingLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.infCarrierRatingLabel.AutoSize = true;
+			this.infCarrierRatingLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.infCarrierRatingLabel.Location = new System.Drawing.Point(4, 161);
+			this.infCarrierRatingLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			this.infCarrierRatingLabel.Name = "infCarrierRatingLabel";
+			this.infCarrierRatingLabel.Size = new System.Drawing.Size(97, 18);
+			this.infCarrierRatingLabel.TabIndex = 0;
+			this.infCarrierRatingLabel.Text = "Carrier rating:";
+			this.infCarrierRatingLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// detectionProbabilityLabel
+			// carrierRatingLabel
 			// 
-			this.detectionProbabilityLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.detectionProbabilityLabel.AutoEllipsis = true;
-			this.detectionProbabilityLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.detectionProbabilityLabel.Location = new System.Drawing.Point(158, 161);
-			this.detectionProbabilityLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-			this.detectionProbabilityLabel.Name = "detectionProbabilityLabel";
-			this.detectionProbabilityLabel.Size = new System.Drawing.Size(214, 18);
-			this.detectionProbabilityLabel.TabIndex = 0;
-			this.detectionProbabilityLabel.Text = "---";
-			this.detectionProbabilityLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.carrierRatingLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.carrierRatingLabel.AutoEllipsis = true;
+			this.carrierRatingLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.carrierRatingLabel.Location = new System.Drawing.Point(158, 161);
+			this.carrierRatingLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			this.carrierRatingLabel.Name = "carrierRatingLabel";
+			this.carrierRatingLabel.Size = new System.Drawing.Size(214, 18);
+			this.carrierRatingLabel.TabIndex = 0;
+			this.carrierRatingLabel.Text = "---";
+			this.carrierRatingLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// infStegoImageNameLabel
 			// 
@@ -638,16 +650,70 @@
 			// helpButton
 			// 
 			this.helpButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.helpButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.helpButton.Location = new System.Drawing.Point(254, 449);
+			this.helpButton.Location = new System.Drawing.Point(1168, 404);
 			this.helpButton.Margin = new System.Windows.Forms.Padding(4);
 			this.helpButton.Name = "helpButton";
-			this.helpButton.Size = new System.Drawing.Size(141, 38);
+			this.helpButton.Size = new System.Drawing.Size(66, 83);
 			this.helpButton.TabIndex = 5;
-			this.helpButton.Text = "About / Help";
 			this.helpButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.helpButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.helpButton.UseVisualStyleBackColor = true;
+			this.helpButton.Click += new System.EventHandler(this.helpButton_Click);
+			// 
+			// radioTableLayout
+			// 
+			this.radioTableLayout.ColumnCount = 1;
+			this.radioTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.radioTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.radioTableLayout.Controls.Add(this.pixelFirstRadio, 0, 1);
+			this.radioTableLayout.Controls.Add(this.bitPlaneFirstRadio, 0, 0);
+			this.radioTableLayout.Location = new System.Drawing.Point(538, 619);
+			this.radioTableLayout.Name = "radioTableLayout";
+			this.radioTableLayout.RowCount = 2;
+			this.radioTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.radioTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.radioTableLayout.Size = new System.Drawing.Size(181, 64);
+			this.radioTableLayout.TabIndex = 20;
+			// 
+			// pixelFirstRadio
+			// 
+			this.pixelFirstRadio.AutoSize = true;
+			this.pixelFirstRadio.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.pixelFirstRadio.Location = new System.Drawing.Point(3, 35);
+			this.pixelFirstRadio.Name = "pixelFirstRadio";
+			this.pixelFirstRadio.Size = new System.Drawing.Size(175, 26);
+			this.pixelFirstRadio.TabIndex = 21;
+			this.pixelFirstRadio.Text = "Pixels first-mode";
+			this.pixelFirstRadio.UseVisualStyleBackColor = true;
+			// 
+			// bitPlaneFirstRadio
+			// 
+			this.bitPlaneFirstRadio.AutoSize = true;
+			this.bitPlaneFirstRadio.Checked = true;
+			this.bitPlaneFirstRadio.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.bitPlaneFirstRadio.Location = new System.Drawing.Point(3, 3);
+			this.bitPlaneFirstRadio.Name = "bitPlaneFirstRadio";
+			this.bitPlaneFirstRadio.Size = new System.Drawing.Size(175, 26);
+			this.bitPlaneFirstRadio.TabIndex = 22;
+			this.bitPlaneFirstRadio.TabStop = true;
+			this.bitPlaneFirstRadio.Text = "Bit planes first-mode";
+			this.bitPlaneFirstRadio.UseVisualStyleBackColor = true;
+			// 
+			// rateButton
+			// 
+			this.rateButton.Enabled = false;
+			this.rateButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.rateButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.rateButton.Location = new System.Drawing.Point(255, 449);
+			this.rateButton.Margin = new System.Windows.Forms.Padding(4);
+			this.rateButton.Name = "rateButton";
+			this.rateButton.Size = new System.Drawing.Size(140, 38);
+			this.rateButton.TabIndex = 21;
+			this.rateButton.Text = "Rate carrier";
+			this.rateButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.rateButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.rateButton.UseVisualStyleBackColor = true;
+			this.rateButton.Click += new System.EventHandler(this.rateButton_Click);
 			// 
 			// logoPictureBox
 			// 
@@ -670,6 +736,8 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
 			this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.ClientSize = new System.Drawing.Size(1250, 766);
+			this.Controls.Add(this.rateButton);
+			this.Controls.Add(this.radioTableLayout);
 			this.Controls.Add(this.helpButton);
 			this.Controls.Add(this.informationTableLayout);
 			this.Controls.Add(this.clearStegoButton);
@@ -678,16 +746,16 @@
 			this.Controls.Add(this.showCarrierBitplanesButton);
 			this.Controls.Add(this.decryptMessageButton);
 			this.Controls.Add(this.encryptMessageButton);
-			this.Controls.Add(this.saveMesssageButton);
+			this.Controls.Add(this.saveMessageButton);
 			this.Controls.Add(this.saveStegoImageButton);
 			this.Controls.Add(this.encryptionKeyLabel);
 			this.Controls.Add(this.encryptionKeyTextbox);
-			this.Controls.Add(this.stegoKeyLabel);
-			this.Controls.Add(this.stegoKeyTextbox);
+			this.Controls.Add(this.stegoPasswordLabel);
+			this.Controls.Add(this.stegoPasswordTextbox);
 			this.Controls.Add(this.loadMessageButton);
 			this.Controls.Add(this.lsbsLabel);
-			this.Controls.Add(this.lsbsComboBox);
-			this.Controls.Add(this.extractMesssageButton);
+			this.Controls.Add(this.bppComboBox);
+			this.Controls.Add(this.extractMessageButton);
 			this.Controls.Add(this.loadStegoImageButton);
 			this.Controls.Add(this.loadCarrierButton);
 			this.Controls.Add(this.logoPictureBox);
@@ -706,6 +774,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.stegoImagePictureBox)).EndInit();
 			this.informationTableLayout.ResumeLayout(false);
 			this.informationTableLayout.PerformLayout();
+			this.radioTableLayout.ResumeLayout(false);
+			this.radioTableLayout.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
@@ -722,16 +792,16 @@
 		private System.Windows.Forms.PictureBox logoPictureBox;
 		private System.Windows.Forms.Button loadCarrierButton;
 		private System.Windows.Forms.Button loadStegoImageButton;
-		private System.Windows.Forms.Button extractMesssageButton;
-		private System.Windows.Forms.ComboBox lsbsComboBox;
+		private System.Windows.Forms.Button extractMessageButton;
+		private System.Windows.Forms.ComboBox bppComboBox;
 		private System.Windows.Forms.Label lsbsLabel;
 		private System.Windows.Forms.Button loadMessageButton;
-		private System.Windows.Forms.TextBox stegoKeyTextbox;
-		private System.Windows.Forms.Label stegoKeyLabel;
+		private System.Windows.Forms.TextBox stegoPasswordTextbox;
+		private System.Windows.Forms.Label stegoPasswordLabel;
 		private System.Windows.Forms.TextBox encryptionKeyTextbox;
 		private System.Windows.Forms.Label encryptionKeyLabel;
 		private System.Windows.Forms.Button saveStegoImageButton;
-		private System.Windows.Forms.Button saveMesssageButton;
+		private System.Windows.Forms.Button saveMessageButton;
 		private System.Windows.Forms.Button encryptMessageButton;
 		private System.Windows.Forms.Button decryptMessageButton;
 		private System.Windows.Forms.Button showCarrierBitplanesButton;
@@ -742,20 +812,24 @@
 		private System.Windows.Forms.Label infCarrierNameLabel;
 		private System.Windows.Forms.Label infCarrierSizeLabel;
 		private System.Windows.Forms.Label infCarrierCapacityLabel;
-		private System.Windows.Forms.Label stegoImageSizeLabel;
 		private System.Windows.Forms.Label infMessageNameLabel;
-		private System.Windows.Forms.Label stegoImageNameLabel;
 		private System.Windows.Forms.Label infMessageSizeLabel;
-		private System.Windows.Forms.Label infStegoImageSizeLabel;
-		private System.Windows.Forms.Label infDetectionProbabilityLabel;
-		private System.Windows.Forms.Label detectionProbabilityLabel;
-		private System.Windows.Forms.Label infStegoImageNameLabel;
+		private System.Windows.Forms.Label infCarrierRatingLabel;
+		private System.Windows.Forms.Label carrierRatingLabel;
 		private System.Windows.Forms.Label messageSizeLabel;
 		private System.Windows.Forms.Label carrierNameLabel;
 		private System.Windows.Forms.Label carrierCapacityLabel;
 		private System.Windows.Forms.Label carrierSizeLabel;
 		private System.Windows.Forms.Label messageNameLabel;
 		private System.Windows.Forms.Button helpButton;
+		private System.Windows.Forms.TableLayoutPanel radioTableLayout;
+		private System.Windows.Forms.RadioButton pixelFirstRadio;
+		private System.Windows.Forms.RadioButton bitPlaneFirstRadio;
+		private System.Windows.Forms.Label stegoImageSizeLabel;
+		private System.Windows.Forms.Label stegoImageNameLabel;
+		private System.Windows.Forms.Label infStegoImageSizeLabel;
+		private System.Windows.Forms.Label infStegoImageNameLabel;
+		private System.Windows.Forms.Button rateButton;
 	}
 }
 
