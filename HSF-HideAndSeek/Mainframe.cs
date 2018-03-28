@@ -75,7 +75,7 @@ namespace HSF_HideAndSeek {
 					carrierNameLabel.Text = carrier.Name;
 					carrierSizeLabel.Text = Converter.BytesToHumanReadableString(carrier.SizeInBytes);
 					carrierCapacityLabel.Text = Converter.BytesToHumanReadableString(
-						embedder.CalculateCapacity(carrier, (byte) bppComboBox.SelectedIndex));
+						embedder.CalculateCapacity(carrier, (byte) (bppComboBox.SelectedIndex + 1)));
 
 					// Check GUI components
 					checkEverything();
@@ -408,11 +408,15 @@ namespace HSF_HideAndSeek {
 
 		private void bppComboBox_SelectedIndexChanged(object sender, EventArgs e) {
 
+			// Change label data
+			if (carrier != null) {
+				carrierCapacityLabel.Text = Converter.BytesToHumanReadableString(
+				embedder.CalculateCapacity(carrier, (byte) (bppComboBox.SelectedIndex + 1)));
+			}
 		}
 		#endregion
 
 		#region GUI component checker methods
-
 		/// <summary>
 		/// Wrapper for all check-methods
 		/// </summary>
@@ -430,7 +434,6 @@ namespace HSF_HideAndSeek {
 		/// <returns></returns>
 		private bool checkEmbedding() {
 			if (carrier == null || message == null) {
-				bppComboBox.Enabled = false;
 				hideMessageButton.Enabled = false;
 				return false;
 			}
@@ -443,7 +446,6 @@ namespace HSF_HideAndSeek {
 			}
 
 			messageSizeLabel.ForeColor = Color.Black;
-			bppComboBox.Enabled = true;
 			hideMessageButton.Enabled = true;
 			return true;
 		}
@@ -454,12 +456,9 @@ namespace HSF_HideAndSeek {
 		/// <returns></returns>
 		private bool checkExtraction() {
 			if (stegoImage == null) {
-				bppComboBox.Enabled = false;
 				extractMessageButton.Enabled = false;
 				return false;
 			}
-
-			bppComboBox.Enabled = true;
 			extractMessageButton.Enabled = true;
 			return true;
 		}
