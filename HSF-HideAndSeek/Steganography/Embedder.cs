@@ -1,4 +1,6 @@
-﻿using HSF_HideAndSeek.Helper;
+﻿using HSF_HideAndSeek.Cryptography;
+using HSF_HideAndSeek.Exceptions;
+using HSF_HideAndSeek.Helper;
 using HSF_HideAndSeek.Steganography.DataStructures;
 using System;
 using System.Collections.Generic;
@@ -54,7 +56,7 @@ namespace HSF_HideAndSeek.Steganography {
 		/// <param name="unit"></param>
 		/// <exception cref="FormatException"></exception>
 		/// <returns></returns>
-		public uint CalculateCapacity(StegoImage carrier, byte amountOfBitPlanes) {
+		public uint CalculateCapacity(StegoImage carrier, int amountOfBitPlanes) {
 			if (amountOfBitPlanes < 0 || amountOfBitPlanes > 7) {
 				throw new FormatException();
 			}
@@ -68,8 +70,8 @@ namespace HSF_HideAndSeek.Steganography {
 		}
 
 		public int RateCarrier(Bitmap carrier, StegoMessage message, string stegoPassword) {
+			
 
-			// TODO: Implement this
 			return 0;
 		}
 
@@ -107,6 +109,12 @@ namespace HSF_HideAndSeek.Steganography {
 			int bitPlanes,
 			bool bitPlanesFirst) {
 
+			// Check if a password is set
+			bool passwordSet = false;
+			if (!stegoPassword.Equals(null) && !stegoPassword.Equals("")) {
+				passwordSet = true;
+			}
+
 			// Generate stego image
 			StegoImage stegoImage = carrierImage;
 			stegoImage.Name = "stegged_" + Path.GetFileNameWithoutExtension(stegoImage.Name) + ".png";
@@ -114,49 +122,80 @@ namespace HSF_HideAndSeek.Steganography {
 			// Base variable declaration
 			int carrierWidth = carrierImage.Image.Width;
 			int carrierHeight = carrierImage.Image.Height;
+			uint maxCarrierPixels = (uint) (carrierWidth * carrierHeight);
+			uint pixelDistance = 1;
 
 			// Get the binary string of a message object and its length
 			string completeMessage = GenerateMessageBitPattern(message);
 			uint completeMessageLength = (uint) completeMessage.Length;
 
 			// Throw exception if the message is too big
-			//uint carrierCapacity = scanner.CalculateCapacity(carrierImage, "bits");
-			//if (completeMessageLength > carrierCapacity) {
-			//	throw new MessageTooBigException();
-			//}
+			uint carrierCapacity = this.CalculateCapacity(carrierImage, bitPlanes);
+			if (completeMessageLength > carrierCapacity*8) {
+				throw new MessageTooBixException();
+			}
+
+			// If a stego password is specified, scramble the image and change the pixelDistance value
+			if (passwordSet) {
+
+				// Transform the password into a value defining the distance between pixels
+				byte[] passwordBytes = Encoding.UTF8.GetBytes(stegoPassword);
+				passwordBytes = Hasher.HashSha256(passwordBytes);
+				pixelDistance = (uint) ((ulong) BitConverter.ToInt64(passwordBytes, 0) % maxCarrierPixels);
+
+				// Scramble image
+				stegoImage.Image = ImageScrambler.ScrambleOne(stegoImage.Image);
+				stegoImage.Image = ImageScrambler.ScrambleThree(stegoImage.Image);
+				stegoImage.Image = ImageScrambler.ScrambleTwo(stegoImage.Image);
+			}
 
 			// Hiding variables
-			Color pixel;
-			int pixelX = 0;
-			int pixelY = 0;
-			int messageBitCounter = 0;
-			byte color = 0x00;
+			int messageBitCounter = 0;		// Counter iterating over all message bits
+			Color pixel;					// Pixel object used to generate the new color
+			byte color = 0x00;              // Variable storing an RGB color value
+			uint currentPixel = 0;          // Variable storing the currently considered pixel
+			int currentPixelXValue;			// x coordinate of current pixel
+			int currentPixelYValue;			// y coordinate of current pixel
+			uint restClassCounter = 0;      // Counter iterating over all rest classes
+			byte bitPlaneSelector = 0;		// Variable used to select which bit plane is used for embedding
 
 			// While there is something left to hide
 			while (messageBitCounter < completeMessageLength) {
 
 				// Get current pixel
-				pixel = stegoImage.Image.GetPixel(pixelX, pixelY);
+				currentPixelXValue = (int) (currentPixel % carrierWidth);
+				currentPixelYValue = (int) (currentPixel / carrierWidth);
+				pixel = stegoImage.Image.GetPixel(currentPixelXValue, currentPixelYValue);
 
 				// Define which of the three LSBs of a pixel should be used
 				switch (messageBitCounter % 3) {
 					case 0:
-						color = setBit(pixel.R, completeMessage[messageBitCounter].ToString(), 0);
-						stegoImage.Image.SetPixel(pixelX, pixelY, Color.FromArgb(color, pixel.G, pixel.B));
+						color = setBit(pixel.R, completeMessage[messageBitCounter].ToString(), bitPlaneSelector);
+						stegoImage.Image.SetPixel(currentPixelXValue, currentPixelYValue, Color.FromArgb(color, pixel.G, pixel.B));
 						break;
 					case 1:
-						color = setBit(pixel.G, completeMessage[messageBitCounter].ToString(), 0);
-						stegoImage.Image.SetPixel(pixelX, pixelY, Color.FromArgb(pixel.R, color, pixel.B));
+						color = setBit(pixel.G, completeMessage[messageBitCounter].ToString(), bitPlaneSelector);
+						stegoImage.Image.SetPixel(currentPixelXValue, currentPixelYValue, Color.FromArgb(pixel.R, color, pixel.B));
 						break;
 					case 2:
-						color = setBit(pixel.B, completeMessage[messageBitCounter].ToString(), 0);
-						stegoImage.Image.SetPixel(pixelX, pixelY, Color.FromArgb(pixel.R, pixel.G, color));
+						color = setBit(pixel.B, completeMessage[messageBitCounter].ToString(), bitPlaneSelector);
+						stegoImage.Image.SetPixel(currentPixelXValue, currentPixelYValue, Color.FromArgb(pixel.R, pixel.G, color));
 
-						// Get next pixel
-						pixelX++;
-						if (pixelX >= carrierWidth) {
-							pixelX = 0;
-							pixelY++;
+						// Go to the next pixel
+						currentPixel += pixelDistance;
+
+						// If the pixel exceeds the maximum amount of pixels
+						// go to the next rest class
+						if (currentPixel >= maxCarrierPixels) {
+							currentPixel = ++restClassCounter;
+
+							// If all rest classes are exhausted,
+							// begin at pixel 0 again but go to the next bit plane
+							if (restClassCounter >= pixelDistance) {
+								currentPixel = 0;
+								restClassCounter = 0;
+								bitPlaneSelector++;
+							}
 						}
 						break;
 					default:
@@ -164,10 +203,25 @@ namespace HSF_HideAndSeek.Steganography {
 				}
 				messageBitCounter++;
 			}
+
+			// If a password has been used, scramble back the image
+			if (passwordSet) {
+				stegoImage.Image = ImageScrambler.ScrambleOne(ImageScrambler.ScrambleThree(ImageScrambler.ScrambleTwo(stegoImage.Image)));
+			}
 			return stegoImage;
 		}
 
-		public StegoMessage ExtractMessage(StegoImage stegoImage) {
+
+		public StegoMessage ExtractMessage(StegoImage stegoImage,
+			string stegoPassword,
+			int bitPlanes,
+			bool bitPlanesFirst) {
+
+			// Set extraction option
+			bool passwordSet = false;
+			if (!stegoPassword.Equals(null) && !stegoPassword.Equals("")) {
+				passwordSet = true;
+			}
 
 			// Base variable declaration
 			StringBuilder messageNameBuilder = new StringBuilder();
@@ -175,18 +229,41 @@ namespace HSF_HideAndSeek.Steganography {
 			StringBuilder payloadBuilder = new StringBuilder();
 			int stegoWidth = stegoImage.Image.Width;
 			int stegoHeight = stegoImage.Image.Height;
+			uint maxStegoPixels = (uint) (stegoWidth * stegoHeight);
+			uint pixelDistance = 1;
 
-			// Extraction variables
-			Color pixel;
-			int pixelX = 0;
-			int pixelY = 0;
-			int messageBitCounter = 0;
-			uint payloadSize = 0;
-			string messageName = "";
+			// If a stego password is specified
+			if (passwordSet) {
+
+				// Transform the password into a value defining the distance between pixels
+				byte[] passwordBytes = Encoding.UTF8.GetBytes(stegoPassword);
+				passwordBytes = Hasher.HashSha256(passwordBytes);
+				pixelDistance = (uint) ((ulong) BitConverter.ToInt64(passwordBytes, 0) % maxStegoPixels);
+
+				// Scramble image
+				stegoImage.Image = ImageScrambler.ScrambleOne(stegoImage.Image);
+				stegoImage.Image = ImageScrambler.ScrambleThree(stegoImage.Image);
+				stegoImage.Image = ImageScrambler.ScrambleTwo(stegoImage.Image);
+			}
+
+			// Variables for LSB extraction
+			int messageBitCounter = 0;  // Counter iterating over all message bits
+			Color pixel;                // Pixel object used to generate the new color
+			int currentPixelXValue;          // x coordinate of current pixel
+			int currentPixelYValue;          // y coordinate of current pixel
+			uint currentPixel = 0;      // Variable storing the currently considered pixel
+			uint restClassCounter = 0;  // Counter iterating over all rest classes
+			uint payloadSize = 0;       // Variable indicating the size of the payload
+			string messageName = "";    // String storing the name of the message
 
 			// Extract the first 512 bits which encode the message's name
 			while (messageBitCounter < 512) {
-				pixel = stegoImage.Image.GetPixel(pixelX, pixelY);
+
+				// Get current pixel
+				currentPixelXValue = (int) currentPixel % stegoWidth;
+				currentPixelYValue = (int) currentPixel / stegoWidth;
+				pixel = stegoImage.Image.GetPixel(currentPixelXValue, currentPixelYValue);
+
 				switch (messageBitCounter % 3) {
 					case 0:
 						messageNameBuilder.Append(getBit(pixel.R, 0));
@@ -196,10 +273,11 @@ namespace HSF_HideAndSeek.Steganography {
 						break;
 					case 2:
 						messageNameBuilder.Append(getBit(pixel.B, 0));
-						pixelX++;
-						if (pixelX >= stegoImage.Image.Width) {
-							pixelX = 0;
-							pixelY++;
+						
+						// Go to the next pixel
+						currentPixel += pixelDistance;
+						if (currentPixel >= maxStegoPixels) {
+							currentPixel = ++restClassCounter;
 						}
 						break;
 					default:
@@ -214,7 +292,12 @@ namespace HSF_HideAndSeek.Steganography {
 
 			// Extract the next 24 bits which encode the message's payload size
 			while (messageBitCounter < 536) {
-				pixel = stegoImage.Image.GetPixel(pixelX, pixelY);
+
+				// Get current pixel
+				currentPixelXValue = (int) currentPixel % stegoWidth;
+				currentPixelYValue = (int) currentPixel / stegoWidth;
+				pixel = stegoImage.Image.GetPixel(currentPixelXValue, currentPixelYValue);
+
 				switch (messageBitCounter % 3) {
 					case 0:
 						payloadSizeBuilder.Append(getBit(pixel.R, 0));
@@ -224,10 +307,11 @@ namespace HSF_HideAndSeek.Steganography {
 						break;
 					case 2:
 						payloadSizeBuilder.Append(getBit(pixel.B, 0));
-						pixelX++;
-						if (pixelX >= stegoImage.Image.Width) {
-							pixelX = 0;
-							pixelY++;
+						
+						// Go to the next pixel
+						currentPixel += pixelDistance;
+						if (currentPixel >= maxStegoPixels) {
+							currentPixel = ++restClassCounter;
 						}
 						break;
 					default:
@@ -242,7 +326,12 @@ namespace HSF_HideAndSeek.Steganography {
 
 			// Extract the payload
 			while (messageBitCounter < payloadSize + 536) {
-				pixel = stegoImage.Image.GetPixel(pixelX, pixelY);
+
+				// Get current pixel
+				currentPixelXValue = (int) currentPixel % stegoWidth;
+				currentPixelYValue = (int) currentPixel / stegoWidth;
+				pixel = stegoImage.Image.GetPixel(currentPixelXValue, currentPixelYValue);
+
 				switch (messageBitCounter % 3) {
 					case 0:
 						payloadBuilder.Append(getBit(pixel.R, 0));
@@ -252,10 +341,11 @@ namespace HSF_HideAndSeek.Steganography {
 						break;
 					case 2:
 						payloadBuilder.Append(getBit(pixel.B, 0));
-						pixelX++;
-						if (pixelX >= stegoImage.Image.Width) {
-							pixelX = 0;
-							pixelY++;
+						
+						// Go to the next pixel
+						currentPixel += pixelDistance;
+						if (currentPixel >= maxStegoPixels) {
+							currentPixel = ++restClassCounter;
 						}
 						break;
 					default:

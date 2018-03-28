@@ -216,8 +216,8 @@ namespace HSF_HideAndSeek {
 			this.hideMessageButton.Image = (Image) (new Bitmap(HSF_HideAndSeek.Properties.Resources.rightArrow, new Size(22, 22)));
 			this.extractMessageButton.Image = (Image) (new Bitmap(HSF_HideAndSeek.Properties.Resources.leftArrow, new Size(22, 22)));
 
-			this.saveStegoImageButton.Image = (Image) (new Bitmap(HSF_HideAndSeek.Properties.Resources.save, new Size(21, 21)));
-			this.saveMessageButton.Image = (Image) (new Bitmap(HSF_HideAndSeek.Properties.Resources.save, new Size(21, 21)));
+			this.saveStegoImageButton.Image = (Image) (new Bitmap(HSF_HideAndSeek.Properties.Resources.save, new Size(19, 19)));
+			this.saveMessageButton.Image = (Image) (new Bitmap(HSF_HideAndSeek.Properties.Resources.save, new Size(19, 19)));
 
 			this.helpButton.Image = (Image) (new Bitmap(HSF_HideAndSeek.Properties.Resources.help_1, new Size(50, 50)));
 
@@ -319,7 +319,7 @@ namespace HSF_HideAndSeek {
 			// Display image
 			stegoImagePictureBox.Image = stegoImage.Image;
 
-			// Enable the buttons
+			// Check GUI components
 			hideMessageButton.Text = "Hide message";
 			checkEverything();
 		}
@@ -327,13 +327,18 @@ namespace HSF_HideAndSeek {
 		private void extractMesssageButton_Click(object sender, EventArgs e) {
 			extractMessageButton.Text = "Extracting ...";
 			extractMessageButton.Enabled = false;
-			message = embedder.ExtractMessage(stegoImage);
+
+			if (stegoPasswordTextbox.Equals("") || stegoPasswordTextbox.Text.Equals(null)) {
+				message = embedder.ExtractMessage(stegoImage, null, bppComboBox.SelectedIndex + 1, true);
+			} else {
+				message = embedder.ExtractMessage(stegoImage, stegoPasswordTextbox.Text, bppComboBox.SelectedIndex + 1, true);
+			}
 
 			// Fill labels with data
 			messageNameLabel.Text = message.Name;
 			messageSizeLabel.Text = Converter.BytesToHumanReadableString(message.FullSizeInBytes);
 
-			// Enable the buttons
+			// Check GUI components
 			extractMessageButton.Text = "Extract message";
 			checkEverything();
 		}
@@ -413,6 +418,9 @@ namespace HSF_HideAndSeek {
 				carrierCapacityLabel.Text = Converter.BytesToHumanReadableString(
 				embedder.CalculateCapacity(carrier, (byte) (bppComboBox.SelectedIndex + 1)));
 			}
+
+			// Check GUI components
+			checkEverything();
 		}
 		#endregion
 
@@ -438,8 +446,7 @@ namespace HSF_HideAndSeek {
 				return false;
 			}
 
-			// TODO: Pimp this
-			if (embedder.CalculateCapacity(carrier, 1) < message.FullSizeInBytes) {
+			if (embedder.CalculateCapacity(carrier, bppComboBox.SelectedIndex+1) < message.FullSizeInBytes) {
 				hideMessageButton.Enabled = false;
 				messageSizeLabel.ForeColor = Color.Red;
 				return false;
