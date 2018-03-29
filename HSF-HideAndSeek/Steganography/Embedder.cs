@@ -115,8 +115,13 @@ namespace HSF_HideAndSeek.Steganography {
 				passwordSet = true;
 			}
 
-			// Generate stego image
-			StegoImage stegoImage = carrierImage;
+			// Generate stego image (Pass by reference)
+			StegoImage stegoImage = new StegoImage(
+				new Bitmap(
+					carrierImage.Image
+				),
+				carrierImage.Name,
+				carrierImage.SizeInBytes);
 			stegoImage.Name = "stegged_" + Path.GetFileNameWithoutExtension(stegoImage.Name) + ".png";
 
 			// Base variable declaration
@@ -181,26 +186,49 @@ namespace HSF_HideAndSeek.Steganography {
 						color = setBit(pixel.B, completeMessage[messageBitCounter].ToString(), bitPlaneSelector);
 						stegoImage.Image.SetPixel(currentPixelXValue, currentPixelYValue, Color.FromArgb(pixel.R, pixel.G, color));
 
-						// Go to the next pixel
-						currentPixel += pixelDistance;
+						// If the whole bit plane should be filled before a pixel should be reused
+						if (bitPlanesFirst) {
 
-						// If the pixel exceeds the maximum amount of pixels
-						// go to the next rest class
-						if (currentPixel >= maxCarrierPixels) {
-							currentPixel = ++restClassCounter;
+							// Go to the next pixel
+							currentPixel += pixelDistance;
 
-							// If all rest classes are exhausted,
-							// begin at pixel 0 again but go to the next bit plane
-							if (restClassCounter >= pixelDistance) {
-								currentPixel = 0;
-								restClassCounter = 0;
-								bitPlaneSelector++;
+							// If the pixel exceeds the maximum amount of pixels
+							// go to the next rest class
+							if (currentPixel >= maxCarrierPixels) {
+								currentPixel = ++restClassCounter;
+
+								// If all rest classes are exhausted,
+								// begin at pixel 0 again but go to the next bit plane
+								if (restClassCounter >= pixelDistance) {
+									currentPixel = 0;
+									restClassCounter = 0;
+									bitPlaneSelector++;
+								}
 							}
-						}
+
+						// If a pixel should be used in full before the next pixel is chosen
+						} else {
+
+							// Go to the next bit plane
+							bitPlaneSelector++;
+
+							// If all allowed bits of a single pixel are used
+							// go to the next pixel
+							if (bitPlaneSelector >= bitPlanes) {
+								currentPixel += pixelDistance;
+								bitPlaneSelector = 0;
+
+								// If the pixel exceeds the maximum amount of pixels
+								// go to the next rest class
+								if (currentPixel >= maxCarrierPixels) {
+									currentPixel = ++restClassCounter;
+								}
+							} // if
+						} // else
 						break;
 					default:
 						break;
-				}
+				} // switch
 				messageBitCounter++;
 			}
 
@@ -249,12 +277,13 @@ namespace HSF_HideAndSeek.Steganography {
 			// Variables for LSB extraction
 			int messageBitCounter = 0;  // Counter iterating over all message bits
 			Color pixel;                // Pixel object used to generate the new color
-			int currentPixelXValue;          // x coordinate of current pixel
-			int currentPixelYValue;          // y coordinate of current pixel
+			int currentPixelXValue;     // x coordinate of current pixel
+			int currentPixelYValue;     // y coordinate of current pixel
 			uint currentPixel = 0;      // Variable storing the currently considered pixel
 			uint restClassCounter = 0;  // Counter iterating over all rest classes
 			uint payloadSize = 0;       // Variable indicating the size of the payload
 			string messageName = "";    // String storing the name of the message
+			byte bitPlaneSelector = 0;  // Variable used to select which bit plane is used for embedding
 
 			// Extract the first 512 bits which encode the message's name
 			while (messageBitCounter < 512) {
@@ -266,23 +295,57 @@ namespace HSF_HideAndSeek.Steganography {
 
 				switch (messageBitCounter % 3) {
 					case 0:
-						messageNameBuilder.Append(getBit(pixel.R, 0));
+						messageNameBuilder.Append(getBit(pixel.R, bitPlaneSelector));
 						break;
 					case 1:
-						messageNameBuilder.Append(getBit(pixel.G, 0));
+						messageNameBuilder.Append(getBit(pixel.G, bitPlaneSelector));
 						break;
 					case 2:
-						messageNameBuilder.Append(getBit(pixel.B, 0));
-						
-						// Go to the next pixel
-						currentPixel += pixelDistance;
-						if (currentPixel >= maxStegoPixels) {
-							currentPixel = ++restClassCounter;
-						}
+						messageNameBuilder.Append(getBit(pixel.B, bitPlaneSelector));
+
+						// If the whole bit plane should be filled before a pixel should be reused
+						if (bitPlanesFirst) {
+
+							// Go to the next pixel
+							currentPixel += pixelDistance;
+
+							// If the pixel exceeds the maximum amount of pixels
+							// go to the next rest class
+							if (currentPixel >= maxStegoPixels) {
+								currentPixel = ++restClassCounter;
+
+								// If all rest classes are exhausted,
+								// begin at pixel 0 again but go to the next bit plane
+								if (restClassCounter >= pixelDistance) {
+									currentPixel = 0;
+									restClassCounter = 0;
+									bitPlaneSelector++;
+								}
+							}
+
+							// If a pixel should be used in full before the next pixel is chosen
+						} else {
+
+							// Go to the next bit plane
+							bitPlaneSelector++;
+
+							// If all allowed bits of a single pixel are used
+							// go to the next pixel
+							if (bitPlaneSelector >= bitPlanes) {
+								currentPixel += pixelDistance;
+								bitPlaneSelector = 0;
+
+								// If the pixel exceeds the maximum amount of pixels
+								// go to the next rest class
+								if (currentPixel >= maxStegoPixels) {
+									currentPixel = ++restClassCounter;
+								}
+							} // if
+						} // else
 						break;
 					default:
 						break;
-				}
+				} // switch
 				messageBitCounter++;
 			}
 
@@ -300,23 +363,57 @@ namespace HSF_HideAndSeek.Steganography {
 
 				switch (messageBitCounter % 3) {
 					case 0:
-						payloadSizeBuilder.Append(getBit(pixel.R, 0));
+						payloadSizeBuilder.Append(getBit(pixel.R, bitPlaneSelector));
 						break;
 					case 1:
-						payloadSizeBuilder.Append(getBit(pixel.G, 0));
+						payloadSizeBuilder.Append(getBit(pixel.G, bitPlaneSelector));
 						break;
 					case 2:
-						payloadSizeBuilder.Append(getBit(pixel.B, 0));
-						
-						// Go to the next pixel
-						currentPixel += pixelDistance;
-						if (currentPixel >= maxStegoPixels) {
-							currentPixel = ++restClassCounter;
-						}
+						payloadSizeBuilder.Append(getBit(pixel.B, bitPlaneSelector));
+
+						// If the whole bit plane should be filled before a pixel should be reused
+						if (bitPlanesFirst) {
+
+							// Go to the next pixel
+							currentPixel += pixelDistance;
+
+							// If the pixel exceeds the maximum amount of pixels
+							// go to the next rest class
+							if (currentPixel >= maxStegoPixels) {
+								currentPixel = ++restClassCounter;
+
+								// If all rest classes are exhausted,
+								// begin at pixel 0 again but go to the next bit plane
+								if (restClassCounter >= pixelDistance) {
+									currentPixel = 0;
+									restClassCounter = 0;
+									bitPlaneSelector++;
+								}
+							}
+
+						// If a pixel should be used in full before the next pixel is chosen
+						} else {
+
+							// Go to the next bit plane
+							bitPlaneSelector++;
+
+							// If all allowed bits of a single pixel are used
+							// go to the next pixel
+							if (bitPlaneSelector >= bitPlanes) {
+								currentPixel += pixelDistance;
+								bitPlaneSelector = 0;
+
+								// If the pixel exceeds the maximum amount of pixels
+								// go to the next rest class
+								if (currentPixel >= maxStegoPixels) {
+									currentPixel = ++restClassCounter;
+								}
+							} // if
+						} // else
 						break;
 					default:
 						break;
-				}
+				} // switch
 				messageBitCounter++;
 			}
 
@@ -334,23 +431,57 @@ namespace HSF_HideAndSeek.Steganography {
 
 				switch (messageBitCounter % 3) {
 					case 0:
-						payloadBuilder.Append(getBit(pixel.R, 0));
+						payloadBuilder.Append(getBit(pixel.R, bitPlaneSelector));
 						break;
 					case 1:
-						payloadBuilder.Append(getBit(pixel.G, 0));
+						payloadBuilder.Append(getBit(pixel.G, bitPlaneSelector));
 						break;
 					case 2:
-						payloadBuilder.Append(getBit(pixel.B, 0));
-						
-						// Go to the next pixel
-						currentPixel += pixelDistance;
-						if (currentPixel >= maxStegoPixels) {
-							currentPixel = ++restClassCounter;
-						}
+						payloadBuilder.Append(getBit(pixel.B, bitPlaneSelector));
+
+						// If the whole bit plane should be filled before a pixel should be reused
+						if (bitPlanesFirst) {
+
+							// Go to the next pixel
+							currentPixel += pixelDistance;
+
+							// If the pixel exceeds the maximum amount of pixels
+							// go to the next rest class
+							if (currentPixel >= maxStegoPixels) {
+								currentPixel = ++restClassCounter;
+
+								// If all rest classes are exhausted,
+								// begin at pixel 0 again but go to the next bit plane
+								if (restClassCounter >= pixelDistance) {
+									currentPixel = 0;
+									restClassCounter = 0;
+									bitPlaneSelector++;
+								}
+							}
+
+							// If a pixel should be used in full before the next pixel is chosen
+						} else {
+
+							// Go to the next bit plane
+							bitPlaneSelector++;
+
+							// If all allowed bits of a single pixel are used
+							// go to the next pixel
+							if (bitPlaneSelector >= bitPlanes) {
+								currentPixel += pixelDistance;
+								bitPlaneSelector = 0;
+
+								// If the pixel exceeds the maximum amount of pixels
+								// go to the next rest class
+								if (currentPixel >= maxStegoPixels) {
+									currentPixel = ++restClassCounter;
+								}
+							} // if
+						} // else
 						break;
 					default:
 						break;
-				}
+				} // switch
 				messageBitCounter++;
 			}
 

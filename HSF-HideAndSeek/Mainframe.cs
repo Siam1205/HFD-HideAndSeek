@@ -300,7 +300,7 @@ namespace HSF_HideAndSeek {
 					message,
 					null,
 					bppComboBox.SelectedIndex + 1,
-					true
+					bitPlaneFirstRadio.Checked
 				);
 			} else {
 				stegoImage = embedder.HideMessage(
@@ -308,7 +308,7 @@ namespace HSF_HideAndSeek {
 					message,
 					stegoPasswordTextbox.Text,
 					bppComboBox.SelectedIndex + 1,
-					true
+					bitPlaneFirstRadio.Checked
 				);
 			}
 
@@ -329,9 +329,9 @@ namespace HSF_HideAndSeek {
 			extractMessageButton.Enabled = false;
 
 			if (stegoPasswordTextbox.Equals("") || stegoPasswordTextbox.Text.Equals(null)) {
-				message = embedder.ExtractMessage(stegoImage, null, bppComboBox.SelectedIndex + 1, true);
+				message = embedder.ExtractMessage(stegoImage, null, bppComboBox.SelectedIndex + 1, bitPlaneFirstRadio.Checked);
 			} else {
-				message = embedder.ExtractMessage(stegoImage, stegoPasswordTextbox.Text, bppComboBox.SelectedIndex + 1, true);
+				message = embedder.ExtractMessage(stegoImage, stegoPasswordTextbox.Text, bppComboBox.SelectedIndex + 1, bitPlaneFirstRadio.Checked);
 			}
 
 			// Fill labels with data
