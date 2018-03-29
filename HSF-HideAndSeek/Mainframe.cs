@@ -329,9 +329,19 @@ namespace HSF_HideAndSeek {
 			extractMessageButton.Enabled = false;
 
 			if (stegoPasswordTextbox.Equals("") || stegoPasswordTextbox.Text.Equals(null)) {
-				message = embedder.ExtractMessage(stegoImage, null, bppComboBox.SelectedIndex + 1, bitPlaneFirstRadio.Checked);
+				message = embedder.ExtractMessage(
+					stegoImage,
+					null,
+					bppComboBox.SelectedIndex + 1,
+					bitPlaneFirstRadio.Checked
+				);
 			} else {
-				message = embedder.ExtractMessage(stegoImage, stegoPasswordTextbox.Text, bppComboBox.SelectedIndex + 1, bitPlaneFirstRadio.Checked);
+				message = embedder.ExtractMessage(
+					stegoImage,
+					stegoPasswordTextbox.Text,
+					bppComboBox.SelectedIndex + 1,
+					bitPlaneFirstRadio.Checked
+				);
 			}
 
 			// Fill labels with data
@@ -364,6 +374,14 @@ namespace HSF_HideAndSeek {
 		private void rateButton_Click(object sender, EventArgs e) {
 			rateButton.Text = "Rating ...";
 			rateButton.Enabled = false;
+
+			carrierRatingLabel.Text = "" + embedder.RateCarrier(
+				carrier,
+				message,
+				null,
+				bppComboBox.SelectedIndex + 1,
+				bitPlaneFirstRadio.Checked
+			) + "%";
 
 			rateButton.Text = "Rate carrier";
 			rateButton.Enabled = true;
@@ -443,17 +461,20 @@ namespace HSF_HideAndSeek {
 		private bool checkEmbedding() {
 			if (carrier == null || message == null) {
 				hideMessageButton.Enabled = false;
+				rateButton.Enabled = false;
 				return false;
 			}
 
 			if (embedder.CalculateCapacity(carrier, bppComboBox.SelectedIndex+1) < message.FullSizeInBytes) {
 				hideMessageButton.Enabled = false;
+				rateButton.Enabled = false;
 				messageSizeLabel.ForeColor = Color.Red;
 				return false;
 			}
 
 			messageSizeLabel.ForeColor = Color.Black;
 			hideMessageButton.Enabled = true;
+			rateButton.Enabled = true;
 			return true;
 		}
 

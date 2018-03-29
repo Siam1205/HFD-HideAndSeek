@@ -31,7 +31,7 @@ namespace HSF_HideAndSeek.Steganography {
 		#endregion
 
 		/// <summary>
-		/// Extracts a specific LSB from a byte and returns it as char
+		/// Extracts a specific bit of a byte and returns it as char
 		/// </summary>
 		/// <param name="inputByte"></param>
 		/// <exception cref="ArgumentException"></exception>
@@ -56,8 +56,8 @@ namespace HSF_HideAndSeek.Steganography {
 		/// <param name="unit"></param>
 		/// <exception cref="FormatException"></exception>
 		/// <returns></returns>
-		public uint CalculateCapacity(StegoImage carrier, int amountOfBitPlanes) {
-			if (amountOfBitPlanes < 0 || amountOfBitPlanes > 7) {
+		public uint CalculateCapacity(StegoImage carrier, int bitPlanes) {
+			if (bitPlanes < 0 || bitPlanes > 7) {
 				throw new FormatException();
 			}
 
@@ -66,14 +66,88 @@ namespace HSF_HideAndSeek.Steganography {
 
 			// Calculate the capacity in bytes and substract 67 bytes for the name and message length
 			// which is embedded before the actual payload
-			return (uint) (((amountOfBitPlanes * 3 * width * height) / 8) - 67);
+			return (uint) (((bitPlanes * 3 * width * height) / 8) - 67);
 		}
 
-		public int RateCarrier(Bitmap carrier, StegoMessage message, string stegoPassword) {
-			
+		public float RateCarrier(
+			StegoImage carrier,
+			StegoMessage message,
+			string stegoPassword,
+			int bitPlanes,
+			bool bitPlanesFirst) {
 
-			return 0;
+			// Get all necessary information about the carrier
+			uint carrierWidth = (uint) carrier.Image.Width;
+			uint carrierHeight = (uint) carrier.Image.Height;
+			uint maxCarrierPixels = (carrierWidth * carrierHeight);
+			uint capacityInBytes = CalculateCapacity(carrier, bitPlanes);
+			string completeMessage = GenerateMessageBitPattern(message);
+
+			// Throw exception if the message is too big
+			if (completeMessage.Length > capacityInBytes*8) {
+				throw new MessageTooBigException();
+			}
+
+			// TODO: Write a comment
+			string carrierBits = collectCarrierBits(carrier, bitPlanes, bitPlanesFirst);
+
+			// Calculate the Hamming distance
+			uint hammingDistance = 0;
+			int lsbCounter = 0;
+			foreach (char bit in completeMessage) {
+
+				// If the index of an array reaches 2^31 it needs to be resetted
+				// This is because an array is accessible only by int values
+				if (lsbCounter == int.MaxValue) {
+					carrierBits = carrierBits.Substring(lsbCounter);
+					lsbCounter = 0;
+				}
+
+				// Increase Hamming distance if message bit and carrier bit do not match
+				if (!Char.Equals(bit, carrierBits[lsbCounter])) {
+					hammingDistance++;
+				}
+				lsbCounter++;
+			}
+
+			double rating = (double) (capacityInBytes - hammingDistance) / capacityInBytes;
+			return (float) Math.Round((rating * 100), 3);
 		}
+
+		
+		public string collectCarrierBits(StegoImage carrier, int bitPlanes, bool bitPlanesFirst) {
+			StringBuilder sb = new StringBuilder();
+			int width = carrier.Image.Width;
+			int height = carrier.Image.Height;
+			Color pixel;
+
+			if (bitPlanesFirst) {
+				for (int currentBitPlane = 0; currentBitPlane <= bitPlanes; currentBitPlane++) {
+					for (int y = 0; y < height; y++) {
+						for (int x = 0; x < width; x++) {
+							pixel = carrier.Image.GetPixel(x, y);
+							sb.Append(getBit(pixel.R, currentBitPlane));
+							sb.Append(getBit(pixel.G, currentBitPlane));
+							sb.Append(getBit(pixel.B, currentBitPlane));
+						} // for
+					} // for
+				} // for
+			} else {
+				for (int y = 0; y < height; y++) {
+					for (int x = 0; x < width; x++) {
+						for (int currentBitPlane = 0; currentBitPlane < bitPlanes; currentBitPlane++) {
+							pixel = carrier.Image.GetPixel(x, y);
+							sb.Append(getBit(pixel.R, currentBitPlane));
+							sb.Append(getBit(pixel.G, currentBitPlane));
+							sb.Append(getBit(pixel.B, currentBitPlane)); 
+						} // for
+					} // for
+				} // for
+			} // else
+			return sb.ToString();
+		}
+
+
 
 		/// <summary>
 		/// Generates a binary bitstring from a message object
@@ -121,7 +195,8 @@ namespace HSF_HideAndSeek.Steganography {
 					carrierImage.Image
 				),
 				carrierImage.Name,
-				carrierImage.SizeInBytes);
+				carrierImage.SizeInBytes
+			);
 			stegoImage.Name = "stegged_" + Path.GetFileNameWithoutExtension(stegoImage.Name) + ".png";
 
 			// Base variable declaration
@@ -137,7 +212,7 @@ namespace HSF_HideAndSeek.Steganography {
 			// Throw exception if the message is too big
 			uint carrierCapacity = this.CalculateCapacity(carrierImage, bitPlanes);
 			if (completeMessageLength > carrierCapacity*8) {
-				throw new MessageTooBixException();
+				throw new MessageTooBigException();
 			}
 
 			// If a stego password is specified, scramble the image and change the pixelDistance value

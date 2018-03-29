@@ -5,6 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace HSF_HideAndSeek.Exceptions {
-	class MessageTooBixException : Exception {
+	class MessageTooBigException : Exception {
 	}
 }
