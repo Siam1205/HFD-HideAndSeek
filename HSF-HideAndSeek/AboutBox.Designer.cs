@@ -27,15 +27,15 @@
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutBox));
 			this.mainTableLayout = new System.Windows.Forms.TableLayoutPanel();
 			this.logoTableLayout = new System.Windows.Forms.TableLayoutPanel();
+			this.descriptionLabel = new System.Windows.Forms.Label();
 			this.logoPictureBox = new System.Windows.Forms.PictureBox();
+			this.infDescriptionLabel = new System.Windows.Forms.Label();
+			this.okButton = new System.Windows.Forms.Button();
 			this.iconTableLayout = new System.Windows.Forms.TableLayoutPanel();
+			this.emailLinkLabel = new System.Windows.Forms.LinkLabel();
+			this.authorLabel = new System.Windows.Forms.Label();
 			this.iconPictureBox = new System.Windows.Forms.PictureBox();
 			this.appNameLabel = new System.Windows.Forms.Label();
-			this.infDescriptionLabel = new System.Windows.Forms.Label();
-			this.authorLabel = new System.Windows.Forms.Label();
-			this.emailLinkLabel = new System.Windows.Forms.LinkLabel();
-			this.descriptionLabel = new System.Windows.Forms.Label();
-			this.okButton = new System.Windows.Forms.Button();
 			this.mainTableLayout.SuspendLayout();
 			this.logoTableLayout.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).BeginInit();
@@ -78,6 +78,16 @@
 			this.logoTableLayout.Size = new System.Drawing.Size(447, 432);
 			this.logoTableLayout.TabIndex = 2;
 			// 
+			// descriptionLabel
+			// 
+			this.descriptionLabel.AutoSize = true;
+			this.descriptionLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.descriptionLabel.Location = new System.Drawing.Point(3, 137);
+			this.descriptionLabel.Name = "descriptionLabel";
+			this.descriptionLabel.Size = new System.Drawing.Size(441, 254);
+			this.descriptionLabel.TabIndex = 3;
+			this.descriptionLabel.Text = resources.GetString("descriptionLabel.Text");
+			// 
 			// logoPictureBox
 			// 
 			this.logoPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -88,6 +98,30 @@
 			this.logoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.logoPictureBox.TabIndex = 0;
 			this.logoPictureBox.TabStop = false;
+			// 
+			// infDescriptionLabel
+			// 
+			this.infDescriptionLabel.AutoSize = true;
+			this.infDescriptionLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.infDescriptionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.infDescriptionLabel.Location = new System.Drawing.Point(3, 100);
+			this.infDescriptionLabel.Name = "infDescriptionLabel";
+			this.infDescriptionLabel.Size = new System.Drawing.Size(441, 37);
+			this.infDescriptionLabel.TabIndex = 1;
+			this.infDescriptionLabel.Text = "Description:";
+			this.infDescriptionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// okButton
+			// 
+			this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.okButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.okButton.Location = new System.Drawing.Point(344, 394);
+			this.okButton.Name = "okButton";
+			this.okButton.Size = new System.Drawing.Size(100, 35);
+			this.okButton.TabIndex = 4;
+			this.okButton.Text = "Ok";
+			this.okButton.UseVisualStyleBackColor = true;
+			this.okButton.Click += new System.EventHandler(this.okButton_Click);
 			// 
 			// iconTableLayout
 			// 
@@ -108,6 +142,31 @@
 			this.iconTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 17.12963F));
 			this.iconTableLayout.Size = new System.Drawing.Size(257, 432);
 			this.iconTableLayout.TabIndex = 3;
+			// 
+			// emailLinkLabel
+			// 
+			this.emailLinkLabel.AutoSize = true;
+			this.emailLinkLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.emailLinkLabel.Location = new System.Drawing.Point(3, 357);
+			this.emailLinkLabel.Name = "emailLinkLabel";
+			this.emailLinkLabel.Size = new System.Drawing.Size(251, 75);
+			this.emailLinkLabel.TabIndex = 18;
+			this.emailLinkLabel.TabStop = true;
+			this.emailLinkLabel.Text = "s.amelunxen@gmx.de";
+			this.emailLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.emailLinkLabel_LinkClicked);
+			// 
+			// authorLabel
+			// 
+			this.authorLabel.AutoSize = true;
+			this.authorLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.authorLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.authorLabel.Location = new System.Drawing.Point(3, 285);
+			this.authorLabel.Name = "authorLabel";
+			this.authorLabel.Size = new System.Drawing.Size(251, 61);
+			this.authorLabel.TabIndex = 16;
+			this.authorLabel.Text = "Simon Amelunxen\r\nDepartment of Appl. Computer Science\r\nFulda University of Applie" +
+    "d Sciences";
+			this.authorLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
 			// 
 			// iconPictureBox
 			// 
@@ -131,64 +190,6 @@
 			this.appNameLabel.TabIndex = 11;
 			this.appNameLabel.Text = "HSF Hide and Seek v1.0";
 			this.appNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			// 
-			// infDescriptionLabel
-			// 
-			this.infDescriptionLabel.AutoSize = true;
-			this.infDescriptionLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.infDescriptionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.infDescriptionLabel.Location = new System.Drawing.Point(3, 100);
-			this.infDescriptionLabel.Name = "infDescriptionLabel";
-			this.infDescriptionLabel.Size = new System.Drawing.Size(441, 37);
-			this.infDescriptionLabel.TabIndex = 1;
-			this.infDescriptionLabel.Text = "Description:";
-			this.infDescriptionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
-			// authorLabel
-			// 
-			this.authorLabel.AutoSize = true;
-			this.authorLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.authorLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.authorLabel.Location = new System.Drawing.Point(3, 285);
-			this.authorLabel.Name = "authorLabel";
-			this.authorLabel.Size = new System.Drawing.Size(251, 61);
-			this.authorLabel.TabIndex = 16;
-			this.authorLabel.Text = "Simon Amelunxen\r\nDepartment of Appl. Computer Science\r\nFulda University of Applie" +
-    "d Sciences";
-			this.authorLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-			// 
-			// emailLinkLabel
-			// 
-			this.emailLinkLabel.AutoSize = true;
-			this.emailLinkLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.emailLinkLabel.Location = new System.Drawing.Point(3, 357);
-			this.emailLinkLabel.Name = "emailLinkLabel";
-			this.emailLinkLabel.Size = new System.Drawing.Size(251, 75);
-			this.emailLinkLabel.TabIndex = 18;
-			this.emailLinkLabel.TabStop = true;
-			this.emailLinkLabel.Text = "s.amelunxen@gmx.de";
-			// 
-			// descriptionLabel
-			// 
-			this.descriptionLabel.AutoSize = true;
-			this.descriptionLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.descriptionLabel.Location = new System.Drawing.Point(3, 137);
-			this.descriptionLabel.Name = "descriptionLabel";
-			this.descriptionLabel.Size = new System.Drawing.Size(441, 254);
-			this.descriptionLabel.TabIndex = 3;
-			this.descriptionLabel.Text = resources.GetString("descriptionLabel.Text");
-			// 
-			// okButton
-			// 
-			this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.okButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.okButton.Location = new System.Drawing.Point(344, 394);
-			this.okButton.Name = "okButton";
-			this.okButton.Size = new System.Drawing.Size(100, 35);
-			this.okButton.TabIndex = 4;
-			this.okButton.Text = "Ok";
-			this.okButton.UseVisualStyleBackColor = true;
-			this.okButton.Click += new System.EventHandler(this.okButton_Click);
 			// 
 			// AboutBox
 			// 
