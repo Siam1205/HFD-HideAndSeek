@@ -3,15 +3,17 @@ using HSF_HideAndSeek.Exceptions;
 using HSF_HideAndSeek.Helper;
 using HSF_HideAndSeek.Steganography.DataStructures;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace HSF_HideAndSeek.Steganography {
 
+	/// <summary>
+	/// This class contains embedding and extracting operations
+	/// in order to hide a message inside a BMP/PNG image or to extract
+	/// a message from such an image.
+	/// </summary>
 	internal class Embedder {
 
 		#region Singleton definition
@@ -31,152 +33,14 @@ namespace HSF_HideAndSeek.Steganography {
 		#endregion
 
 		/// <summary>
-		/// Extracts a specific bit of a byte and returns it as char
+		/// Hide a message inside a carrier image
 		/// </summary>
-		/// <param name="inputByte"></param>
-		/// <exception cref="ArgumentException"></exception>
-		/// <exception cref="ArgumentNullException"></exception>
-		/// <exception cref="ArgumentOutOfRangeException"></exception>
-		/// <exception cref="FormatException"></exception>
-		/// <returns></returns>
-		private char ExtractBitFromByte(byte inputByte, int pos) {
-			if (pos < 0 || pos > 7) {
-				throw new ArgumentException();
-			}
-			string bitPattern = Converter.DecimalToBinary(inputByte, 8);
-			string lsb = bitPattern.Substring(pos, 1);
-			return Convert.ToChar(lsb);
-		}
-
-		/// <summary>
-		/// Calculates the hiding capacity of a given carrier
-		/// based on the amount of specified bit planes and returns it in bytes
-		/// </summary>
-		/// <param name="carrier"></param>
-		/// <param name="unit"></param>
-		/// <exception cref="FormatException"></exception>
-		/// <returns></returns>
-		public uint CalculateCapacity(StegoImage carrier, int bitPlanes) {
-			if (bitPlanes < 0 || bitPlanes > 7) {
-				throw new FormatException();
-			}
-
-			uint width = (uint) carrier.Image.Width;
-			uint height = (uint) carrier.Image.Height;
-
-			// Calculate the capacity in bytes and substract 67 bytes for the name and message length
-			// which is embedded before the actual payload
-			return (uint) (((bitPlanes * 3 * width * height) / 8) - 67);
-		}
-
-		public float RateCarrier(
-			StegoImage carrier,
-			StegoMessage message,
-			string stegoPassword,
-			int bitPlanes,
-			bool bitPlanesFirst) {
-
-			// Get all necessary information about the carrier
-			uint carrierWidth = (uint) carrier.Image.Width;
-			uint carrierHeight = (uint) carrier.Image.Height;
-			uint maxCarrierPixels = (carrierWidth * carrierHeight);
-			uint capacityInBytes = CalculateCapacity(carrier, bitPlanes);
-			string completeMessage = GenerateMessageBitPattern(message);
-
-			// Throw exception if the message is too big
-			if (completeMessage.Length > capacityInBytes*8) {
-				throw new MessageTooBigException();
-			}
-
-			// TODO: Write a comment
-			string carrierBits = collectCarrierBits(carrier, bitPlanes, bitPlanesFirst);
-
-			// Calculate the Hamming distance
-			uint hammingDistance = 0;
-			int lsbCounter = 0;
-			foreach (char bit in completeMessage) {
-
-				// If the index of an array reaches 2^31 it needs to be resetted
-				// This is because an array is accessible only by int values
-				if (lsbCounter == int.MaxValue) {
-					carrierBits = carrierBits.Substring(lsbCounter);
-					lsbCounter = 0;
-				}
-
-				// Increase Hamming distance if message bit and carrier bit do not match
-				if (!Char.Equals(bit, carrierBits[lsbCounter])) {
-					hammingDistance++;
-				}
-				lsbCounter++;
-			}
-
-			double rating = (double) (capacityInBytes - hammingDistance) / capacityInBytes;
-			return (float) Math.Round((rating * 100), 3);
-		}
-
-		
-		public string collectCarrierBits(StegoImage carrier, int bitPlanes, bool bitPlanesFirst) {
-			StringBuilder sb = new StringBuilder();
-			int width = carrier.Image.Width;
-			int height = carrier.Image.Height;
-			Color pixel;
-
-			if (bitPlanesFirst) {
-				for (int currentBitPlane = 0; currentBitPlane <= bitPlanes; currentBitPlane++) {
-					for (int y = 0; y < height; y++) {
-						for (int x = 0; x < width; x++) {
-							pixel = carrier.Image.GetPixel(x, y);
-							sb.Append(getBit(pixel.R, currentBitPlane));
-							sb.Append(getBit(pixel.G, currentBitPlane));
-							sb.Append(getBit(pixel.B, currentBitPlane));
-						} // for
-					} // for
-				} // for
-			} else {
-				for (int y = 0; y < height; y++) {
-					for (int x = 0; x < width; x++) {
-						for (int currentBitPlane = 0; currentBitPlane < bitPlanes; currentBitPlane++) {
-							pixel = carrier.Image.GetPixel(x, y);
-							sb.Append(getBit(pixel.R, currentBitPlane));
-							sb.Append(getBit(pixel.G, currentBitPlane));
-							sb.Append(getBit(pixel.B, currentBitPlane)); 
-						} // for
-					} // for
-				} // for
-			} // else
-			return sb.ToString();
-		}
-
-
-
-		/// <summary>
-		/// Generates a binary bitstring from a message object
-		/// </summary>
-		/// <param name="message"></param>
-		/// <exception cref="ArgumentException"></exception>
-		/// <exception cref="ArgumentOutOfRangeException"></exception>
-		/// <returns></returns>
-		public string GenerateMessageBitPattern(StegoMessage message) {
-
-			// Extract data from the message object
-			string messageName = message.Name;
-			byte[] payload = message.Payload;
-			long payloadSize = message.PayloadSizeInBits;
-
-			// Convert data to binary strings
-			string payloadNameBinary = Converter.StringToBinary(messageName, 64);
-			string payloadSizeBinary = Converter.DecimalToBinary(payloadSize, 24);
-			string payloadBinary = Converter.ByteArrayToBinary(payload);
-
-			// Generate complete message
-			StringBuilder sb = new StringBuilder();
-			sb.Append(payloadNameBinary);
-			sb.Append(payloadSizeBinary);
-			sb.Append(payloadBinary);
-
-			return sb.ToString();
-		}
-
+		/// <param name="carrierImage">The carrier image which is to be used to hide the message</param>
+		/// <param name="message">The message which is to be hidden inside the carrier image</param>
+		/// <param name="stegoPassword">The password which is to be used to hide the message (Randomized Hide and Seek)</param>
+		/// <param name="bitPlanes">The amount of bit planes that are to be used to hide the message</param>
+		/// <param name="bitPlanesFirst">true for bit planes first-mode; false for pixels first-mode</param>
+		/// <returns>The stego image containing the hidden message</returns>
 		public StegoImage HideMessage(StegoImage carrierImage,
 			StegoMessage message,
 			string stegoPassword,
@@ -211,7 +75,7 @@ namespace HSF_HideAndSeek.Steganography {
 
 			// Throw exception if the message is too big
 			uint carrierCapacity = this.CalculateCapacity(carrierImage, bitPlanes);
-			if (completeMessageLength > carrierCapacity*8) {
+			if (completeMessageLength > carrierCapacity * 8) {
 				throw new MessageTooBigException();
 			}
 
@@ -230,14 +94,14 @@ namespace HSF_HideAndSeek.Steganography {
 			}
 
 			// Hiding variables
-			int messageBitCounter = 0;		// Counter iterating over all message bits
-			Color pixel;					// Pixel object used to generate the new color
+			int messageBitCounter = 0;      // Counter iterating over all message bits
+			Color pixel;                    // Pixel object used to generate the new color
 			byte color = 0x00;              // Variable storing an RGB color value
 			uint currentPixel = 0;          // Variable storing the currently considered pixel
-			int currentPixelXValue;			// x coordinate of current pixel
-			int currentPixelYValue;			// y coordinate of current pixel
+			int currentPixelXValue;         // x coordinate of current pixel
+			int currentPixelYValue;         // y coordinate of current pixel
 			uint restClassCounter = 0;      // Counter iterating over all rest classes
-			byte bitPlaneSelector = 0;		// Variable used to select which bit plane is used for embedding
+			byte bitPlaneSelector = 0;      // Variable used to select which bit plane is used for embedding
 
 			// While there is something left to hide
 			while (messageBitCounter < completeMessageLength) {
@@ -281,7 +145,7 @@ namespace HSF_HideAndSeek.Steganography {
 								}
 							}
 
-						// If a pixel should be used in full before the next pixel is chosen
+							// If a pixel should be used in full before the next pixel is chosen
 						} else {
 
 							// Go to the next bit plane
@@ -314,7 +178,14 @@ namespace HSF_HideAndSeek.Steganography {
 			return stegoImage;
 		}
 
-
+		/// <summary>
+		/// Extract a message from a carrier
+		/// </summary>
+		/// <param name="stegoImage">The stego image which hides the message</param>
+		/// <param name="stegoPassword">The password used to hide the message (Randomized Hide and Seek)</param>
+		/// <param name="bitPlanes">The amount of bit planes that have been used to hide the message</param>
+		/// <param name="bitPlanesFirst">true for bit planes first-mode; false for pixels first-mode</param>
+		/// <returns>The message that was hidden inside the stego image</returns>
 		public StegoMessage ExtractMessage(StegoImage stegoImage,
 			string stegoPassword,
 			int bitPlanes,
@@ -466,7 +337,7 @@ namespace HSF_HideAndSeek.Steganography {
 								}
 							}
 
-						// If a pixel should be used in full before the next pixel is chosen
+							// If a pixel should be used in full before the next pixel is chosen
 						} else {
 
 							// Go to the next bit plane
@@ -568,6 +439,190 @@ namespace HSF_HideAndSeek.Steganography {
 		}
 
 		/// <summary>
+		/// Rate a carrier image based on the amount of bits that have to be changed during the embedding process.
+		/// The result is the exact amount of LSBs inside a carrier that stay the same
+		/// during sequential embedding (without a stego password) in percent.
+		/// </summary>
+		/// <param name="carrier">The carrier image which is to be rated</param>
+		/// <param name="message">The message which is to be hidden inside the carrier image</param>
+		/// <returns></returns>
+		public float RateCarrier(StegoImage carrier, StegoMessage message) {
+
+			// Get all necessary information of the carrier
+			uint carrierWidth = (uint) carrier.Image.Width;
+			uint carrierHeight = (uint) carrier.Image.Height;
+			uint maxCarrierPixels = (carrierWidth * carrierHeight);
+			uint capacityInBytes = CalculateCapacity(carrier, 1);           // Only use LSBs
+			uint capacityInBits = capacityInBytes * 8;
+			string completeMessage = GenerateMessageBitPattern(message);
+
+			// Directly return 0 if the message exceeds the capacity
+			if (completeMessage.Length > capacityInBits) {
+				return 0.00f;
+			}
+
+			// Collect all LSBs of the carrier
+			//string carrierBits = collectCarrierBits(carrier, 1, bitPlanesFirst);
+			string carrierLsbs = collectCarrierLsbs(carrier);
+
+			// Calculate the Hamming distance
+			uint hammingDistance = 0;
+			int lsbCounter = 0;
+			foreach (char bit in completeMessage) {
+
+				// If the index of an array reaches 2^31 it needs to be resetted
+				// This is because an array is accessible only by int values
+				if (lsbCounter == int.MaxValue) {
+					carrierLsbs = carrierLsbs.Substring(lsbCounter);
+					lsbCounter = 0;
+				}
+
+				// Increase Hamming distance if message bit and carrier bit do not match
+				if (!Char.Equals(bit, carrierLsbs[lsbCounter])) {
+					hammingDistance++;
+				}
+				lsbCounter++;
+			}
+
+			double rating = (double) (capacityInBits - hammingDistance) / capacityInBits;
+			return (float) Math.Round((rating * 100), 3);
+		}
+
+		/// <summary>
+		/// Calculates the hiding capacity of a given carrier
+		/// based on the amount of specified bit planes and returns it in bytes
+		/// </summary>
+		/// <param name="carrier">The carrier which the capacity should be calculated from</param>
+		/// <param name="unit">The amount of the carrier's bit planes that are allowed to be used</param>
+		/// <exception cref="FormatException"></exception>
+		/// <returns></returns>
+		public uint CalculateCapacity(StegoImage carrier, int bitPlanes) {
+			if (bitPlanes < 0 || bitPlanes > 7) {
+				throw new FormatException();
+			}
+
+			uint width = (uint) carrier.Image.Width;
+			uint height = (uint) carrier.Image.Height;
+
+			// Calculate the capacity in bytes and substract 67 bytes for the name and message length
+			// which is embedded before the actual payload
+			return (uint) (((bitPlanes * 3 * width * height) / 8) - 67);
+		}
+		
+		/// <summary>
+		/// Generates a binary bitstring from a message object
+		/// </summary>
+		/// <param name="message"></param>
+		/// <exception cref="ArgumentException"></exception>
+		/// <exception cref="ArgumentOutOfRangeException"></exception>
+		/// <returns></returns>
+		public string GenerateMessageBitPattern(StegoMessage message) {
+
+			// Extract data from the message object
+			string messageName = message.Name;
+			byte[] payload = message.Payload;
+			long payloadSize = message.PayloadSizeInBits;
+
+			// Convert data to binary strings
+			string payloadNameBinary = Converter.StringToBinary(messageName, 64);
+			string payloadSizeBinary = Converter.DecimalToBinary(payloadSize, 24);
+			string payloadBinary = Converter.ByteArrayToBinary(payload);
+
+			// Generate complete message
+			StringBuilder sb = new StringBuilder();
+			sb.Append(payloadNameBinary);
+			sb.Append(payloadSizeBinary);
+			sb.Append(payloadBinary);
+
+			return sb.ToString();
+		}
+
+		/// <summary>
+		/// Extracts a specific bit of a byte and returns it as char
+		/// </summary>
+		/// <param name="inputByte"></param>
+		/// <exception cref="ArgumentException"></exception>
+		/// <exception cref="ArgumentNullException"></exception>
+		/// <exception cref="ArgumentOutOfRangeException"></exception>
+		/// <exception cref="FormatException"></exception>
+		/// <returns>The bit of inputByte at position pos</returns>
+		private char ExtractBitFromByte(byte inputByte, int pos) {
+			if (pos < 0 || pos > 7) {
+				throw new ArgumentException();
+			}
+			string bitPattern = Converter.DecimalToBinary(inputByte, 8);
+			string lsb = bitPattern.Substring(pos, 1);
+			return Convert.ToChar(lsb);
+		}
+
+		/// <summary>
+		/// Collects all LSBs of a given carrier image ordered from pixel
+		/// (0, 0) to (xMax, yMax) and from color R over G to B and returns them as string
+		/// </summary>
+		/// <param name="carrierImage">The carrier all LSBs are to be taken from</param>
+		/// <exception cref="ArgumentException"></exception>
+		/// <exception cref="ArgumentOutOfRangeException"></exception>
+		/// <returns></returns>
+		private string collectCarrierLsbs(StegoImage carrier) {
+			StringBuilder sb = new StringBuilder();
+			int width = carrier.Image.Width;
+			int height = carrier.Image.Height;
+			Color pixel;
+
+			// Iterate over the whole image
+			for (int y = 0; y < height; y++) {
+				for (int x = 0; x < width; x++) {
+					pixel = carrier.Image.GetPixel(x, y);
+					sb.Append(getBit(pixel.R, 0));
+					sb.Append(getBit(pixel.G, 0));
+					sb.Append(getBit(pixel.B, 0));
+				}
+			}
+			return sb.ToString();
+		}
+
+		/// <summary>
+		/// Collects all bits of the given bit planes of a given carrier image
+		/// beginning with the least significant bit plane ordered from pixel
+		/// (0, 0) to (xMax, yMax) and from color R over G to B and returns them as string 
+		/// </summary>
+		/// <param name="carrier"></param>
+		/// <param name="bitPlanes"></param>
+		/// <param name="bitPlanesFirst"></param>
+		/// <returns></returns>
+		private string collectCarrierBits(StegoImage carrier, int bitPlanes, bool bitPlanesFirst) {
+			StringBuilder sb = new StringBuilder();
+			int width = carrier.Image.Width;
+			int height = carrier.Image.Height;
+			Color pixel;
+
+			if (bitPlanesFirst) {
+				for (int currentBitPlane = 0; currentBitPlane <= bitPlanes; currentBitPlane++) {
+					for (int y = 0; y < height; y++) {
+						for (int x = 0; x < width; x++) {
+							pixel = carrier.Image.GetPixel(x, y);
+							sb.Append(getBit(pixel.R, currentBitPlane));
+							sb.Append(getBit(pixel.G, currentBitPlane));
+							sb.Append(getBit(pixel.B, currentBitPlane));
+						} // for
+					} // for
+				} // for
+			} else {
+				for (int y = 0; y < height; y++) {
+					for (int x = 0; x < width; x++) {
+						for (int currentBitPlane = 0; currentBitPlane < bitPlanes; currentBitPlane++) {
+							pixel = carrier.Image.GetPixel(x, y);
+							sb.Append(getBit(pixel.R, currentBitPlane));
+							sb.Append(getBit(pixel.G, currentBitPlane));
+							sb.Append(getBit(pixel.B, currentBitPlane)); 
+						} // for
+					} // for
+				} // for
+			} // else
+			return sb.ToString();
+		}
+
+		/// <summary>
 		/// Gets the bit of a specific position inside an arbitrary byte
 		/// </summary>
 		/// <param name="arbitraryByte"></param>
@@ -584,7 +639,7 @@ namespace HSF_HideAndSeek.Steganography {
 		/// <param name="arbitraryByte"></param>
 		/// <param name="messsageBit"></param>
 		/// <param name="bitPosition"></param>
-		/// <exception cref="FormatException"></exception>
+		/// <exception cref="ArgumentException"></exception>
 		/// <returns></returns>
 		private byte setBit(byte arbitraryByte, byte bit, byte bitPosition) {
 			if (bit < 0 || bit > 1) {
@@ -604,6 +659,7 @@ namespace HSF_HideAndSeek.Steganography {
 		/// <param name="arbitraryByte"></param>
 		/// <param name="bit"></param>
 		/// <param name="bitPosition"></param>
+		/// <exception cref="ArgumentNullException"></exception>
 		/// <exception cref="ArgumentNullException"></exception>
 		/// <exception cref="FormatException"></exception>
 		/// <exception cref="OverflowException"></exception>

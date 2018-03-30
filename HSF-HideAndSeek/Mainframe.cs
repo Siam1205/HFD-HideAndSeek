@@ -4,14 +4,9 @@ using HSF_HideAndSeek.Steganography;
 using HSF_HideAndSeek.Steganography.DataStructures;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace HSF_HideAndSeek {
@@ -56,7 +51,7 @@ namespace HSF_HideAndSeek {
 		/// <summary>
 		/// Loads a carrier image from a specified path to the GUI
 		/// </summary>
-		/// <param name="path"></param>
+		/// <param name="path">Preferably absolute path of an image</param>
 		private void loadCarrierImage(string path) {
 			if (File.Exists(path)) {
 				if (imageExtensions.Contains(Path.GetExtension(path).ToLowerInvariant())) {
@@ -86,7 +81,7 @@ namespace HSF_HideAndSeek {
 		/// <summary>
 		/// Loads a stego image from a specified path
 		/// </summary>
-		/// <param name="path"></param>
+		/// <param name="path">Preferably absolute path of an image</param>
 		private void loadStegoImage(string path) {
 			if (File.Exists(path)) {
 				if (imageExtensions.Contains(Path.GetExtension(path).ToLowerInvariant())) {
@@ -114,7 +109,7 @@ namespace HSF_HideAndSeek {
 		/// <summary>
 		/// Loads a message from a specified path
 		/// </summary>
-		/// <param name="path"></param>
+		/// <param name="path">Preferably absolute path of an arbitrary file</param>
 		private void loadMessage(string path) {
 			if (File.Exists(path)) {
 
@@ -374,15 +369,7 @@ namespace HSF_HideAndSeek {
 		private void rateButton_Click(object sender, EventArgs e) {
 			rateButton.Text = "Rating ...";
 			rateButton.Enabled = false;
-
-			carrierRatingLabel.Text = "" + embedder.RateCarrier(
-				carrier,
-				message,
-				null,
-				bppComboBox.SelectedIndex + 1,
-				bitPlaneFirstRadio.Checked
-			) + "%";
-
+			carrierRatingLabel.Text = "" + embedder.RateCarrier(carrier, message) + "%";
 			rateButton.Text = "Rate carrier";
 			rateButton.Enabled = true;
 		}

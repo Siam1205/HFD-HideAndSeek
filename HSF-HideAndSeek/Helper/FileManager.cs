@@ -1,12 +1,7 @@
 ﻿using HSF_HideAndSeek.Exceptions;
-using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HSF_HideAndSeek.Helper {
 	class FileManager {
@@ -27,7 +22,6 @@ namespace HSF_HideAndSeek.Helper {
 			}
 		}
 		#endregion
-
 
 		/// <summary>
 		/// Read a message file and return it using an array of bytes
@@ -100,7 +94,7 @@ namespace HSF_HideAndSeek.Helper {
 					return new Bitmap(img);
 				}
 			} // using
-		} // method
+		}
 
 		/// <summary>
 		/// Returns a long variable storing the size of a file specified by a path in bytes
