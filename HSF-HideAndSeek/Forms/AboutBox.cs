@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace HSF_HideAndSeek {
+namespace HSF_HideAndSeek.Forms {
 	public partial class AboutBox : Form {
 		public AboutBox() {
 			InitializeComponent();

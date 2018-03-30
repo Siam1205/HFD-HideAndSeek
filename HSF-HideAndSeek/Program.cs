@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HSF_HideAndSeek.Forms;
+using System;
 using System.Windows.Forms;
 
 namespace HSF_HideAndSeek {

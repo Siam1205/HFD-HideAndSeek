@@ -1,4 +1,4 @@
-﻿namespace HSF_HideAndSeek {
+﻿namespace HSF_HideAndSeek.Forms {
 	partial class Mainframe {
 		/// <summary>
 		/// Required designer variable.
@@ -88,9 +88,9 @@
 			this.carrierImageGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.carrierImageGroupBox.ForeColor = System.Drawing.Color.Blue;
 			this.carrierImageGroupBox.Location = new System.Drawing.Point(15, 11);
-			this.carrierImageGroupBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.carrierImageGroupBox.Margin = new System.Windows.Forms.Padding(4);
 			this.carrierImageGroupBox.Name = "carrierImageGroupBox";
-			this.carrierImageGroupBox.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.carrierImageGroupBox.Padding = new System.Windows.Forms.Padding(4);
 			this.carrierImageGroupBox.Size = new System.Drawing.Size(600, 375);
 			this.carrierImageGroupBox.TabIndex = 0;
 			this.carrierImageGroupBox.TabStop = false;
@@ -101,7 +101,7 @@
 			this.carrierImagePictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.carrierImagePictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.carrierImagePictureBox.Location = new System.Drawing.Point(4, 27);
-			this.carrierImagePictureBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.carrierImagePictureBox.Margin = new System.Windows.Forms.Padding(4);
 			this.carrierImagePictureBox.Name = "carrierImagePictureBox";
 			this.carrierImagePictureBox.Size = new System.Drawing.Size(592, 344);
 			this.carrierImagePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -117,9 +117,9 @@
 			this.stegoImageGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.stegoImageGroupBox.ForeColor = System.Drawing.Color.Red;
 			this.stegoImageGroupBox.Location = new System.Drawing.Point(638, 11);
-			this.stegoImageGroupBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.stegoImageGroupBox.Margin = new System.Windows.Forms.Padding(4);
 			this.stegoImageGroupBox.Name = "stegoImageGroupBox";
-			this.stegoImageGroupBox.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.stegoImageGroupBox.Padding = new System.Windows.Forms.Padding(4);
 			this.stegoImageGroupBox.Size = new System.Drawing.Size(600, 375);
 			this.stegoImageGroupBox.TabIndex = 0;
 			this.stegoImageGroupBox.TabStop = false;
@@ -130,7 +130,7 @@
 			this.stegoImagePictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.stegoImagePictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.stegoImagePictureBox.Location = new System.Drawing.Point(4, 27);
-			this.stegoImagePictureBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.stegoImagePictureBox.Margin = new System.Windows.Forms.Padding(4);
 			this.stegoImagePictureBox.Name = "stegoImagePictureBox";
 			this.stegoImagePictureBox.Size = new System.Drawing.Size(592, 344);
 			this.stegoImagePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -151,7 +151,7 @@
             "18 bpp",
             "21 bpp"});
 			this.bppComboBox.Location = new System.Drawing.Point(538, 584);
-			this.bppComboBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.bppComboBox.Margin = new System.Windows.Forms.Padding(4);
 			this.bppComboBox.Name = "bppComboBox";
 			this.bppComboBox.Size = new System.Drawing.Size(182, 28);
 			this.bppComboBox.TabIndex = 10;
@@ -171,7 +171,7 @@
 			// 
 			this.stegoPasswordTextbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
 			this.stegoPasswordTextbox.Location = new System.Drawing.Point(638, 524);
-			this.stegoPasswordTextbox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.stegoPasswordTextbox.Margin = new System.Windows.Forms.Padding(4);
 			this.stegoPasswordTextbox.Name = "stegoPasswordTextbox";
 			this.stegoPasswordTextbox.Size = new System.Drawing.Size(182, 26);
 			this.stegoPasswordTextbox.TabIndex = 9;
@@ -192,7 +192,7 @@
 			// 
 			this.encryptionKeyTextbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
 			this.encryptionKeyTextbox.Location = new System.Drawing.Point(434, 524);
-			this.encryptionKeyTextbox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.encryptionKeyTextbox.Margin = new System.Windows.Forms.Padding(4);
 			this.encryptionKeyTextbox.Name = "encryptionKeyTextbox";
 			this.encryptionKeyTextbox.Size = new System.Drawing.Size(182, 26);
 			this.encryptionKeyTextbox.TabIndex = 7;
@@ -214,14 +214,14 @@
 			this.showCarrierBitplanesButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.showCarrierBitplanesButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.showCarrierBitplanesButton.Location = new System.Drawing.Point(19, 449);
-			this.showCarrierBitplanesButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.showCarrierBitplanesButton.Margin = new System.Windows.Forms.Padding(4);
 			this.showCarrierBitplanesButton.Name = "showCarrierBitplanesButton";
 			this.showCarrierBitplanesButton.Size = new System.Drawing.Size(228, 38);
 			this.showCarrierBitplanesButton.TabIndex = 4;
 			this.showCarrierBitplanesButton.Text = "Show carrier bit planes";
 			this.showCarrierBitplanesButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.showCarrierBitplanesButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.toolTip.SetToolTip(this.showCarrierBitplanesButton, "Show the individual bit planes of the carrier image");
+			this.toolTip.SetToolTip(this.showCarrierBitplanesButton, "Show the eight individual bit planes of the carrier\'s red color channel");
 			this.showCarrierBitplanesButton.UseVisualStyleBackColor = true;
 			this.showCarrierBitplanesButton.Click += new System.EventHandler(this.showCarrierBitplanesButton_Click);
 			// 
@@ -231,7 +231,7 @@
 			this.decryptMessageButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.decryptMessageButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.decryptMessageButton.Location = new System.Drawing.Point(434, 449);
-			this.decryptMessageButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.decryptMessageButton.Margin = new System.Windows.Forms.Padding(4);
 			this.decryptMessageButton.Name = "decryptMessageButton";
 			this.decryptMessageButton.Size = new System.Drawing.Size(181, 38);
 			this.decryptMessageButton.TabIndex = 12;
@@ -248,7 +248,7 @@
 			this.encryptMessageButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.encryptMessageButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.encryptMessageButton.Location = new System.Drawing.Point(434, 404);
-			this.encryptMessageButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.encryptMessageButton.Margin = new System.Windows.Forms.Padding(4);
 			this.encryptMessageButton.Name = "encryptMessageButton";
 			this.encryptMessageButton.Size = new System.Drawing.Size(181, 38);
 			this.encryptMessageButton.TabIndex = 6;
@@ -265,7 +265,7 @@
 			this.saveMessageButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.saveMessageButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.saveMessageButton.Location = new System.Drawing.Point(638, 709);
-			this.saveMessageButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.saveMessageButton.Margin = new System.Windows.Forms.Padding(4);
 			this.saveMessageButton.Name = "saveMessageButton";
 			this.saveMessageButton.Size = new System.Drawing.Size(181, 38);
 			this.saveMessageButton.TabIndex = 14;
@@ -282,7 +282,7 @@
 			this.saveStegoImageButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.saveStegoImageButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.saveStegoImageButton.Location = new System.Drawing.Point(434, 709);
-			this.saveStegoImageButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.saveStegoImageButton.Margin = new System.Windows.Forms.Padding(4);
 			this.saveStegoImageButton.Name = "saveStegoImageButton";
 			this.saveStegoImageButton.Size = new System.Drawing.Size(181, 38);
 			this.saveStegoImageButton.TabIndex = 11;
@@ -298,7 +298,7 @@
 			this.loadMessageButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.loadMessageButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.loadMessageButton.Location = new System.Drawing.Point(175, 404);
-			this.loadMessageButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.loadMessageButton.Margin = new System.Windows.Forms.Padding(4);
 			this.loadMessageButton.Name = "loadMessageButton";
 			this.loadMessageButton.Size = new System.Drawing.Size(176, 38);
 			this.loadMessageButton.TabIndex = 2;
@@ -316,7 +316,7 @@
 			this.extractMessageButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.extractMessageButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.extractMessageButton.Location = new System.Drawing.Point(638, 449);
-			this.extractMessageButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.extractMessageButton.Margin = new System.Windows.Forms.Padding(4);
 			this.extractMessageButton.Name = "extractMessageButton";
 			this.extractMessageButton.Size = new System.Drawing.Size(181, 38);
 			this.extractMessageButton.TabIndex = 13;
@@ -334,7 +334,7 @@
 			this.hideMessageButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.hideMessageButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.hideMessageButton.Location = new System.Drawing.Point(638, 404);
-			this.hideMessageButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.hideMessageButton.Margin = new System.Windows.Forms.Padding(4);
 			this.hideMessageButton.Name = "hideMessageButton";
 			this.hideMessageButton.Size = new System.Drawing.Size(181, 38);
 			this.hideMessageButton.TabIndex = 8;
@@ -352,7 +352,7 @@
 			this.loadCarrierButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.loadCarrierButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.loadCarrierButton.Location = new System.Drawing.Point(19, 404);
-			this.loadCarrierButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.loadCarrierButton.Margin = new System.Windows.Forms.Padding(4);
 			this.loadCarrierButton.Name = "loadCarrierButton";
 			this.loadCarrierButton.Size = new System.Drawing.Size(149, 38);
 			this.loadCarrierButton.TabIndex = 1;
@@ -370,14 +370,14 @@
 			this.showStegoImageBitplanesButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.showStegoImageBitplanesButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.showStegoImageBitplanesButton.Location = new System.Drawing.Point(859, 449);
-			this.showStegoImageBitplanesButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.showStegoImageBitplanesButton.Margin = new System.Windows.Forms.Padding(4);
 			this.showStegoImageBitplanesButton.Name = "showStegoImageBitplanesButton";
 			this.showStegoImageBitplanesButton.Size = new System.Drawing.Size(270, 38);
 			this.showStegoImageBitplanesButton.TabIndex = 17;
 			this.showStegoImageBitplanesButton.Text = "Show stego image bit planes";
 			this.showStegoImageBitplanesButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.showStegoImageBitplanesButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.toolTip.SetToolTip(this.showStegoImageBitplanesButton, "Show the individual bit planes of the stego image");
+			this.toolTip.SetToolTip(this.showStegoImageBitplanesButton, "Show the eight individual bit planes of the stego image\'s red color channel\r\n");
 			this.showStegoImageBitplanesButton.UseVisualStyleBackColor = true;
 			this.showStegoImageBitplanesButton.Click += new System.EventHandler(this.showStegoImageBitplanesButton_Click);
 			// 
@@ -386,7 +386,7 @@
 			this.loadStegoImageButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.loadStegoImageButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.loadStegoImageButton.Location = new System.Drawing.Point(859, 404);
-			this.loadStegoImageButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.loadStegoImageButton.Margin = new System.Windows.Forms.Padding(4);
 			this.loadStegoImageButton.Name = "loadStegoImageButton";
 			this.loadStegoImageButton.Size = new System.Drawing.Size(226, 38);
 			this.loadStegoImageButton.TabIndex = 16;
@@ -401,7 +401,7 @@
 			// 
 			this.clearCarrierAndMessageButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.clearCarrierAndMessageButton.Location = new System.Drawing.Point(359, 404);
-			this.clearCarrierAndMessageButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.clearCarrierAndMessageButton.Margin = new System.Windows.Forms.Padding(4);
 			this.clearCarrierAndMessageButton.Name = "clearCarrierAndMessageButton";
 			this.clearCarrierAndMessageButton.Size = new System.Drawing.Size(36, 38);
 			this.clearCarrierAndMessageButton.TabIndex = 3;
@@ -414,7 +414,7 @@
 			// 
 			this.clearStegoButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.clearStegoButton.Location = new System.Drawing.Point(1092, 404);
-			this.clearStegoButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.clearStegoButton.Margin = new System.Windows.Forms.Padding(4);
 			this.clearStegoButton.Name = "clearStegoButton";
 			this.clearStegoButton.Size = new System.Drawing.Size(36, 38);
 			this.clearStegoButton.TabIndex = 15;
@@ -446,7 +446,7 @@
 			this.informationTableLayout.Controls.Add(this.messageNameLabel, 1, 3);
 			this.informationTableLayout.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
 			this.informationTableLayout.Location = new System.Drawing.Point(19, 495);
-			this.informationTableLayout.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.informationTableLayout.Margin = new System.Windows.Forms.Padding(4);
 			this.informationTableLayout.Name = "informationTableLayout";
 			this.informationTableLayout.RowCount = 8;
 			this.informationTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
@@ -672,7 +672,7 @@
 			// 
 			this.helpButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.helpButton.Location = new System.Drawing.Point(1168, 404);
-			this.helpButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.helpButton.Margin = new System.Windows.Forms.Padding(4);
 			this.helpButton.Name = "helpButton";
 			this.helpButton.Size = new System.Drawing.Size(66, 82);
 			this.helpButton.TabIndex = 5;
@@ -730,7 +730,7 @@
 			this.rateButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.rateButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.rateButton.Location = new System.Drawing.Point(255, 449);
-			this.rateButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.rateButton.Margin = new System.Windows.Forms.Padding(4);
 			this.rateButton.Name = "rateButton";
 			this.rateButton.Size = new System.Drawing.Size(140, 38);
 			this.rateButton.TabIndex = 21;
@@ -750,7 +750,7 @@
 			this.logoPictureBox.Image = global::HSF_HideAndSeek.Properties.Resources.logo;
 			this.logoPictureBox.InitialImage = null;
 			this.logoPictureBox.Location = new System.Drawing.Point(980, 698);
-			this.logoPictureBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.logoPictureBox.Margin = new System.Windows.Forms.Padding(4);
 			this.logoPictureBox.Name = "logoPictureBox";
 			this.logoPictureBox.Size = new System.Drawing.Size(258, 58);
 			this.logoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -789,7 +789,7 @@
 			this.Controls.Add(this.stegoImageGroupBox);
 			this.Controls.Add(this.hideMessageButton);
 			this.Controls.Add(this.carrierImageGroupBox);
-			this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.Margin = new System.Windows.Forms.Padding(4);
 			this.MaximumSize = new System.Drawing.Size(1268, 811);
 			this.MinimumSize = new System.Drawing.Size(1268, 811);
 			this.Name = "Mainframe";

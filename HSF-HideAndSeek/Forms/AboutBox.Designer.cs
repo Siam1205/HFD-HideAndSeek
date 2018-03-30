@@ -1,4 +1,4 @@
-﻿namespace HSF_HideAndSeek {
+﻿namespace HSF_HideAndSeek.Forms {
 	partial class AboutBox {
 		
 		/// <summary>

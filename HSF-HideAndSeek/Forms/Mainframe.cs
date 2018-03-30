@@ -9,7 +9,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Windows.Forms;
 
-namespace HSF_HideAndSeek {
+namespace HSF_HideAndSeek.Forms {
 	public partial class Mainframe : Form {
 
 		// About and help form (closed on start)
@@ -442,11 +442,22 @@ namespace HSF_HideAndSeek {
 		/// Wrapper for all check-methods
 		/// </summary>
 		private void checkEverything() {
+			checkShowCarrierBitPlanes();
 			checkEncryption();
 			checkEmbedding();
+			checkSavingStegoImage();
 			checkExtraction();
 			checkSavingMessage();
-			checkSavingStegoImage();
+		}
+
+		private bool checkShowCarrierBitPlanes() {
+			if (carrier == null) {
+				showCarrierBitplanesButton.Enabled = false;
+				return false;
+			}
+
+			showCarrierBitplanesButton.Enabled = true;
+			return true;
 		}
 
 		/// <summary>
@@ -479,9 +490,11 @@ namespace HSF_HideAndSeek {
 		/// <returns></returns>
 		private bool checkExtraction() {
 			if (stegoImage == null) {
+				showStegoImageBitplanesButton.Enabled = false;
 				extractMessageButton.Enabled = false;
 				return false;
 			}
+			showStegoImageBitplanesButton.Enabled = true;
 			extractMessageButton.Enabled = true;
 			return true;
 		}
