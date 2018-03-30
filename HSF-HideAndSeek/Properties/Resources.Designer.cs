@@ -103,6 +103,16 @@ namespace HSF_HideAndSeek.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Final_cropped {
+            get {
+                object obj = ResourceManager.GetObject("Final_cropped", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap forbidden {
             get {
                 object obj = ResourceManager.GetObject("forbidden", resourceCulture);

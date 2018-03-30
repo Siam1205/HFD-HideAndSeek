@@ -47,6 +47,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutBox.Designer.cs">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Cryptography\AES.cs" />
     <Compile Include="Cryptography\Hasher.cs" />
     <Compile Include="Exceptions\MessageNameTooBigException.cs" />
@@ -67,6 +73,9 @@
     <Compile Include="Steganography\Embedder.cs" />
     <Compile Include="Steganography\DataStructures\StegoMessage.cs" />
     <Compile Include="Steganography\ImageScrambler.cs" />
+    <EmbeddedResource Include="AboutBox.resx">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Mainframe.resx">
       <DependentUpon>Mainframe.cs</DependentUpon>
     </EmbeddedResource>
@@ -134,6 +143,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\help_2.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Final_cropped.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

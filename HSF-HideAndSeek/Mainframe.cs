@@ -12,6 +12,9 @@ using System.Windows.Forms;
 namespace HSF_HideAndSeek {
 	public partial class Mainframe : Form {
 
+		// About and help form (closed on start)
+		private AboutBox aboutBox;
+
 		// Instances for backend logic
 		private FileManager fm = FileManager.Instance;
 		private Embedder embedder = Embedder.Instance;
@@ -383,7 +386,12 @@ namespace HSF_HideAndSeek {
 		}
 
 		private void helpButton_Click(object sender, EventArgs e) {
-
+			if (aboutBox == null || !aboutBox.Visible) {
+				aboutBox = new AboutBox();
+				aboutBox.Show();
+			} else {
+				aboutBox.Focus();
+			}
 		}
 
 		private void encryptionKeyTextbox_TextChanged(object sender, EventArgs e) {
