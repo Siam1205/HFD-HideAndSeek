@@ -58,6 +58,12 @@
     <Compile Include="Exceptions\MessageNameTooBigException.cs" />
     <Compile Include="Exceptions\MessageTooBixException.cs" />
     <Compile Include="Exceptions\WrongPixelFormatException.cs" />
+    <Compile Include="Forms\BitPlaneForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\BitPlaneForm.Designer.cs">
+      <DependentUpon>BitPlaneForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Helper\Converter.cs" />
     <Compile Include="Helper\Extensions.cs" />
     <Compile Include="Helper\FileManager.cs" />
@@ -69,12 +75,16 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Steganography\BitPlaneExtractor.cs" />
     <Compile Include="Steganography\DataStructures\StegoImage.cs" />
     <Compile Include="Steganography\Embedder.cs" />
     <Compile Include="Steganography\DataStructures\StegoMessage.cs" />
     <Compile Include="Steganography\ImageScrambler.cs" />
     <EmbeddedResource Include="Forms\AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\BitPlaneForm.resx">
+      <DependentUpon>BitPlaneForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Mainframe.resx">
       <DependentUpon>Mainframe.cs</DependentUpon>

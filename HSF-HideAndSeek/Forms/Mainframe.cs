@@ -14,6 +14,8 @@ namespace HSF_HideAndSeek.Forms {
 
 		// About and help form (closed on start)
 		private AboutBox aboutBox;
+		private BitPlaneForm carrierBitPlaneForm;
+		private BitPlaneForm stegoImageBitPlaneForm;
 
 		// Instances for backend logic
 		private FileManager fm = FileManager.Instance;
@@ -381,6 +383,15 @@ namespace HSF_HideAndSeek.Forms {
 			showStegoImageBitplanesButton.Text = "Generating bit planes ...";
 			showStegoImageBitplanesButton.Enabled = false;
 
+			if (stegoImageBitPlaneForm == null || !stegoImageBitPlaneForm.Visible) {
+				stegoImageBitPlaneForm = new BitPlaneForm(stegoImage.Image);
+				stegoImageBitPlaneForm.Show();
+				//stegoImageBitPlaneForm.DisplayBitPlanes();
+
+			} else {
+				stegoImageBitPlaneForm.Focus();
+			}
+
 			showStegoImageBitplanesButton.Text = "Show stego image bit planes";
 			showStegoImageBitplanesButton.Enabled = true;
 		}
@@ -401,6 +412,15 @@ namespace HSF_HideAndSeek.Forms {
 		private void showCarrierBitplanesButton_Click(object sender, EventArgs e) {
 			showCarrierBitplanesButton.Text = "Generating bit planes ...";
 			showCarrierBitplanesButton.Enabled = false;
+
+			if (carrierBitPlaneForm == null || !carrierBitPlaneForm.Visible) {
+				carrierBitPlaneForm = new BitPlaneForm(carrier.Image);
+				carrierBitPlaneForm.Show();
+				//carrierBitPlaneForm.DisplayBitPlanes();
+
+			} else {
+				carrierBitPlaneForm.Focus();
+			}
 
 			showCarrierBitplanesButton.Text = "Show carrier bit planes";
 			showCarrierBitplanesButton.Enabled = true;
