@@ -386,7 +386,7 @@ namespace HSF_HideAndSeek.Forms {
 			showStegoImageBitplanesButton.Enabled = false;
 
 			if (stegoImageBitPlaneForm == null || !stegoImageBitPlaneForm.Visible) {
-				stegoImageBitPlaneForm = new BitPlaneForm(stegoImage.Image);
+				stegoImageBitPlaneForm = new BitPlaneForm("Stego image bit planes", stegoImage.Image);
 				stegoImageBitPlaneForm.Show();
 				//stegoImageBitPlaneForm.DisplayBitPlanes();
 
@@ -416,8 +416,9 @@ namespace HSF_HideAndSeek.Forms {
 			showCarrierBitplanesButton.Enabled = false;
 
 			if (carrierBitPlaneForm == null || !carrierBitPlaneForm.Visible) {
-				carrierBitPlaneForm = new BitPlaneForm(carrier.Image);
+				carrierBitPlaneForm = new BitPlaneForm("Carrier image bit planes", carrier.Image);
 				carrierBitPlaneForm.Show();
+				carrierBitPlaneForm.Name = "Carrier bit planes";
 				//carrierBitPlaneForm.DisplayBitPlanes();
 
 			} else {

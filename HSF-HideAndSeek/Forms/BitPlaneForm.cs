@@ -15,15 +15,25 @@ namespace HSF_HideAndSeek.Forms {
 
 		private Bitmap image;
 
-		public BitPlaneForm(Bitmap image) {
+		/// <summary>
+		/// Constructor: Generates a new form with a given name and
+		/// displays the eight bit planes (red color channel) of the given image
+		/// </summary>
+		/// <param name="title">The form's title</param>
+		/// <param name="image">The image whose bit planes are to be shown</param>
+		public BitPlaneForm(string title, Bitmap image) {
 			InitializeComponent();
 			this.image = new Bitmap(image);
+			this.Text = title;
 			
 			// Prevent the GUI from blocking by generating the bit planes inside a new thread
 			Thread thread = new Thread(new ThreadStart(displayBitPlanes));
 			thread.Start();
 		}
 
+		/// <summary>
+		/// Fills the picture boxes with the bit plane images
+		/// </summary>
 		private void displayBitPlanes() {
 			bitPlanePictureBox0.Image = BitPlaneExtractor.ExtractSingleBitPlane(image, 0);
 			//Update();
@@ -42,6 +52,11 @@ namespace HSF_HideAndSeek.Forms {
 			bitPlanePictureBox7.Image = BitPlaneExtractor.ExtractSingleBitPlane(image, 7);
 		}
 
+		/// <summary>
+		/// Free memory while closing the form
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void BitPlaneForm_FormClosing(object sender, FormClosingEventArgs e) {
 			try {
 				bitPlanePictureBox0.Image.Dispose();
