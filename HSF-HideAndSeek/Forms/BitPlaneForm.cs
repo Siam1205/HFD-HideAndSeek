@@ -43,15 +43,18 @@ namespace HSF_HideAndSeek.Forms {
 		}
 
 		private void BitPlaneForm_FormClosing(object sender, FormClosingEventArgs e) {
-			bitPlanePictureBox0.Image.Dispose();
-			bitPlanePictureBox1.Image.Dispose();
-			bitPlanePictureBox2.Image.Dispose();
-			bitPlanePictureBox3.Image.Dispose();
-			bitPlanePictureBox4.Image.Dispose();
-			bitPlanePictureBox5.Image.Dispose();
-			bitPlanePictureBox6.Image.Dispose();
-			bitPlanePictureBox7.Image.Dispose();
-			GC.Collect();
+			try {
+				bitPlanePictureBox0.Image.Dispose();
+				bitPlanePictureBox1.Image.Dispose();
+				bitPlanePictureBox2.Image.Dispose();
+				bitPlanePictureBox3.Image.Dispose();
+				bitPlanePictureBox4.Image.Dispose();
+				bitPlanePictureBox5.Image.Dispose();
+				bitPlanePictureBox6.Image.Dispose();
+				bitPlanePictureBox7.Image.Dispose();
+			} catch (Exception) {
+				//this.Dispose();
+			}
 		}
 	}
 }

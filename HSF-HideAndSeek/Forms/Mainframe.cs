@@ -142,6 +142,7 @@ namespace HSF_HideAndSeek.Forms {
 			carrier = null;
 
 			// Remove image
+			carrierImagePictureBox.Image.Dispose();
 			carrierImagePictureBox.Image = null;
 
 			// Remove data from labels
@@ -162,6 +163,7 @@ namespace HSF_HideAndSeek.Forms {
 			stegoImage = null;
 
 			// Remove image
+			stegoImagePictureBox.Image.Dispose();
 			stegoImagePictureBox.Image = null;
 
 			// Remove data from labels

@@ -41,16 +41,17 @@ namespace HSF_HideAndSeek.Steganography {
 		/// <param name="bitPlanes">The amount of bit planes that are to be used to hide the message</param>
 		/// <param name="bitPlanesFirst">true for bit planes first-mode; false for pixels first-mode</param>
 		/// <returns>The stego image containing the hidden message</returns>
-		public StegoImage HideMessage(StegoImage carrierImage,
+		public StegoImage HideMessage(
+			StegoImage carrierImage,
 			StegoMessage message,
 			string stegoPassword,
 			int bitPlanes,
 			bool bitPlanesFirst) {
 
 			// Check if a password is set
-			bool passwordSet = false;
-			if (!stegoPassword.Equals(null) && !stegoPassword.Equals("")) {
-				passwordSet = true;
+			bool passwordSet = true;
+			if (stegoPassword.Equals(null) || stegoPassword.Equals("")) {
+				passwordSet = false;
 			}
 
 			// Generate stego image (Pass by reference)
@@ -192,9 +193,9 @@ namespace HSF_HideAndSeek.Steganography {
 			bool bitPlanesFirst) {
 
 			// Set extraction option
-			bool passwordSet = false;
-			if (!stegoPassword.Equals(null) && !stegoPassword.Equals("")) {
-				passwordSet = true;
+			bool passwordSet = true;
+			if (stegoPassword.Equals(null) || stegoPassword.Equals("")) {
+				passwordSet = false;
 			}
 
 			// Base variable declaration
