@@ -55,7 +55,7 @@
 			this.mainTableLayout.Name = "mainTableLayout";
 			this.mainTableLayout.RowCount = 1;
 			this.mainTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.mainTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 416F));
+			this.mainTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 447F));
 			this.mainTableLayout.Size = new System.Drawing.Size(716, 438);
 			this.mainTableLayout.TabIndex = 0;
 			// 
@@ -197,6 +197,7 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(716, 438);
 			this.Controls.Add(this.mainTableLayout);
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "AboutBox";
 			this.Text = "AboutBox";
 			this.mainTableLayout.ResumeLayout(false);

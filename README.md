@@ -1,14 +1,17 @@
 # HSF-HideAndSeek
 
-Steganography is the art and science of concealing data inside carrier media like images. Within this context, the term "message" describes the data which is to be hidden inside another file. This file, which is used to carry the data, is called "carrier" or rarely "vessel". After embedding the message into the carrier, the result, hence the original carrier file which now carries the message, is called "stego file".<br />
+Steganography is the art and science of concealing data inside carrier media like images, audio files, movie clips, text files or even header segments of TCP/IP segments. Within this context, the term "message" describes the data which is to be hidden inside another file. This file, which is used to carry the data, is called "carrier" or rarely "vessel". After embedding the message into the carrier, the result, hence the original carrier file which now carries the message, is called "stego file".<br />
 <br />
 HSF-HideAndSeek (HSF-HAS) is an LSB-based Steganography tool with a Graphical User Interface (GUI) developed primarily for the purpose of teaching. It allows to hide arbitrary files inside BMP or PNG images. Furthermore, the messages may be encrypted beforehand.
 
 ## Background
-Since only BMP or PNG files are allowed as carriers, HSF-HAS obviously is an image-based Steganography tool. In order to explain the whole scope of the tool itself, a short excursus on digital images is necessary.
+Since in the scope of this tool, only BMP or PNG files are allowed as carriers, HSF-HAS obviously is an image-based Steganography tool. In order to explain the whole scope of the tool itself, a short excursus on digital images is necessary.
+
+### Digital images
+Slightly simplified, digital images are nothing more than a set of pixels storing three-dimensional color vectors. These vectors are mostly 24 bit-based which means each dimension has 8 bit available for storing a color value of a specific color. The most common color space is RGB which means each pixel has 256 different values for the colors red green and blue. A pixel with the color value (255, 168, 0) for example is colored orange since it stores the maximum amount of red, moderately much green and no blue.
 
 ### Bit planes
-A bit plane of a digital image is a set of bits corresponding to a given bit position in each of the bytes representing the image. It can also be represented as a binary image drawn with the values of the original image's bit position whereas black pixels illustrate a bit value of 1 and white pixels illustrate a value of 0.
+A bit plane of a digital image is a set of bits corresponding to a given bit position over all bytes of an image's color channel. It can also be represented as a binary image drawn with the values of the original image's bit position whereas black pixels illustrate a bit value of 1 and white pixels illustrate a value of 0.
 
 ### Embedding schemes:
 Even for a single steganographic technique, different modes of operation can be used (similar to the AES modes of operation ECB, CBC, CFB, OFB, ...). HSF-HAS itself implements derivatives of the Sequential and Randomized Hide & Seek algorithms which means it embeds the message into the Least Significant Bits (LSB) of all color channels over all of the carrier's pixels. In other words, the message is embedded into the image's bit plane 0 containing the bits of all color values at position 0. For example, a pixel with the color (255, 0, 0) will receive the color (254, 0, 1) if the message bits 001 are embedded.<br />

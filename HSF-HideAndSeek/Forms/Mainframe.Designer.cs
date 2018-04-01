@@ -24,6 +24,7 @@
 		/// </summary>
 		private void InitializeComponent() {
 			this.components = new System.ComponentModel.Container();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Mainframe));
 			this.carrierImageGroupBox = new System.Windows.Forms.GroupBox();
 			this.carrierImagePictureBox = new System.Windows.Forms.PictureBox();
 			this.stegoImageGroupBox = new System.Windows.Forms.GroupBox();
@@ -790,6 +791,7 @@
 			this.Controls.Add(this.stegoImageGroupBox);
 			this.Controls.Add(this.hideMessageButton);
 			this.Controls.Add(this.carrierImageGroupBox);
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Margin = new System.Windows.Forms.Padding(4);
 			this.MaximumSize = new System.Drawing.Size(1268, 811);
 			this.MinimumSize = new System.Drawing.Size(1268, 811);
