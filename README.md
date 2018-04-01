@@ -2,32 +2,36 @@
 
 Steganography is the art and science of concealing data inside carrier media like images. Within this context, the term "message" describes the data which is to be hidden inside another file. This file, which is used to carry the data, is called "carrier" or rarely "vessel". After embedding the message into the carrier, the result, hence the original carrier file which now carries the message, is called "stego file".<br />
 <br />
-HSF-HideAndSeek (HSF-HAS) is an LSB-based Steganography tool with a Graphical User Interface (GUI) developed primarily for the purpose of teaching. It allows to hide arbitrary files inside BMP or PNG images. Furthermore, the messages may be encrypted before. In order to achieve this, HSF-HAS implements derivatives of the Sequential and Randomized Hide & Seek algorithms as well as AES256-CBC.
+HSF-HideAndSeek (HSF-HAS) is an LSB-based Steganography tool with a Graphical User Interface (GUI) developed primarily for the purpose of teaching. It allows to hide arbitrary files inside BMP or PNG images. Furthermore, the messages may be encrypted beforehand.
 
-## Instructions
+## Background
+Since only BMP or PNG files are allowed as carriers, HSF-HAS obviously is an image-based Steganography tool. In order to explain the whole scope of the tool itself, a short excursus on digital images is necessary.
 
 ### Bit planes
 A bit plane of a digital image is a set of bits corresponding to a given bit position in each of the bytes representing the image. It can also be represented as a binary image drawn with the values of the original image's bit position whereas black pixels illustrate a bit value of 1 and white pixels illustrate a value of 0.
 
 ### Embedding schemes:
-The hiding can be done in "bit planes first-mode" or in "pixels first-mode". In the former mode, the bit planes are filled completely before another one is used while in the latter mode, the pixels are filled first which almost always results in a worse stego image.
+Even for a single steganographic technique, different modes of operation can be used (similar to the AES modes of operation ECB, CBC, CFB, OFB, ...). HSF-HAS itself implements derivatives of the Sequential and Randomized Hide & Seek algorithms which means it embeds the message into the Least Significant Bits (LSB) of all color channels over all of the carrier's pixels. In other words, the message is embedded into the image's bit plane 0 containing the bits of all color values at position 0. For example, a pixel with the color (255, 0, 0) will receive the color (254, 0, 1) if the message bits 001 are embedded.<br />
+Nevertheless, bits can also be embedded into higher bit planes. Embedding the message bits 001 into bit plane 1 would make the color (255, 0, 0) become (253, 0, 2).<br />
+HSF-HAS provides message embedding in "bit planes first-mode" or in "pixels first-mode". In the former mode, the bit planes are filled completely before another one is used while in the latter mode, the pixels are up to the maximum amount of allowed bit planes before the next pixel is used.
 
-### Usage
-Upon starting the tool, the HSF-HAS mainframe appears. Into the main frame, one carrier image, one message file and one stego image can be loaded at a time. All operations that address the respective object will overwrite it or its counterpart. As an example, if a carrier is loaded while another one has already been loaded, it will be overwritten. Furthermore, if a stego image is loaded and a message is hidden, the existing stego image is overwritten with the newly generated stego image.<br />
+## HSF-HAS usage
+Upon starting the tool, the HSF-HAS mainframe appears. At this point, one carrier image, one message file and one stego image can be loaded at a time. All operations that address the respective object will overwrite it or its counterpart. As an example, if a carrier is loaded while another one has already been loaded, it will be overwritten. Furthermore, if a stego image is loaded and a message is hidden, the existing stego image is overwritten with the newly generated stego image.<br />
 The following paragraph describes the function of the available controls:
-* **_Load carrier:_**				Opens a file dialog in order to load a carrier image from the file system.
-* **_Load message:_**				Opens a file dialog in order to load a message file from the file system.
-* **_Show carrier bit planes:_**	Opens a new windows and displays the eight individual bit planes of the carrier's red color channel.
-* **_Rate carrier:_**				Rates a carrier based on its suitability to hide the message. Ratings above 90% are considered secure.
-* **_Encrypt message:_**			Encrypts the currently loaded message with AES256-CBC.
-* **_Decrypt message:_**			Decrypts the currently loaded message with AES256-CBC.
-* **_Hide message:_**				Hides the message inside the carrier image based on the specified options.
-* **_Extract message:_**			Hides the message inside the carrier image based on the specified options.
-* **_Load stego image:_**			Opens a file dialog in order to load a stego image from the file system.
+* **_Load carrier:_**             Opens a file dialog in order to load a carrier image from the file system.
+* **_Load message:_**				      Opens a file dialog in order to load a message file from the file system.
+* **_Show carrier bit planes:_**	Opens a new window and displays the eight individual bit planes of the carrier's red color channel.
+* **_Rate carrier:_**				      Rates a carrier based on its suitability to hide the message. Ratings above 90% are considered secure. A carrier with a rating below 90% might be exposed as such by statistical attacks.
+* **_Encrypt message:_**			    Encrypts the currently loaded message with AES256-CBC.
+* **_Decrypt message:_**			    Decrypts the currently loaded message with AES256-CBC.
+* **_Hide message:_**				      Hides the message inside the carrier image based on the specified options.
+* **_Extract message:_**			    Hides the message inside the carrier image based on the specified options.
+* **_Bits per pixel:_**			      Select the amount of allowed bit planes (3 bits per pixel correspond to 1 bit plane)
+* **_Load stego image:_**			    Opens a file dialog in order to load a stego image from the file system.
 * **_Show stego bit planes:_**		Opens a new windows and displays the eight individual bit planes of the stego image's red color channel.
-* **_Help:_**						Opens the Help / About window
-* **_Save stego image:_**			Opens a dialog in order to save the stego image to the file system.
-* **_Save message:_**				Opens a dialog in order to save the carrier to the file system. 
+* **_Help:_**						          Opens the Help / About window
+* **_Save stego image:_**		    	Opens a dialog in order to save the stego image to the file system.
+* **_Save message:_**				      Opens a dialog in order to save the carrier to the file system. 
 
 ## Private Comment
 I developed this tool for the purpose of teaching one possible type of steganographic algorithm in a 'quick and dirty' way under no license. There was no time wasted for efficiency or high quality code.
