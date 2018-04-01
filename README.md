@@ -45,7 +45,7 @@ HSF-HAS provides message embedding in "bit planes first-mode" or in "pixels firs
 ## HSF-HAS usage
 Upon starting the tool, the HSF-HAS mainframe appears:
 <p align="center">
-  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/GUI.png" width="80%"/>
+  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/GUI.png" width="90%"/>
 </p>
 At this point, one carrier image, one message file and one stego image can be loaded at a time. All operations that address the respective object will overwrite it or its counterpart. As an example, if a carrier is loaded while another one has already been loaded, it will be overwritten. Furthermore, if a stego image is loaded and a message is hidden, the existing stego image is overwritten with the newly generated stego image.<br />
 The following paragraph describes the function of the available controls:
@@ -55,15 +55,15 @@ The following paragraph describes the function of the available controls:
   <li><b>Show carrier bit planes: </b>Opens a new window and displays the eight individual bit planes of the carrier's red color channel.</li>
   <li><b>Rate carrier: </b>Rates a carrier based on its suitability to hide the message. Ratings above 90% are considered secure. A carrier with a rating below 90% might be exposed as such by statistical attacks.</li>
   <li><b>Encrypt message: </b>Encrypts the currently loaded message with AES256-CBC.</li>
-  <li><b>Decrypt message: </b></li>Decrypts the currently loaded message with AES256-CBC.
-  <li><b>Hide message: </b></li>Hides the message inside the carrier image based on the specified options.
-  <li><b>Extract message: </b></li>Hides the message inside the carrier image based on the specified options.
-  <li><b>Bits per pixel: </b></li>Select the amount of allowed bit planes (3 bits per pixel correspond to 1 bit plane)
-  <li><b>Load stego image: </b></li>Opens a file dialog in order to load a stego image from the file system.
-  <li><b>Show stego image bit planes: </b></li>Opens a new windows and displays the eight individual bit planes of the stego image's red color channel.
-  <li><b>Help: </b></li>Opens the Help / About window.
-  <li><b>Save stego image: </b></li>Opens a dialog in order to save the stego image to the file system.
-  <li><b>Save message: </b></li>Opens a dialog in order to save the carrier to the file system.
+  <li><b>Decrypt message: </b>Decrypts the currently loaded message with AES256-CBC.</li>
+  <li><b>Hide message: </b>Hides the message inside the carrier image based on the specified options.</li>
+  <li><b>Extract message: </b>Hides the message inside the carrier image based on the specified options.</li>
+  <li><b>Bits per pixel: </b>Select the amount of allowed bit planes (3 bits per pixel correspond to 1 bit plane)</li>
+  <li><b>Load stego image: </b>Opens a file dialog in order to load a stego image from the file system.</li>
+  <li><b>Show stego image bit planes: </b>Opens a new windows and displays the eight individual bit planes of the stego image's red color channel.</li>
+  <li><b>Help: </b>Opens the Help / About window.</li>
+  <li><b>Save stego image: </b>Opens a dialog in order to save the stego image to the file system.</li>
+  <li><b>Save message: </b>Opens a dialog in order to save the carrier to the file system.</li>
 </ul>
 
 ## Private Comment
