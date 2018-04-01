@@ -43,7 +43,11 @@ Even for a single steganographic technique, different modes of operation can be 
 HSF-HAS provides message embedding in "bit planes first-mode" or in "pixels first-mode". In the former mode, the bit planes are filled completely before another one is used while in the latter mode the pixels are up to the maximum amount of allowed bit planes before the next pixel is used.
 
 ## HSF-HAS usage
-Upon starting the tool, the HSF-HAS mainframe appears. At this point, one carrier image, one message file and one stego image can be loaded at a time. All operations that address the respective object will overwrite it or its counterpart. As an example, if a carrier is loaded while another one has already been loaded, it will be overwritten. Furthermore, if a stego image is loaded and a message is hidden, the existing stego image is overwritten with the newly generated stego image.<br />
+Upon starting the tool, the HSF-HAS mainframe appears:
+<p align="center">
+  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/GUI.png" width="40%"/>
+</p>
+At this point, one carrier image, one message file and one stego image can be loaded at a time. All operations that address the respective object will overwrite it or its counterpart. As an example, if a carrier is loaded while another one has already been loaded, it will be overwritten. Furthermore, if a stego image is loaded and a message is hidden, the existing stego image is overwritten with the newly generated stego image.<br />
 The following paragraph describes the function of the available controls:
 * **_Load carrier:_**             Opens a file dialog in order to load a carrier image from the file system.
 * **_Load message:_**				      Opens a file dialog in order to load a message file from the file system.
