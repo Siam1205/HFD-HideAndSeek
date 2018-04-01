@@ -45,24 +45,26 @@ HSF-HAS provides message embedding in "bit planes first-mode" or in "pixels firs
 ## HSF-HAS usage
 Upon starting the tool, the HSF-HAS mainframe appears:
 <p align="center">
-  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/GUI.png" width="40%"/>
+  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/GUI.png" width="80%"/>
 </p>
 At this point, one carrier image, one message file and one stego image can be loaded at a time. All operations that address the respective object will overwrite it or its counterpart. As an example, if a carrier is loaded while another one has already been loaded, it will be overwritten. Furthermore, if a stego image is loaded and a message is hidden, the existing stego image is overwritten with the newly generated stego image.<br />
 The following paragraph describes the function of the available controls:
-* **_Load carrier:_**             Opens a file dialog in order to load a carrier image from the file system.
-* **_Load message:_**				      Opens a file dialog in order to load a message file from the file system.
-* **_Show carrier bit planes:_**	Opens a new window and displays the eight individual bit planes of the carrier's red color channel.
-* **_Rate carrier:_**				      Rates a carrier based on its suitability to hide the message. Ratings above 90% are considered secure. A carrier with a rating below 90% might be exposed as such by statistical attacks.
-* **_Encrypt message:_**			    Encrypts the currently loaded message with AES256-CBC.
-* **_Decrypt message:_**			    Decrypts the currently loaded message with AES256-CBC.
-* **_Hide message:_**				      Hides the message inside the carrier image based on the specified options.
-* **_Extract message:_**			    Hides the message inside the carrier image based on the specified options.
-* **_Bits per pixel:_**			      Select the amount of allowed bit planes (3 bits per pixel correspond to 1 bit plane)
-* **_Load stego image:_**			    Opens a file dialog in order to load a stego image from the file system.
-* **_Show stego bit planes:_**		Opens a new windows and displays the eight individual bit planes of the stego image's red color channel.
-* **_Help:_**						          Opens the Help / About window
-* **_Save stego image:_**		    	Opens a dialog in order to save the stego image to the file system.
-* **_Save message:_**				      Opens a dialog in order to save the carrier to the file system. 
+<ul>
+  <li><b>Load carrier: </b>Opens a file dialog in order to load a carrier image from the file system.</li>
+  <li><b>Load message: </b>Opens a file dialog in order to load a message file from the file system.</li>
+  <li><b>Show carrier bit planes: </b>Opens a new window and displays the eight individual bit planes of the carrier's red color channel.</li>
+  <li><b>Rate carrier: </b>Rates a carrier based on its suitability to hide the message. Ratings above 90% are considered secure. A carrier with a rating below 90% might be exposed as such by statistical attacks.</li>
+  <li><b>Encrypt message: </b>Encrypts the currently loaded message with AES256-CBC.</li>
+  <li><b>Decrypt message: </b></li>Decrypts the currently loaded message with AES256-CBC.
+  <li><b>Hide message: </b></li>Hides the message inside the carrier image based on the specified options.
+  <li><b>Extract message: </b></li>Hides the message inside the carrier image based on the specified options.
+  <li><b>Bits per pixel: </b></li>Select the amount of allowed bit planes (3 bits per pixel correspond to 1 bit plane)
+  <li><b>Load stego image: </b></li>Opens a file dialog in order to load a stego image from the file system.
+  <li><b>Show stego image bit planes: </b></li>Opens a new windows and displays the eight individual bit planes of the stego image's red color channel.
+  <li><b>Help: </b></li>Opens the Help / About window.
+  <li><b>Save stego image: </b></li>Opens a dialog in order to save the stego image to the file system.
+  <li><b>Save message: </b></li>Opens a dialog in order to save the carrier to the file system.
+</ul>
 
 ## Private Comment
 I developed this tool for the purpose of teaching one possible type of steganographic algorithm in a 'quick and dirty' way under no license. There was no time wasted for efficiency or high quality code.
