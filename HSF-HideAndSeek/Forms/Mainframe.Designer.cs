@@ -280,7 +280,7 @@
 			// 
 			this.saveStegoImageButton.Enabled = false;
 			this.saveStegoImageButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.saveStegoImageButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.saveStegoImageButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.saveStegoImageButton.Location = new System.Drawing.Point(434, 709);
 			this.saveStegoImageButton.Margin = new System.Windows.Forms.Padding(4);
 			this.saveStegoImageButton.Name = "saveStegoImageButton";
@@ -288,7 +288,7 @@
 			this.saveStegoImageButton.TabIndex = 11;
 			this.saveStegoImageButton.Text = "Save stego image";
 			this.saveStegoImageButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.saveStegoImageButton.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+			this.saveStegoImageButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.toolTip.SetToolTip(this.saveStegoImageButton, "Save the currently loaded stego image to the file system");
 			this.saveStegoImageButton.UseVisualStyleBackColor = true;
 			this.saveStegoImageButton.Click += new System.EventHandler(this.saveStegoImageButton_Click);

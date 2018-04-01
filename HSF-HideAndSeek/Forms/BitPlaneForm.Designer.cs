@@ -87,7 +87,7 @@
 			// 
 			this.bitPlaneGroupBox7.Controls.Add(this.bitPlanePictureBox7);
 			this.bitPlaneGroupBox7.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.bitPlaneGroupBox7.ForeColor = System.Drawing.Color.Blue;
+			this.bitPlaneGroupBox7.ForeColor = System.Drawing.Color.Black;
 			this.bitPlaneGroupBox7.Location = new System.Drawing.Point(969, 297);
 			this.bitPlaneGroupBox7.Name = "bitPlaneGroupBox7";
 			this.bitPlaneGroupBox7.Size = new System.Drawing.Size(318, 289);
@@ -109,7 +109,7 @@
 			// 
 			this.bitPlaneGroupBox6.Controls.Add(this.bitPlanePictureBox6);
 			this.bitPlaneGroupBox6.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.bitPlaneGroupBox6.ForeColor = System.Drawing.Color.Blue;
+			this.bitPlaneGroupBox6.ForeColor = System.Drawing.Color.Black;
 			this.bitPlaneGroupBox6.Location = new System.Drawing.Point(647, 297);
 			this.bitPlaneGroupBox6.Name = "bitPlaneGroupBox6";
 			this.bitPlaneGroupBox6.Size = new System.Drawing.Size(316, 289);
@@ -131,7 +131,7 @@
 			// 
 			this.bitPlaneGroupBox5.Controls.Add(this.bitPlanePictureBox5);
 			this.bitPlaneGroupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.bitPlaneGroupBox5.ForeColor = System.Drawing.Color.Blue;
+			this.bitPlaneGroupBox5.ForeColor = System.Drawing.Color.Black;
 			this.bitPlaneGroupBox5.Location = new System.Drawing.Point(325, 297);
 			this.bitPlaneGroupBox5.Name = "bitPlaneGroupBox5";
 			this.bitPlaneGroupBox5.Size = new System.Drawing.Size(316, 289);
@@ -153,7 +153,7 @@
 			// 
 			this.bitPlaneGroupBox4.Controls.Add(this.bitPlanePictureBox4);
 			this.bitPlaneGroupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.bitPlaneGroupBox4.ForeColor = System.Drawing.Color.Blue;
+			this.bitPlaneGroupBox4.ForeColor = System.Drawing.Color.Black;
 			this.bitPlaneGroupBox4.Location = new System.Drawing.Point(3, 297);
 			this.bitPlaneGroupBox4.Name = "bitPlaneGroupBox4";
 			this.bitPlaneGroupBox4.Size = new System.Drawing.Size(316, 289);
@@ -175,7 +175,7 @@
 			// 
 			this.bitPlaneGroupBox3.Controls.Add(this.bitPlanePictureBox3);
 			this.bitPlaneGroupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.bitPlaneGroupBox3.ForeColor = System.Drawing.Color.Blue;
+			this.bitPlaneGroupBox3.ForeColor = System.Drawing.Color.Black;
 			this.bitPlaneGroupBox3.Location = new System.Drawing.Point(969, 3);
 			this.bitPlaneGroupBox3.Name = "bitPlaneGroupBox3";
 			this.bitPlaneGroupBox3.Size = new System.Drawing.Size(318, 288);
@@ -197,7 +197,7 @@
 			// 
 			this.bitPlaneGroupBox2.Controls.Add(this.bitPlanePictureBox2);
 			this.bitPlaneGroupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.bitPlaneGroupBox2.ForeColor = System.Drawing.Color.Blue;
+			this.bitPlaneGroupBox2.ForeColor = System.Drawing.Color.Black;
 			this.bitPlaneGroupBox2.Location = new System.Drawing.Point(647, 3);
 			this.bitPlaneGroupBox2.Name = "bitPlaneGroupBox2";
 			this.bitPlaneGroupBox2.Size = new System.Drawing.Size(316, 288);
@@ -219,7 +219,7 @@
 			// 
 			this.bitPlaneGroupBox1.Controls.Add(this.bitPlanePictureBox1);
 			this.bitPlaneGroupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.bitPlaneGroupBox1.ForeColor = System.Drawing.Color.Blue;
+			this.bitPlaneGroupBox1.ForeColor = System.Drawing.Color.Black;
 			this.bitPlaneGroupBox1.Location = new System.Drawing.Point(325, 3);
 			this.bitPlaneGroupBox1.Name = "bitPlaneGroupBox1";
 			this.bitPlaneGroupBox1.Size = new System.Drawing.Size(316, 288);
@@ -241,7 +241,7 @@
 			// 
 			this.bitPlaneGroupBox0.Controls.Add(this.bitPlanePictureBox0);
 			this.bitPlaneGroupBox0.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.bitPlaneGroupBox0.ForeColor = System.Drawing.Color.Blue;
+			this.bitPlaneGroupBox0.ForeColor = System.Drawing.Color.Black;
 			this.bitPlaneGroupBox0.Location = new System.Drawing.Point(3, 3);
 			this.bitPlaneGroupBox0.Name = "bitPlaneGroupBox0";
 			this.bitPlaneGroupBox0.Size = new System.Drawing.Size(316, 288);

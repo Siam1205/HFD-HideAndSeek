@@ -111,6 +111,11 @@ namespace HSF_HideAndSeek.Forms {
 			}
 		}
 
+		private void saveStegoImage(StegoImage stegoImage, string path) {
+			fm.WriteStegoImage(stegoImage.Image, path);
+			stegoImageSizeLabel.Text = Converter.BytesToHumanReadableString(fm.getFileSizeInBytes(path));
+		}
+
 		/// <summary>
 		/// Loads a message from a specified path
 		/// </summary>
@@ -142,13 +147,16 @@ namespace HSF_HideAndSeek.Forms {
 			carrier = null;
 
 			// Remove image
-			carrierImagePictureBox.Image.Dispose();
-			carrierImagePictureBox.Image = null;
-
+			if (carrierImagePictureBox.Image != null) {
+				carrierImagePictureBox.Image.Dispose();
+				carrierImagePictureBox.Image = null;
+			}
+			
 			// Remove data from labels
 			carrierNameLabel.Text = defaultLabelValue;
 			carrierSizeLabel.Text = defaultLabelValue;
 			carrierCapacityLabel.Text = defaultLabelValue;
+			carrierRatingLabel.Text = defaultLabelValue;
 
 			// Check GUI components
 			checkEverything();
@@ -163,8 +171,11 @@ namespace HSF_HideAndSeek.Forms {
 			stegoImage = null;
 
 			// Remove image
-			stegoImagePictureBox.Image.Dispose();
-			stegoImagePictureBox.Image = null;
+			if (stegoImagePictureBox.Image != null) {
+				stegoImagePictureBox.Image.Dispose();
+				stegoImagePictureBox.Image = null;
+			}
+			
 
 			// Remove data from labels
 			stegoImageNameLabel.Text = defaultLabelValue;
@@ -236,7 +247,19 @@ namespace HSF_HideAndSeek.Forms {
 			ofd.Title = "Please select a carrier image file";
 			ofd.Filter = carrierExtensionsFilter;
 			ofd.ShowDialog();
-			loadCarrierImage(ofd.FileName);
+
+			try {
+				loadCarrierImage(ofd.FileName);
+			} catch (Exception ex) {
+				MessageBox.Show(
+					"The sysem caught an exception:"
+					   + "\nType:        " + ex.GetType().Name
+					   + "\nMessage:  " + ex.Message,
+				"Critical error!",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Error
+				);
+			}
 		}
 
 		private void loadMessageButton_Click(object sender, EventArgs e) {
@@ -248,7 +271,19 @@ namespace HSF_HideAndSeek.Forms {
 			ofd.Title = "Please select a message file";
 			ofd.Filter = messageExtensionsFilter;
 			ofd.ShowDialog();
-			loadMessage(ofd.FileName);
+
+			try {
+				loadMessage(ofd.FileName);
+			} catch (Exception ex) {
+				MessageBox.Show(
+					"The sysem caught an exception:"
+					   + "\nType:        " + ex.GetType().Name
+					   + "\nMessage:  " + ex.Message,
+				"Critical error!",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Error
+				);
+			}
 		}
 
 		private void loadStegoImageButton_Click(object sender, EventArgs e) {
@@ -260,7 +295,19 @@ namespace HSF_HideAndSeek.Forms {
 			ofd.Title = "Please select a stego image file";
 			ofd.Filter = stegoImageExtensionsFilter;
 			ofd.ShowDialog();
-			loadStegoImage(ofd.FileName);
+
+			try {
+				loadStegoImage(ofd.FileName);
+			} catch (Exception ex) {
+				MessageBox.Show(
+					"The sysem caught an exception:"
+					   + "\nType:        " + ex.GetType().Name
+					   + "\nMessage:  " + ex.Message,
+				"Critical error!",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Error
+				);
+			}
 		}
 
 		private void clearCarrierAndMessageButton_Click(object sender, EventArgs e) {
@@ -295,22 +342,33 @@ namespace HSF_HideAndSeek.Forms {
 			hideMessageButton.Text = "Hiding ...";
 			hideMessageButton.Enabled = false;
 
-			// Generate stego image
-			if (stegoPasswordTextbox.Equals("") || stegoPasswordTextbox.Text.Equals(null)) {
-				stegoImage = embedder.HideMessage(
-					carrier,
-					message,
-					null,
-					bppComboBox.SelectedIndex + 1,
-					bitPlaneFirstRadio.Checked
-				);
-			} else {
-				stegoImage = embedder.HideMessage(
-					carrier,
-					message,
-					stegoPasswordTextbox.Text,
-					bppComboBox.SelectedIndex + 1,
-					bitPlaneFirstRadio.Checked
+			try {
+				// Generate stego image
+				if (stegoPasswordTextbox.Equals("") || stegoPasswordTextbox.Text.Equals(null)) {
+					stegoImage = embedder.HideMessage(
+						carrier,
+						message,
+						null,
+						bppComboBox.SelectedIndex + 1,
+						bitPlaneFirstRadio.Checked
+					);
+				} else {
+					stegoImage = embedder.HideMessage(
+						carrier,
+						message,
+						stegoPasswordTextbox.Text,
+						bppComboBox.SelectedIndex + 1,
+						bitPlaneFirstRadio.Checked
+					);
+				}
+			} catch (Exception ex) {
+				MessageBox.Show(
+					"The sysem caught an exception:"
+					   + "\nType:        " + ex.GetType().Name
+					   + "\nMessage:  " + ex.Message,
+				"Critical error!",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Error
 				);
 			}
 
@@ -330,19 +388,30 @@ namespace HSF_HideAndSeek.Forms {
 			extractMessageButton.Text = "Extracting ...";
 			extractMessageButton.Enabled = false;
 
-			if (stegoPasswordTextbox.Equals("") || stegoPasswordTextbox.Text.Equals(null)) {
-				message = embedder.ExtractMessage(
-					stegoImage,
-					null,
-					bppComboBox.SelectedIndex + 1,
-					bitPlaneFirstRadio.Checked
-				);
-			} else {
-				message = embedder.ExtractMessage(
-					stegoImage,
-					stegoPasswordTextbox.Text,
-					bppComboBox.SelectedIndex + 1,
-					bitPlaneFirstRadio.Checked
+			try {
+				if (stegoPasswordTextbox.Equals("") || stegoPasswordTextbox.Text.Equals(null)) {
+					message = embedder.ExtractMessage(
+						stegoImage,
+						null,
+						bppComboBox.SelectedIndex + 1,
+						bitPlaneFirstRadio.Checked
+					);
+				} else {
+					message = embedder.ExtractMessage(
+						stegoImage,
+						stegoPasswordTextbox.Text,
+						bppComboBox.SelectedIndex + 1,
+						bitPlaneFirstRadio.Checked
+					);
+				}
+			} catch (Exception ex) {
+				MessageBox.Show(
+					"The sysem caught an exception:"
+					   + "\nType:        " + ex.GetType().Name
+					   + "\nMessage:  " + ex.Message,
+				"Critical error!",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Error
 				);
 			}
 
@@ -363,8 +432,17 @@ namespace HSF_HideAndSeek.Forms {
 				messageSizeLabel.Text = Converter.BytesToHumanReadableString(message.FullSizeInBytes);
 			} catch (CryptographicException) {
 				MessageBox.Show(
-					"Could not decrypt the message (with the given key).",
-					"Error!",
+					"Could not decrypt the message with the given key. Either the key is wrong or the message is unencrypted.",
+					"Could not decrypt the message!",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Error
+				);
+			} catch (Exception ex) {
+				MessageBox.Show(
+					"The sysem caught an exception:"
+					   + "\nType:        " + ex.GetType().Name
+					   + "\nMessage:  " + ex.Message,
+				"Critical error!",
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Error
 				);
@@ -376,7 +454,19 @@ namespace HSF_HideAndSeek.Forms {
 		private void rateButton_Click(object sender, EventArgs e) {
 			rateButton.Text = "Rating ...";
 			rateButton.Enabled = false;
-			carrierRatingLabel.Text = "" + embedder.RateCarrier(carrier, message) + "%";
+
+			try {
+				carrierRatingLabel.Text = "" + embedder.RateCarrier(carrier, message) + "%";
+			} catch (Exception ex) {
+				MessageBox.Show(
+					"The sysem caught an exception:"
+					   + "\nType:        " + ex.GetType().Name
+					   + "\nMessage:  " + ex.Message,
+				"Critical error!",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Error
+				);
+			}
 			rateButton.Text = "Rate carrier";
 			rateButton.Enabled = true;
 		}
@@ -435,7 +525,19 @@ namespace HSF_HideAndSeek.Forms {
 			sfd.FileName = stegoImage.Name;
 			sfd.Filter = stegoImageExtensionsFilter;
 			sfd.ShowDialog();
-			fm.WriteStegoImage(stegoImage.Image, sfd.FileName);
+
+			try {
+				saveStegoImage(stegoImage, sfd.FileName);
+			} catch (Exception ex) {
+				MessageBox.Show(
+					"The sysem caught an exception:"
+					   + "\nType:        " + ex.GetType().Name
+					   + "\nMessage:  " + ex.Message,
+				"Critical error!",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Error
+				);
+			}
 		}
 
 		private void saveMessageButton_Click(object sender, EventArgs e) {
@@ -444,7 +546,19 @@ namespace HSF_HideAndSeek.Forms {
 			sfd.FileName = message.Name;
 			sfd.Filter = messageExtensionsFilter;
 			sfd.ShowDialog();
-			fm.WriteMessageFile(message.Payload, sfd.FileName);
+
+			try {
+				fm.WriteMessageFile(message.Payload, sfd.FileName);
+			} catch (Exception ex) {
+				MessageBox.Show(
+					"The sysem caught an exception:"
+					   + "\nType:        " + ex.GetType().Name
+					   + "\nMessage:  " + ex.Message,
+				"Critical error!",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Error
+				);
+			}
 		}
 
 		private void bppComboBox_SelectedIndexChanged(object sender, EventArgs e) {
