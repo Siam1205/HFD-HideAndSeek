@@ -154,7 +154,7 @@
 			this.bppComboBox.Margin = new System.Windows.Forms.Padding(4);
 			this.bppComboBox.Name = "bppComboBox";
 			this.bppComboBox.Size = new System.Drawing.Size(182, 28);
-			this.bppComboBox.TabIndex = 10;
+			this.bppComboBox.TabIndex = 7;
 			this.bppComboBox.SelectedIndexChanged += new System.EventHandler(this.bppComboBox_SelectedIndexChanged);
 			// 
 			// lsbsLabel
@@ -174,7 +174,7 @@
 			this.stegoPasswordTextbox.Margin = new System.Windows.Forms.Padding(4);
 			this.stegoPasswordTextbox.Name = "stegoPasswordTextbox";
 			this.stegoPasswordTextbox.Size = new System.Drawing.Size(182, 26);
-			this.stegoPasswordTextbox.TabIndex = 9;
+			this.stegoPasswordTextbox.TabIndex = 8;
 			this.toolTip.SetToolTip(this.stegoPasswordTextbox, "Enter the stego password. If the text field is empty, sequential Hide and Seek is" +
         " used. Randomized Hide and Seek otherwise.");
 			// 
@@ -195,7 +195,7 @@
 			this.encryptionKeyTextbox.Margin = new System.Windows.Forms.Padding(4);
 			this.encryptionKeyTextbox.Name = "encryptionKeyTextbox";
 			this.encryptionKeyTextbox.Size = new System.Drawing.Size(182, 26);
-			this.encryptionKeyTextbox.TabIndex = 7;
+			this.encryptionKeyTextbox.TabIndex = 5;
 			this.encryptionKeyTextbox.TextChanged += new System.EventHandler(this.encryptionKeyTextbox_TextChanged);
 			// 
 			// encryptionKeyLabel
@@ -217,7 +217,7 @@
 			this.showCarrierBitplanesButton.Margin = new System.Windows.Forms.Padding(4);
 			this.showCarrierBitplanesButton.Name = "showCarrierBitplanesButton";
 			this.showCarrierBitplanesButton.Size = new System.Drawing.Size(228, 38);
-			this.showCarrierBitplanesButton.TabIndex = 4;
+			this.showCarrierBitplanesButton.TabIndex = 3;
 			this.showCarrierBitplanesButton.Text = "Show carrier bit planes";
 			this.showCarrierBitplanesButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.showCarrierBitplanesButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -268,7 +268,7 @@
 			this.saveMessageButton.Margin = new System.Windows.Forms.Padding(4);
 			this.saveMessageButton.Name = "saveMessageButton";
 			this.saveMessageButton.Size = new System.Drawing.Size(181, 38);
-			this.saveMessageButton.TabIndex = 14;
+			this.saveMessageButton.TabIndex = 16;
 			this.saveMessageButton.Text = "Save message";
 			this.saveMessageButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.saveMessageButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -285,7 +285,7 @@
 			this.saveStegoImageButton.Margin = new System.Windows.Forms.Padding(4);
 			this.saveStegoImageButton.Name = "saveStegoImageButton";
 			this.saveStegoImageButton.Size = new System.Drawing.Size(181, 38);
-			this.saveStegoImageButton.TabIndex = 11;
+			this.saveStegoImageButton.TabIndex = 10;
 			this.saveStegoImageButton.Text = "Save stego image";
 			this.saveStegoImageButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.saveStegoImageButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -319,7 +319,7 @@
 			this.extractMessageButton.Margin = new System.Windows.Forms.Padding(4);
 			this.extractMessageButton.Name = "extractMessageButton";
 			this.extractMessageButton.Size = new System.Drawing.Size(181, 38);
-			this.extractMessageButton.TabIndex = 13;
+			this.extractMessageButton.TabIndex = 11;
 			this.extractMessageButton.Text = "Extract message";
 			this.extractMessageButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.extractMessageButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -337,7 +337,7 @@
 			this.hideMessageButton.Margin = new System.Windows.Forms.Padding(4);
 			this.hideMessageButton.Name = "hideMessageButton";
 			this.hideMessageButton.Size = new System.Drawing.Size(181, 38);
-			this.hideMessageButton.TabIndex = 8;
+			this.hideMessageButton.TabIndex = 9;
 			this.hideMessageButton.Text = "Hide message";
 			this.hideMessageButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.hideMessageButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -373,7 +373,7 @@
 			this.showStegoImageBitplanesButton.Margin = new System.Windows.Forms.Padding(4);
 			this.showStegoImageBitplanesButton.Name = "showStegoImageBitplanesButton";
 			this.showStegoImageBitplanesButton.Size = new System.Drawing.Size(270, 38);
-			this.showStegoImageBitplanesButton.TabIndex = 17;
+			this.showStegoImageBitplanesButton.TabIndex = 14;
 			this.showStegoImageBitplanesButton.Text = "Show stego image bit planes";
 			this.showStegoImageBitplanesButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.showStegoImageBitplanesButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -389,7 +389,7 @@
 			this.loadStegoImageButton.Margin = new System.Windows.Forms.Padding(4);
 			this.loadStegoImageButton.Name = "loadStegoImageButton";
 			this.loadStegoImageButton.Size = new System.Drawing.Size(226, 38);
-			this.loadStegoImageButton.TabIndex = 16;
+			this.loadStegoImageButton.TabIndex = 13;
 			this.loadStegoImageButton.Text = "Load stego image";
 			this.loadStegoImageButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.loadStegoImageButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -404,7 +404,8 @@
 			this.clearCarrierAndMessageButton.Margin = new System.Windows.Forms.Padding(4);
 			this.clearCarrierAndMessageButton.Name = "clearCarrierAndMessageButton";
 			this.clearCarrierAndMessageButton.Size = new System.Drawing.Size(36, 38);
-			this.clearCarrierAndMessageButton.TabIndex = 3;
+			this.clearCarrierAndMessageButton.TabIndex = 17;
+			this.clearCarrierAndMessageButton.TabStop = false;
 			this.clearCarrierAndMessageButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.toolTip.SetToolTip(this.clearCarrierAndMessageButton, "Remove carrier image and message file");
 			this.clearCarrierAndMessageButton.UseVisualStyleBackColor = true;
@@ -417,7 +418,8 @@
 			this.clearStegoButton.Margin = new System.Windows.Forms.Padding(4);
 			this.clearStegoButton.Name = "clearStegoButton";
 			this.clearStegoButton.Size = new System.Drawing.Size(36, 38);
-			this.clearStegoButton.TabIndex = 15;
+			this.clearStegoButton.TabIndex = 18;
+			this.clearStegoButton.TabStop = false;
 			this.clearStegoButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.toolTip.SetToolTip(this.clearStegoButton, "Remove stego image");
 			this.clearStegoButton.UseVisualStyleBackColor = true;
@@ -675,7 +677,7 @@
 			this.helpButton.Margin = new System.Windows.Forms.Padding(4);
 			this.helpButton.Name = "helpButton";
 			this.helpButton.Size = new System.Drawing.Size(66, 82);
-			this.helpButton.TabIndex = 5;
+			this.helpButton.TabIndex = 15;
 			this.helpButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.helpButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.toolTip.SetToolTip(this.helpButton, "Show About / Help");
@@ -696,7 +698,7 @@
 			this.radioTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
 			this.radioTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
 			this.radioTableLayout.Size = new System.Drawing.Size(181, 64);
-			this.radioTableLayout.TabIndex = 20;
+			this.radioTableLayout.TabIndex = 0;
 			// 
 			// pixelFirstRadio
 			// 
@@ -706,7 +708,7 @@
 			this.pixelFirstRadio.Margin = new System.Windows.Forms.Padding(2);
 			this.pixelFirstRadio.Name = "pixelFirstRadio";
 			this.pixelFirstRadio.Size = new System.Drawing.Size(177, 28);
-			this.pixelFirstRadio.TabIndex = 21;
+			this.pixelFirstRadio.TabIndex = 0;
 			this.pixelFirstRadio.Text = "Pixels first-mode";
 			this.pixelFirstRadio.UseVisualStyleBackColor = true;
 			// 
@@ -719,8 +721,7 @@
 			this.bitPlaneFirstRadio.Margin = new System.Windows.Forms.Padding(2);
 			this.bitPlaneFirstRadio.Name = "bitPlaneFirstRadio";
 			this.bitPlaneFirstRadio.Size = new System.Drawing.Size(177, 28);
-			this.bitPlaneFirstRadio.TabIndex = 22;
-			this.bitPlaneFirstRadio.TabStop = true;
+			this.bitPlaneFirstRadio.TabIndex = 0;
 			this.bitPlaneFirstRadio.Text = "Bit planes first-mode";
 			this.bitPlaneFirstRadio.UseVisualStyleBackColor = true;
 			// 
@@ -733,7 +734,7 @@
 			this.rateButton.Margin = new System.Windows.Forms.Padding(4);
 			this.rateButton.Name = "rateButton";
 			this.rateButton.Size = new System.Drawing.Size(140, 38);
-			this.rateButton.TabIndex = 21;
+			this.rateButton.TabIndex = 4;
 			this.rateButton.Text = "Rate carrier";
 			this.rateButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.rateButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
