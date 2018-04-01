@@ -111,6 +111,11 @@ namespace HSF_HideAndSeek.Forms {
 			}
 		}
 
+		/// <summary>
+		/// Save a stego image to a specified path
+		/// </summary>
+		/// <param name="stegoImage"></param>
+		/// <param name="path"></param>
 		private void saveStegoImage(StegoImage stegoImage, string path) {
 			fm.WriteStegoImage(stegoImage.Image, path);
 			stegoImageSizeLabel.Text = Converter.BytesToHumanReadableString(fm.getFileSizeInBytes(path));
@@ -237,7 +242,9 @@ namespace HSF_HideAndSeek.Forms {
 			this.rateButton.Image = (Image) (new Bitmap(HSF_HideAndSeek.Properties.Resources.star, new Size(22, 22)));
 		}
 
+
 		#region Events and listeners
+
 		private void loadCarrierButton_Click(object sender, EventArgs e) {
 			OpenFileDialog ofd = new OpenFileDialog();
 			ofd.InitialDirectory = @"C:\";
@@ -572,9 +579,12 @@ namespace HSF_HideAndSeek.Forms {
 			// Check GUI components
 			checkEverything();
 		}
+		
 		#endregion
 
+
 		#region GUI component checker methods
+
 		/// <summary>
 		/// Wrapper for all check-methods
 		/// </summary>
@@ -684,6 +694,7 @@ namespace HSF_HideAndSeek.Forms {
 			saveMessageButton.Enabled = true;
 			return true;
 		}
+
 		#endregion
 	}
 }
