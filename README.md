@@ -30,10 +30,10 @@ A bit plane of a digital image is a set of bits corresponding to a given bit pos
   While embedding a message, bit planes are manipulated which may in some cases lead to the fact that a message has been embedded into the respective carrier. This is processed is called a visual attack:
 </p>
 <p align="center">
-  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/pumpkins_red/seq_stegged_pumpkins_12bpp_pfm_0_red.png" width="22%"/>
-  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/pumpkins_red/seq_stegged_pumpkins_12bpp_pfm_1_red.png" width="22%"/>
-  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/pumpkins_red/seq_stegged_pumpkins_12bpp_pfm_2_red.png" width="22%"/>
-  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/pumpkins_red/seq_stegged_pumpkins_12bpp_pfm_3_red.png" width="22%"/>
+  <img src="https://github.com/Siam1205/HSF-HideAndSeek/tree/master/Example/pumpkins/seq_stegged_pumpkins_12bpp_pfm_red/seq_stegged_pumpkins_12bpp_pfm_0_red.png" width="22%"/>
+  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/seq_stegged_pumpkins_12bpp_pfm_red/seq_stegged_pumpkins_12bpp_pfm_1_red.png" width="22%"/>
+  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/seq_stegged_pumpkins_12bpp_pfm_red/seq_stegged_pumpkins_12bpp_pfm_2_red.png" width="22%"/>
+  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/seq_stegged_pumpkins_12bpp_pfm_red/seq_stegged_pumpkins_12bpp_pfm_3_red.png" width="22%"/>
 </p>
 HSF-HAS provides the possibility to show the individual bit planes so that the risk that a message may be detected due to visual attacks can be reduced by selecting a proper carrier image (unlike the one shown in this example).
 
