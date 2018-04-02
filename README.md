@@ -1,5 +1,4 @@
 # HSF-HideAndSeek
-
 Steganography is the art and science of concealing data inside carrier media like images, audio files, movie clips, text files or even header segments of TCP/IP segments. Within this context, the term "message" describes the data which is to be hidden inside another file. This file, which is used to carry the data, is called "carrier" or rarely "vessel". After embedding the message into the carrier, the result, hence the original carrier file which now carries the message, is called "stego file".<br />
 <br />
 HSF-HideAndSeek (HSF-HAS) is an LSB-based Steganography tool with a Graphical User Interface (GUI) developed primarily for the purpose of teaching. It allows to hide arbitrary files inside BMP or PNG images. Furthermore, the messages may be encrypted beforehand.
@@ -13,28 +12,28 @@ Slightly simplified, digital images are nothing more than a set of pixels storin
 ### Bit planes
 A bit plane of a digital image is a set of bits corresponding to a given bit position over all bytes of an image's color channel. It can also be represented as a binary image drawn with the values of the original image's bit position whereas black pixels illustrate a bit value of 1 and white pixels illustrate a value of 0.
 <p align="center">
-  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/cube.png" width="30%"/>
+  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/pumpkins.png" width="30%"/>
 </p>
 <p align="center">
-  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/cube_red/cube_0_red.png" width="22%"/>
-  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/cube_red/cube_1_red.png" width="22%"/>
-  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/cube_red/cube_2_red.png" width="22%"/>
-  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/cube_red/cube_3_red.png" width="22%"/>
+  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/pumpkins_red/pumpkins_0_red.png" width="22%"/>
+  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/pumpkins_red/pumpkins_1_red.png" width="22%"/>
+  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/pumpkins_red/pumpkins_2_red.png" width="22%"/>
+  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/pumpkins_red/pumpkins_3_red.png" width="22%"/>
 </p>
 <p align="center">
-  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/cube_red/cube_4_red.png" width="22%"/>
-  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/cube_red/cube_5_red.png" width="22%"/>
-  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/cube_red/cube_6_red.png" width="22%"/>
-  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/cube_red/cube_7_red.png" width="22%"/>
+  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/pumpkins_red/pumpkins_4_red.png" width="22%"/>
+  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/pumpkins_red/pumpkins_5_red.png" width="22%"/>
+  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/pumpkins_red/pumpkins_6_red.png" width="22%"/>
+  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/pumpkins_red/pumpkins_7_red.png" width="22%"/>
 </p>
 <p>
   While embedding a message, bit planes are manipulated which may in some cases lead to the fact that a message has been embedded into the respective carrier. This is processed is called a visual attack:
 </p>
 <p align="center">
-  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/seq_stegged_cube_9bpp_bpfm_red/seq_stegged_cube_9bpp_bpfm_0_red.png" width="22%"/>
-  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/seq_stegged_cube_9bpp_bpfm_red/seq_stegged_cube_9bpp_bpfm_1_red.png" width="22%"/>
-  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/seq_stegged_cube_9bpp_bpfm_red/seq_stegged_cube_9bpp_bpfm_2_red.png" width="22%"/>
-  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/seq_stegged_cube_9bpp_bpfm_red/seq_stegged_cube_9bpp_bpfm_3_red.png" width="22%"/>
+  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/pumpkins_red/seq_stegged_pumpkins_12bpp_pfm_0_red.png" width="22%"/>
+  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/pumpkins_red/seq_stegged_pumpkins_12bpp_pfm_1_red.png" width="22%"/>
+  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/pumpkins_red/seq_stegged_pumpkins_12bpp_pfm_2_red.png" width="22%"/>
+  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/pumpkins_red/seq_stegged_pumpkins_12bpp_pfm_3_red.png" width="22%"/>
 </p>
 HSF-HAS provides the possibility to show the individual bit planes so that the risk that a message may be detected due to visual attacks can be reduced by selecting a proper carrier image (unlike the one shown in this example).
 
