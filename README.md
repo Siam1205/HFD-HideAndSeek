@@ -35,11 +35,11 @@ A bit plane of a digital image is a set of bits corresponding to a given bit pos
   <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/seq_stegged_pumpkins_12bpp_pfm_red/seq_stegged_pumpkins_12bpp_pfm_2_red.png" width="22%"/>
   <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/seq_stegged_pumpkins_12bpp_pfm_red/seq_stegged_pumpkins_12bpp_pfm_3_red.png" width="22%"/>
 </p>
-HSF-HAS provides the possibility to show the individual bit planes so that the risk that a message may be detected due to visual attacks can be reduced by selecting a proper carrier image (unlike the one shown in this example).
+HSF-HAS provides the possibility to show the individual bit planes so that the risk that a message may be detected due to visual attacks can be reduced by selecting a proper carrier image (unlike the one shown in this example) and especially the most proper embedding scheme and options.
 
 ### Embedding schemes:
 Even for a single steganographic technique, different modes of operation can be used (similar to the AES modes of operation ECB, CBC, CFB, OFB, ...). HSF-HAS itself implements derivatives of the Sequential and Randomized Hide & Seek algorithms which means it embeds the message into the Least Significant Bits (LSB) of all color channels over all of the carrier's pixels. In other words, the message is embedded into the image's bit plane 0 containing the bits of all color values at position 0. For example, a pixel with the color (255, 0, 0) will receive the color (254, 0, 1) if the message bits 001 are embedded. Nevertheless, bits can also be embedded into higher bit planes. Embedding the message bits 001 into bit plane 1 would make the color (255, 0, 0) become (253, 0, 2).<br />
-HSF-HAS provides message embedding in "bit planes first-mode" or in "pixels first-mode". In the former mode, the bit planes are filled completely before another one is used while in the latter mode the pixels are up to the maximum amount of allowed bit planes before the next pixel is used.
+HSF-HAS provides message embedding in all but the highest bit plane as well as in "bit planes first-mode" or in "pixels first-mode". In the former mode, the bit planes are filled completely before another one is used while in the latter mode the pixels are up to the maximum amount of allowed bit planes before the next pixel is used as it is shown in the previous images.
 
 ## HSF-HAS usage
 Upon starting the tool, the HSF-HAS mainframe appears:
