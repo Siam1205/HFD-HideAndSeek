@@ -1,19 +1,13 @@
 ﻿using HSF_HideAndSeek.Steganography;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace HSF_HideAndSeek.Forms {
 	public partial class BitPlaneForm : Form {
 
-		private Bitmap image;
+		private readonly Bitmap _image;
 
 		/// <summary>
 		/// Constructor: Generates a new form with a given name and
@@ -23,33 +17,39 @@ namespace HSF_HideAndSeek.Forms {
 		/// <param name="image">The image whose bit planes are to be shown</param>
 		public BitPlaneForm(string title, Bitmap image) {
 			InitializeComponent();
-			this.image = new Bitmap(image);
-			this.Text = title;
+			_image = new Bitmap(image);
+			Text = title;
 			
 			// Prevent the GUI from blocking by generating the bit planes inside a new thread
-			Thread thread = new Thread(new ThreadStart(displayBitPlanes));
+			Thread thread = new Thread(DisplayBitPlanes);
 			thread.Start();
+		}
+
+		public sealed override string Text
+		{
+			get { return base.Text; }
+			set { base.Text = value; }
 		}
 
 		/// <summary>
 		/// Fills the picture boxes with the bit plane images
 		/// </summary>
-		private void displayBitPlanes() {
-			bitPlanePictureBox0.Image = BitPlaneExtractor.ExtractSingleBitPlane(image, 0);
+		private void DisplayBitPlanes() {
+			bitPlanePictureBox0.Image = BitPlaneExtractor.ExtractSingleBitPlane(_image, 0);
 			//Update();
-			bitPlanePictureBox1.Image = BitPlaneExtractor.ExtractSingleBitPlane(image, 1);
+			bitPlanePictureBox1.Image = BitPlaneExtractor.ExtractSingleBitPlane(_image, 1);
 			//Update();
-			bitPlanePictureBox2.Image = BitPlaneExtractor.ExtractSingleBitPlane(image, 2);
+			bitPlanePictureBox2.Image = BitPlaneExtractor.ExtractSingleBitPlane(_image, 2);
 			//Update();
-			bitPlanePictureBox3.Image = BitPlaneExtractor.ExtractSingleBitPlane(image, 3);
+			bitPlanePictureBox3.Image = BitPlaneExtractor.ExtractSingleBitPlane(_image, 3);
 			//Update();
-			bitPlanePictureBox4.Image = BitPlaneExtractor.ExtractSingleBitPlane(image, 4);
+			bitPlanePictureBox4.Image = BitPlaneExtractor.ExtractSingleBitPlane(_image, 4);
 			//Update();
-			bitPlanePictureBox5.Image = BitPlaneExtractor.ExtractSingleBitPlane(image, 5);
+			bitPlanePictureBox5.Image = BitPlaneExtractor.ExtractSingleBitPlane(_image, 5);
 			//Update();
-			bitPlanePictureBox6.Image = BitPlaneExtractor.ExtractSingleBitPlane(image, 6);
+			bitPlanePictureBox6.Image = BitPlaneExtractor.ExtractSingleBitPlane(_image, 6);
 			//Update();
-			bitPlanePictureBox7.Image = BitPlaneExtractor.ExtractSingleBitPlane(image, 7);
+			bitPlanePictureBox7.Image = BitPlaneExtractor.ExtractSingleBitPlane(_image, 7);
 		}
 
 		/// <summary>

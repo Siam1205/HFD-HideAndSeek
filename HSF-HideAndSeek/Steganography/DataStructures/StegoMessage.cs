@@ -1,51 +1,41 @@
 ﻿namespace HSF_HideAndSeek.Steganography.DataStructures {
 
 	internal sealed class StegoMessage {
+		private byte[] _payload;
 
-		private string name;
-		private byte[] payload;
-
-		public string Name {
-			get {
-				return name;
-			}
-
-			set {
-				name = value;
-			}
-		}
+		public string Name { get; set; }
 
 		public uint PayloadSizeInBits {
 			get {
-				return (uint) payload.LongLength*8;
+				return (uint) _payload.LongLength*8;
 			}
 		}
 
 		public byte[] Payload {
 			get {
-				return payload;
+				return _payload;
 			}
 
 			set {
-				payload = value;
+				_payload = value;
 			}
 		}
 
 		public uint FullSizeInBits {
 			get {
-				return (uint) (payload.LongLength * 8) + 536;
+				return (uint) (_payload.LongLength * 8) + 536;
 			}
 		}
 
 		public uint FullSizeInBytes {
 			get {
-				return (uint) payload.LongLength + 67;
+				return (uint) _payload.LongLength + 67;
 			}
 		}
 
 		public StegoMessage(string name, byte[] payload) {
-			this.Name = name;
-			this.Payload = payload;
+			Name = name;
+			Payload = payload;
 		}
 	} // class
 } // namespace

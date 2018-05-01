@@ -17,17 +17,17 @@ namespace HSF_HideAndSeek.Steganography {
 	internal class Embedder {
 
 		#region Singleton definition
-		private static Embedder instance;
+		private static Embedder _instance;
 
 		private Embedder() {
 		}
 
 		public static Embedder Instance {
 			get {
-				if (instance == null) {
-					instance = new Embedder();
+				if (_instance == null) {
+					_instance = new Embedder();
 				}
-				return instance;
+				return _instance;
 			}
 		}
 		#endregion
@@ -49,10 +49,7 @@ namespace HSF_HideAndSeek.Steganography {
 			bool bitPlanesFirst) {
 
 			// Check if a password is set
-			bool passwordSet = true;
-			if (stegoPassword.Equals(null) || stegoPassword.Equals("")) {
-				passwordSet = false;
-			}
+			bool passwordSet = !(stegoPassword.Equals(""));
 
 			// Generate stego image (Pass by reference)
 			StegoImage stegoImage = new StegoImage(
@@ -75,7 +72,7 @@ namespace HSF_HideAndSeek.Steganography {
 			uint completeMessageLength = (uint) completeMessage.Length;
 
 			// Throw exception if the message is too big
-			uint carrierCapacity = this.CalculateCapacity(carrierImage, bitPlanes);
+			uint carrierCapacity = CalculateCapacity(carrierImage, bitPlanes);
 			if (completeMessageLength > carrierCapacity * 8) {
 				throw new MessageTooBigException();
 			}
@@ -96,34 +93,32 @@ namespace HSF_HideAndSeek.Steganography {
 
 			// Hiding variables
 			int messageBitCounter = 0;      // Counter iterating over all message bits
-			Color pixel;                    // Pixel object used to generate the new color
-			byte color = 0x00;              // Variable storing an RGB color value
 			uint currentPixel = 0;          // Variable storing the currently considered pixel
-			int currentPixelXValue;         // x coordinate of current pixel
-			int currentPixelYValue;         // y coordinate of current pixel
 			uint restClassCounter = 0;      // Counter iterating over all rest classes
 			byte bitPlaneSelector = 0;      // Variable used to select which bit plane is used for embedding
 
 			// While there is something left to hide
 			while (messageBitCounter < completeMessageLength) {
 
+				var currentPixelXValue = (int) (currentPixel % carrierWidth);	// x coordinate of current pixel
+				var currentPixelYValue = (int) (currentPixel / carrierWidth);	// y coordinate of current pixel
+
 				// Get current pixel
-				currentPixelXValue = (int) (currentPixel % carrierWidth);
-				currentPixelYValue = (int) (currentPixel / carrierWidth);
-				pixel = stegoImage.Image.GetPixel(currentPixelXValue, currentPixelYValue);
+				var pixel = stegoImage.Image.GetPixel(currentPixelXValue, currentPixelYValue);	// Pixel object used to generate the new color
 
 				// Define which of the three LSBs of a pixel should be used
+				byte color;
 				switch (messageBitCounter % 3) {
 					case 0:
-						color = setBit(pixel.R, completeMessage[messageBitCounter].ToString(), bitPlaneSelector);
+						color = SetBit(pixel.R, completeMessage[messageBitCounter].ToString(), bitPlaneSelector);
 						stegoImage.Image.SetPixel(currentPixelXValue, currentPixelYValue, Color.FromArgb(color, pixel.G, pixel.B));
 						break;
 					case 1:
-						color = setBit(pixel.G, completeMessage[messageBitCounter].ToString(), bitPlaneSelector);
+						color = SetBit(pixel.G, completeMessage[messageBitCounter].ToString(), bitPlaneSelector);
 						stegoImage.Image.SetPixel(currentPixelXValue, currentPixelYValue, Color.FromArgb(pixel.R, color, pixel.B));
 						break;
 					case 2:
-						color = setBit(pixel.B, completeMessage[messageBitCounter].ToString(), bitPlaneSelector);
+						color = SetBit(pixel.B, completeMessage[messageBitCounter].ToString(), bitPlaneSelector);
 						stegoImage.Image.SetPixel(currentPixelXValue, currentPixelYValue, Color.FromArgb(pixel.R, pixel.G, color));
 
 						// If the whole bit plane should be filled before a pixel should be reused
@@ -166,8 +161,6 @@ namespace HSF_HideAndSeek.Steganography {
 							} // if
 						} // else
 						break;
-					default:
-						break;
 				} // switch
 				messageBitCounter++;
 			}
@@ -193,10 +186,7 @@ namespace HSF_HideAndSeek.Steganography {
 			bool bitPlanesFirst) {
 
 			// Set extraction option
-			bool passwordSet = true;
-			if (stegoPassword.Equals(null) || stegoPassword.Equals("")) {
-				passwordSet = false;
-			}
+			bool passwordSet = !(stegoPassword.Equals(""));
 
 			// Base variable declaration
 			StringBuilder messageNameBuilder = new StringBuilder();
@@ -228,8 +218,6 @@ namespace HSF_HideAndSeek.Steganography {
 			int currentPixelYValue;     // y coordinate of current pixel
 			uint currentPixel = 0;      // Variable storing the currently considered pixel
 			uint restClassCounter = 0;  // Counter iterating over all rest classes
-			uint payloadSize = 0;       // Variable indicating the size of the payload
-			string messageName = "";    // String storing the name of the message
 			byte bitPlaneSelector = 0;  // Variable used to select which bit plane is used for embedding
 
 			// Extract the first 512 bits which encode the message's name
@@ -242,13 +230,13 @@ namespace HSF_HideAndSeek.Steganography {
 
 				switch (messageBitCounter % 3) {
 					case 0:
-						messageNameBuilder.Append(getBit(pixel.R, bitPlaneSelector));
+						messageNameBuilder.Append(GetBit(pixel.R, bitPlaneSelector));
 						break;
 					case 1:
-						messageNameBuilder.Append(getBit(pixel.G, bitPlaneSelector));
+						messageNameBuilder.Append(GetBit(pixel.G, bitPlaneSelector));
 						break;
 					case 2:
-						messageNameBuilder.Append(getBit(pixel.B, bitPlaneSelector));
+						messageNameBuilder.Append(GetBit(pixel.B, bitPlaneSelector));
 
 						// If the whole bit plane should be filled before a pixel should be reused
 						if (bitPlanesFirst) {
@@ -290,15 +278,13 @@ namespace HSF_HideAndSeek.Steganography {
 							} // if
 						} // else
 						break;
-					default:
-						break;
 				} // switch
 				messageBitCounter++;
 			}
 
 			// Compose the message's name
 			string messageNameString = messageNameBuilder.ToString();
-			messageName = Converter.BinaryToString(messageNameString).Replace("\0", "");
+			string messageName = Converter.BinaryToString(messageNameString).Replace("\0", "");
 
 			// Extract the next 24 bits which encode the message's payload size
 			while (messageBitCounter < 536) {
@@ -310,13 +296,13 @@ namespace HSF_HideAndSeek.Steganography {
 
 				switch (messageBitCounter % 3) {
 					case 0:
-						payloadSizeBuilder.Append(getBit(pixel.R, bitPlaneSelector));
+						payloadSizeBuilder.Append(GetBit(pixel.R, bitPlaneSelector));
 						break;
 					case 1:
-						payloadSizeBuilder.Append(getBit(pixel.G, bitPlaneSelector));
+						payloadSizeBuilder.Append(GetBit(pixel.G, bitPlaneSelector));
 						break;
 					case 2:
-						payloadSizeBuilder.Append(getBit(pixel.B, bitPlaneSelector));
+						payloadSizeBuilder.Append(GetBit(pixel.B, bitPlaneSelector));
 
 						// If the whole bit plane should be filled before a pixel should be reused
 						if (bitPlanesFirst) {
@@ -358,15 +344,13 @@ namespace HSF_HideAndSeek.Steganography {
 							} // if
 						} // else
 						break;
-					default:
-						break;
 				} // switch
 				messageBitCounter++;
 			}
 
 			// Compose the payloads's size
 			string payloadSizeString = payloadSizeBuilder.ToString();
-			payloadSize = Converter.BinaryToUint(payloadSizeString);
+			uint payloadSize = Converter.BinaryToUint(payloadSizeString);
 
 			// Extract the payload
 			while (messageBitCounter < payloadSize + 536) {
@@ -378,13 +362,13 @@ namespace HSF_HideAndSeek.Steganography {
 
 				switch (messageBitCounter % 3) {
 					case 0:
-						payloadBuilder.Append(getBit(pixel.R, bitPlaneSelector));
+						payloadBuilder.Append(GetBit(pixel.R, bitPlaneSelector));
 						break;
 					case 1:
-						payloadBuilder.Append(getBit(pixel.G, bitPlaneSelector));
+						payloadBuilder.Append(GetBit(pixel.G, bitPlaneSelector));
 						break;
 					case 2:
-						payloadBuilder.Append(getBit(pixel.B, bitPlaneSelector));
+						payloadBuilder.Append(GetBit(pixel.B, bitPlaneSelector));
 
 						// If the whole bit plane should be filled before a pixel should be reused
 						if (bitPlanesFirst) {
@@ -426,15 +410,13 @@ namespace HSF_HideAndSeek.Steganography {
 							} // if
 						} // else
 						break;
-					default:
-						break;
 				} // switch
 				messageBitCounter++;
 			}
 
 			// Compose the message object
 			string payloadString = payloadBuilder.ToString();
-			byte[] payload = Extensions.ConvertBitstringToByteArray(payloadString);
+			byte[] payload = payloadString.ConvertBitstringToByteArray();
 			StegoMessage message = new StegoMessage(messageName, payload);
 			return message;
 		}
@@ -450,9 +432,6 @@ namespace HSF_HideAndSeek.Steganography {
 		public float RateCarrier(StegoImage carrier, StegoMessage message) {
 
 			// Get all necessary information of the carrier
-			uint carrierWidth = (uint) carrier.Image.Width;
-			uint carrierHeight = (uint) carrier.Image.Height;
-			uint maxCarrierPixels = (carrierWidth * carrierHeight);
 			uint capacityInBytes = CalculateCapacity(carrier, 1);           // Only use LSBs
 			uint capacityInBits = capacityInBytes * 8;
 			string completeMessage = GenerateMessageBitPattern(message);
@@ -464,7 +443,7 @@ namespace HSF_HideAndSeek.Steganography {
 
 			// Collect all LSBs of the carrier
 			//string carrierBits = collectCarrierBits(carrier, 1, bitPlanesFirst);
-			string carrierLsbs = collectCarrierLsbs(carrier);
+			string carrierLsbs = CollectCarrierLsbs(carrier);
 
 			// Calculate the Hamming distance
 			uint hammingDistance = 0;
@@ -479,7 +458,7 @@ namespace HSF_HideAndSeek.Steganography {
 				}
 
 				// Increase Hamming distance if message bit and carrier bit do not match
-				if (!Char.Equals(bit, carrierLsbs[lsbCounter])) {
+				if (!char.Equals(bit, carrierLsbs[lsbCounter])) {
 					hammingDistance++;
 				}
 				lsbCounter++;
@@ -494,7 +473,7 @@ namespace HSF_HideAndSeek.Steganography {
 		/// based on the amount of specified bit planes and returns it in bytes
 		/// </summary>
 		/// <param name="carrier">The carrier which the capacity should be calculated from</param>
-		/// <param name="unit">The amount of the carrier's bit planes that are allowed to be used</param>
+		/// <param name="bitPlanes">The amount of the carrier's bit planes that are allowed to be used</param>
 		/// <exception cref="FormatException"></exception>
 		/// <returns></returns>
 		public uint CalculateCapacity(StegoImage carrier, int bitPlanes) {
@@ -542,6 +521,7 @@ namespace HSF_HideAndSeek.Steganography {
 		/// Extracts a specific bit of a byte and returns it as char
 		/// </summary>
 		/// <param name="inputByte"></param>
+		/// <param name="pos"></param>
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="ArgumentNullException"></exception>
 		/// <exception cref="ArgumentOutOfRangeException"></exception>
@@ -560,23 +540,22 @@ namespace HSF_HideAndSeek.Steganography {
 		/// Collects all LSBs of a given carrier image ordered from pixel
 		/// (0, 0) to (xMax, yMax) and from color R over G to B and returns them as string
 		/// </summary>
-		/// <param name="carrierImage">The carrier all LSBs are to be taken from</param>
+		/// <param name="carrier">The carrier all LSBs are to be taken from</param>
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="ArgumentOutOfRangeException"></exception>
 		/// <returns></returns>
-		private string collectCarrierLsbs(StegoImage carrier) {
+		private string CollectCarrierLsbs(StegoImage carrier) {
 			StringBuilder sb = new StringBuilder();
 			int width = carrier.Image.Width;
 			int height = carrier.Image.Height;
-			Color pixel;
 
 			// Iterate over the whole image
 			for (int y = 0; y < height; y++) {
 				for (int x = 0; x < width; x++) {
-					pixel = carrier.Image.GetPixel(x, y);
-					sb.Append(getBit(pixel.R, 0));
-					sb.Append(getBit(pixel.G, 0));
-					sb.Append(getBit(pixel.B, 0));
+					var pixel = carrier.Image.GetPixel(x, y);
+					sb.Append(GetBit(pixel.R, 0));
+					sb.Append(GetBit(pixel.G, 0));
+					sb.Append(GetBit(pixel.B, 0));
 				}
 			}
 			return sb.ToString();
@@ -591,7 +570,7 @@ namespace HSF_HideAndSeek.Steganography {
 		/// <param name="bitPlanes"></param>
 		/// <param name="bitPlanesFirst"></param>
 		/// <returns></returns>
-		private string collectCarrierBits(StegoImage carrier, int bitPlanes, bool bitPlanesFirst) {
+		private string CollectCarrierBits(StegoImage carrier, int bitPlanes, bool bitPlanesFirst) {
 			StringBuilder sb = new StringBuilder();
 			int width = carrier.Image.Width;
 			int height = carrier.Image.Height;
@@ -602,9 +581,9 @@ namespace HSF_HideAndSeek.Steganography {
 					for (int y = 0; y < height; y++) {
 						for (int x = 0; x < width; x++) {
 							pixel = carrier.Image.GetPixel(x, y);
-							sb.Append(getBit(pixel.R, currentBitPlane));
-							sb.Append(getBit(pixel.G, currentBitPlane));
-							sb.Append(getBit(pixel.B, currentBitPlane));
+							sb.Append(GetBit(pixel.R, currentBitPlane));
+							sb.Append(GetBit(pixel.G, currentBitPlane));
+							sb.Append(GetBit(pixel.B, currentBitPlane));
 						} // for
 					} // for
 				} // for
@@ -613,9 +592,9 @@ namespace HSF_HideAndSeek.Steganography {
 					for (int x = 0; x < width; x++) {
 						for (int currentBitPlane = 0; currentBitPlane < bitPlanes; currentBitPlane++) {
 							pixel = carrier.Image.GetPixel(x, y);
-							sb.Append(getBit(pixel.R, currentBitPlane));
-							sb.Append(getBit(pixel.G, currentBitPlane));
-							sb.Append(getBit(pixel.B, currentBitPlane)); 
+							sb.Append(GetBit(pixel.R, currentBitPlane));
+							sb.Append(GetBit(pixel.G, currentBitPlane));
+							sb.Append(GetBit(pixel.B, currentBitPlane)); 
 						} // for
 					} // for
 				} // for
@@ -629,20 +608,20 @@ namespace HSF_HideAndSeek.Steganography {
 		/// <param name="arbitraryByte"></param>
 		/// <param name="bitPosition"></param>
 		/// <returns></returns>
-		public static string getBit(byte arbitraryByte, int bitPosition) {
+		public static string GetBit(byte arbitraryByte, int bitPosition) {
 			bool bit = (1 == ((arbitraryByte >> bitPosition) & 1));
-			return (bit == true) ? "1" : "0";
+			return bit ? "1" : "0";
 		}
 
 		/// <summary>
 		/// Sets a bit of an arbitrary byte at a specified position to a given value
 		/// </summary>
 		/// <param name="arbitraryByte"></param>
-		/// <param name="messsageBit"></param>
+		/// <param name="bit"></param>
 		/// <param name="bitPosition"></param>
 		/// <exception cref="ArgumentException"></exception>
 		/// <returns></returns>
-		private byte setBit(byte arbitraryByte, byte bit, byte bitPosition) {
+		private byte SetBit(byte arbitraryByte, byte bit, byte bitPosition) {
 			if (bit < 0 || bit > 1) {
 				throw new ArgumentException();
 			}
@@ -665,8 +644,8 @@ namespace HSF_HideAndSeek.Steganography {
 		/// <exception cref="FormatException"></exception>
 		/// <exception cref="OverflowException"></exception>
 		/// <returns></returns>
-		private byte setBit(byte arbitraryByte, string bit, byte bitPosition) {
-			return setBit(arbitraryByte, Byte.Parse(bit), bitPosition);
+		private byte SetBit(byte arbitraryByte, string bit, byte bitPosition) {
+			return SetBit(arbitraryByte, byte.Parse(bit), bitPosition);
 		}
 	}
 }

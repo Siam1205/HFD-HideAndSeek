@@ -20,11 +20,15 @@ namespace HSF_HideAndSeek.Helper {
 		public static string StringToBinary(string str, int zeroPadding) {
 			UTF8Encoding encoding = new UTF8Encoding();
 			byte[] buffer = encoding.GetBytes(str);
+
 			if (buffer.Length > 64) {
 				throw new MessageNameTooBigException();
-			} else if (buffer.Length < 64) {
-				Array.Resize<byte>(ref buffer, zeroPadding);
 			}
+
+			if (buffer.Length < 64) {
+				Array.Resize(ref buffer, zeroPadding);
+			}
+
 			StringBuilder sb = new StringBuilder();
 			foreach (byte element in buffer) {
 				sb.Append(Convert.ToString(element, 2).PadLeft(8, '0'));
@@ -37,6 +41,7 @@ namespace HSF_HideAndSeek.Helper {
 		/// specified amount of zeros to the left
 		/// </summary>
 		/// <param name="decimalNumber"></param>
+		/// <param name="zeroPadding"></param>
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="ArgumentOutOfRangeException"></exception>
 		/// <returns></returns>
@@ -53,6 +58,7 @@ namespace HSF_HideAndSeek.Helper {
 		/// specified amount of zeros to the left
 		/// </summary>
 		/// <param name="decimalNumber"></param>
+		/// <param name="zeroPadding"></param>
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="ArgumentOutOfRangeException"></exception>
 		/// <returns></returns>
@@ -69,6 +75,7 @@ namespace HSF_HideAndSeek.Helper {
 		/// specified amount of zeros to the left
 		/// </summary>
 		/// <param name="decimalNumber"></param>
+		/// <param name="zeroPadding"></param>
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="ArgumentOutOfRangeException"></exception>
 		/// <returns></returns>
@@ -83,11 +90,11 @@ namespace HSF_HideAndSeek.Helper {
 		/// <summary>
 		/// Converts a byte array to it's binary string representation
 		/// </summary>
-		/// <param name="decimalNumber"></param>
+		/// <param name="array"></param>
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="ArgumentOutOfRangeException"></exception>
 		/// <returns></returns>
-		public static string ByteArrayToBinary(Byte[] array) {
+		public static string ByteArrayToBinary(byte[] array) {
 			StringBuilder sb = new StringBuilder();
 			foreach (byte by in array) {
 				sb.Append(DecimalToBinary(by, 8));
@@ -125,14 +132,14 @@ namespace HSF_HideAndSeek.Helper {
 		/// <exception cref="OverflowException"></exception>
 		/// <returns></returns>
 		public static byte BinaryToByte(string binary) {
-			byte by = Convert.ToByte(binary.ToString(), 2);
+			byte by = Convert.ToByte(binary, 2);
 			return by;
 		}
 
 		/// <summary>
 		/// Calls an extension method to convert a binary string pattern to a byte array
 		/// </summary>
-		/// <param name="source"></param>
+		/// <param name="binary"></param>
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="ArgumentNullException"></exception>
 		/// <exception cref="ArgumentOutOfRangeException"></exception>
@@ -140,7 +147,7 @@ namespace HSF_HideAndSeek.Helper {
 		/// <exception cref="OverflowException"></exception>
 		/// <returns></returns>
 		public static byte[] BinaryToByteArray(string binary) {
-			return Extensions.ConvertBitstringToByteArray(binary);
+			return binary.ConvertBitstringToByteArray();
 		}
 
 		/// <summary>
@@ -167,6 +174,7 @@ namespace HSF_HideAndSeek.Helper {
 		/// <exception cref="ArgumentOutOfRangeException"></exception>
 		/// <returns></returns>
 		public static double BitsToKiloBytes(uint bits) {
+			// ReSharper disable once PossibleLossOfFraction
 			float bytes = bits / 8;
 			float kiloBytes = bytes / 1024;
 			return Math.Round(kiloBytes, 5);

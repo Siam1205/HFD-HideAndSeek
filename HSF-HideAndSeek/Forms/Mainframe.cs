@@ -13,38 +13,38 @@ namespace HSF_HideAndSeek.Forms {
 	public partial class Mainframe : Form {
 
 		// About and help form (closed on start)
-		private AboutBox aboutBox;
-		private BitPlaneForm carrierBitPlaneForm;
-		private BitPlaneForm stegoImageBitPlaneForm;
+		private AboutBox _aboutBox;
+		private BitPlaneForm _carrierBitPlaneForm;
+		private BitPlaneForm _stegoImageBitPlaneForm;
 
 		// Instances for backend logic
-		private FileManager fm = FileManager.Instance;
-		private Embedder embedder = Embedder.Instance;
+		private readonly FileManager _fm = FileManager.Instance;
+		private readonly Embedder _embedder = Embedder.Instance;
 
 		// Main data structures
-		private StegoImage carrier;
-		private StegoImage stegoImage;
-		private StegoMessage message;
+		private StegoImage _carrier;
+		private StegoImage _stegoImage;
+		private StegoMessage _message;
 
 		// File extensions and its filter for the OpenFileDialog class
-		private readonly List<string> imageExtensions = new List<string> { ".bmp", ".jpg", ".jpeg", ".jfif", ".gif", ".png" };
-		private readonly string carrierExtensionsFilter = "" +
+		private readonly List<string> _imageExtensions = new List<string> { ".bmp", ".jpg", ".jpeg", ".jfif", ".gif", ".png" };
+		private readonly string _carrierExtensionsFilter = "" +
 				"Image files (*.bmp, *.gif, *.jpg, *.jpeg, *.jfif, *.png) | *.bmp; *.gif; *.jpg; *.jpeg; *.jfif; *.png; |" +
 				"BMP files (*.bmp) | *.bmp; |" +
 				"GIF files (*.gif) | *.gif; |" +
 				"PNG files (*.png) | *.png; |" +
 				"JPEG files (*.jpg, *.jpeg, *.jfif)| *.jpg; *.jpeg; *.jfif;";
-		private readonly string stegoImageExtensionsFilter = "" +
+		private readonly string _stegoImageExtensionsFilter = "" +
 				"Image files (*.bmp, *.png) | *.bmp; *.png; |" +
 				"BMP files (*.bmp) | *.bmp; |" +
 				"PNG files (*.png) | *.png;";
-		private readonly string messageExtensionsFilter = "" +
+		private readonly string _messageExtensionsFilter = "" +
 				"All Files (*.*) | *.*; |" +
 				"Image files (*.bmp, *.gif, *.jpg, *.jpeg, *.jfif, *.png) | *.bmp; *.gif; *.jpg; *.jpeg; *.jfif; *.png; |" +
 				"Office files (*.doc, *.docx, *.xls, *.ppt) | *.doc; *.docx; *.xls; *.ppt; |" +
 				"Text files (*.txt, *.pdf) | *.txt; *.pdf;";
 
-		private readonly string defaultLabelValue = "---";
+		private readonly string _defaultLabelValue = "---";
 
 		/// <summary>
 		/// Constructor
@@ -57,28 +57,28 @@ namespace HSF_HideAndSeek.Forms {
 		/// Loads a carrier image from a specified path to the GUI
 		/// </summary>
 		/// <param name="path">Preferably absolute path of an image</param>
-		private void loadCarrierImage(string path) {
+		private void LoadCarrierImage(string path) {
 			if (File.Exists(path)) {
-				if (imageExtensions.Contains(Path.GetExtension(path).ToLowerInvariant())) {
+				if (_imageExtensions.Contains(Path.GetExtension(path).ToLowerInvariant())) {
 
 					// Generate carrier image object
-					carrier = new StegoImage(
-						fm.ReadImageFile(path, false),
+					_carrier = new StegoImage(
+						_fm.ReadImageFile(path, true),
 						Path.GetFileName(path),
-						fm.getFileSizeInBytes(path)
+						_fm.GetFileSizeInBytes(path)
 					);
 
 					// Display image
-					carrierImagePictureBox.Image = carrier.Image;
+					carrierImagePictureBox.Image = _carrier.Image;
 
 					// Fill labels with data
-					carrierNameLabel.Text = carrier.Name;
-					carrierSizeLabel.Text = Converter.BytesToHumanReadableString(carrier.SizeInBytes);
+					carrierNameLabel.Text = _carrier.Name;
+					carrierSizeLabel.Text = Converter.BytesToHumanReadableString(_carrier.SizeInBytes);
 					carrierCapacityLabel.Text = Converter.BytesToHumanReadableString(
-						embedder.CalculateCapacity(carrier, (byte) (bppComboBox.SelectedIndex + 1)));
+						_embedder.CalculateCapacity(_carrier, (byte) (bppComboBox.SelectedIndex + 1)));
 
 					// Check GUI components
-					checkEverything();
+					CheckEverything();
 				}
 			}
 		}
@@ -87,26 +87,26 @@ namespace HSF_HideAndSeek.Forms {
 		/// Loads a stego image from a specified path
 		/// </summary>
 		/// <param name="path">Preferably absolute path of an image</param>
-		private void loadStegoImage(string path) {
+		private void LoadStegoImage(string path) {
 			if (File.Exists(path)) {
-				if (imageExtensions.Contains(Path.GetExtension(path).ToLowerInvariant())) {
+				if (_imageExtensions.Contains(Path.GetExtension(path).ToLowerInvariant())) {
 
 					// Generate stego image object
-					stegoImage = new StegoImage(
-						fm.ReadImageFile(path, false),
+					_stegoImage = new StegoImage(
+						_fm.ReadImageFile(path, false),
 						Path.GetFileName(path),
-						fm.getFileSizeInBytes(path)
+						_fm.GetFileSizeInBytes(path)
 					);
 
 					// Display image
-					stegoImagePictureBox.Image = stegoImage.Image;
+					stegoImagePictureBox.Image = _stegoImage.Image;
 
 					// Fill labels with data
-					stegoImageNameLabel.Text = stegoImage.Name;
-					stegoImageSizeLabel.Text = Converter.BytesToHumanReadableString(stegoImage.SizeInBytes);
+					stegoImageNameLabel.Text = _stegoImage.Name;
+					stegoImageSizeLabel.Text = Converter.BytesToHumanReadableString(_stegoImage.SizeInBytes);
 
 					// Check GUI components
-					checkEverything();
+					CheckEverything();
 				}
 			}
 		}
@@ -116,40 +116,40 @@ namespace HSF_HideAndSeek.Forms {
 		/// </summary>
 		/// <param name="stegoImage"></param>
 		/// <param name="path"></param>
-		private void saveStegoImage(StegoImage stegoImage, string path) {
-			fm.WriteStegoImage(stegoImage.Image, path);
-			stegoImageSizeLabel.Text = Converter.BytesToHumanReadableString(fm.getFileSizeInBytes(path));
+		private void SaveStegoImage(StegoImage stegoImage, string path) {
+			_fm.WriteStegoImage(stegoImage.Image, path);
+			stegoImageSizeLabel.Text = Converter.BytesToHumanReadableString(_fm.GetFileSizeInBytes(path));
 		}
 
 		/// <summary>
 		/// Loads a message from a specified path
 		/// </summary>
 		/// <param name="path">Preferably absolute path of an arbitrary file</param>
-		private void loadMessage(string path) {
+		private void LoadMessage(string path) {
 			if (File.Exists(path)) {
 
 				// Generate message object
-				message = new StegoMessage(
+				_message = new StegoMessage(
 					Path.GetFileName(path),
-					fm.ReadMessageFile(path)
+					_fm.ReadMessageFile(path)
 				);
 
 				// Fill labels with data
-				messageNameLabel.Text = message.Name;
-				messageSizeLabel.Text = Converter.BytesToHumanReadableString(message.FullSizeInBytes);
+				messageNameLabel.Text = _message.Name;
+				messageSizeLabel.Text = Converter.BytesToHumanReadableString(_message.FullSizeInBytes);
 
 				// Check GUI components
-				checkEverything();
+				CheckEverything();
 			}
 		}
 
 		/// <summary>
 		/// Removes the carrier image from the GUI
 		/// </summary>
-		private void clearCarrierImage() {
+		private void ClearCarrierImage() {
 
 			// Reset carrier image object
-			carrier = null;
+			_carrier = null;
 
 			// Remove image
 			if (carrierImagePictureBox.Image != null) {
@@ -158,22 +158,22 @@ namespace HSF_HideAndSeek.Forms {
 			}
 			
 			// Remove data from labels
-			carrierNameLabel.Text = defaultLabelValue;
-			carrierSizeLabel.Text = defaultLabelValue;
-			carrierCapacityLabel.Text = defaultLabelValue;
-			carrierRatingLabel.Text = defaultLabelValue;
+			carrierNameLabel.Text = _defaultLabelValue;
+			carrierSizeLabel.Text = _defaultLabelValue;
+			carrierCapacityLabel.Text = _defaultLabelValue;
+			carrierRatingLabel.Text = _defaultLabelValue;
 
 			// Check GUI components
-			checkEverything();
+			CheckEverything();
 		}
 
 		/// <summary>
 		/// Removes the stego image from the GUI
 		/// </summary>
-		private void clearStegoImage() {
+		private void ClearStegoImage() {
 
 			// Reset stego image object
-			stegoImage = null;
+			_stegoImage = null;
 
 			// Remove image
 			if (stegoImagePictureBox.Image != null) {
@@ -183,27 +183,27 @@ namespace HSF_HideAndSeek.Forms {
 			
 
 			// Remove data from labels
-			stegoImageNameLabel.Text = defaultLabelValue;
-			stegoImageSizeLabel.Text = defaultLabelValue;
+			stegoImageNameLabel.Text = _defaultLabelValue;
+			stegoImageSizeLabel.Text = _defaultLabelValue;
 
 			// Check GUI components
-			checkEverything();
+			CheckEverything();
 		}
 
 		/// <summary>
 		/// Removes the message from the GUI
 		/// </summary>
-		private void clearMessage() {
+		private void ClearMessage() {
 
 			// Reset message object
-			message = null;
+			_message = null;
 
 			// Remove data from labels
-			messageNameLabel.Text = defaultLabelValue;
-			messageSizeLabel.Text = defaultLabelValue;
+			messageNameLabel.Text = _defaultLabelValue;
+			messageSizeLabel.Text = _defaultLabelValue;
 
 			// Check GUI components
-			checkEverything();
+			CheckEverything();
 		}
 
 		/// <summary>
@@ -246,23 +246,24 @@ namespace HSF_HideAndSeek.Forms {
 		#region Events and listeners
 
 		private void loadCarrierButton_Click(object sender, EventArgs e) {
-			OpenFileDialog ofd = new OpenFileDialog();
-			ofd.InitialDirectory = @"C:\";
-			ofd.Multiselect = false;
-			ofd.CheckPathExists = true;
-			ofd.CheckFileExists = true;
-			ofd.Title = "Please select a carrier image file";
-			ofd.Filter = carrierExtensionsFilter;
+			OpenFileDialog ofd = new OpenFileDialog {
+				InitialDirectory = @"C:\",
+				Multiselect = false,
+				CheckPathExists = true,
+				CheckFileExists = true,
+				Title = @"Please select a carrier image file",
+				Filter = _carrierExtensionsFilter
+			};
 			ofd.ShowDialog();
 
 			try {
-				loadCarrierImage(ofd.FileName);
+				LoadCarrierImage(ofd.FileName);
 			} catch (Exception ex) {
 				MessageBox.Show(
-					"The sysem caught an exception:"
+					@"The sysem caught an exception:"
 					   + "\nType:        " + ex.GetType().Name
 					   + "\nMessage:  " + ex.Message,
-				"Critical error!",
+					@"Critical error!",
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Error
 				);
@@ -275,18 +276,18 @@ namespace HSF_HideAndSeek.Forms {
 			ofd.Multiselect = false;
 			ofd.CheckPathExists = true;
 			ofd.CheckFileExists = true;
-			ofd.Title = "Please select a message file";
-			ofd.Filter = messageExtensionsFilter;
+			ofd.Title = @"Please select a message file";
+			ofd.Filter = _messageExtensionsFilter;
 			ofd.ShowDialog();
 
 			try {
-				loadMessage(ofd.FileName);
+				LoadMessage(ofd.FileName);
 			} catch (Exception ex) {
 				MessageBox.Show(
-					"The sysem caught an exception:"
+					@"The sysem caught an exception:"
 					   + "\nType:        " + ex.GetType().Name
 					   + "\nMessage:  " + ex.Message,
-				"Critical error!",
+					@"Critical error!",
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Error
 				);
@@ -299,18 +300,18 @@ namespace HSF_HideAndSeek.Forms {
 			ofd.Multiselect = false;
 			ofd.CheckPathExists = true;
 			ofd.CheckFileExists = true;
-			ofd.Title = "Please select a stego image file";
-			ofd.Filter = stegoImageExtensionsFilter;
+			ofd.Title = @"Please select a stego image file";
+			ofd.Filter = _stegoImageExtensionsFilter;
 			ofd.ShowDialog();
 
 			try {
-				loadStegoImage(ofd.FileName);
+				LoadStegoImage(ofd.FileName);
 			} catch (Exception ex) {
 				MessageBox.Show(
-					"The sysem caught an exception:"
+					@"The sysem caught an exception:"
 					   + "\nType:        " + ex.GetType().Name
 					   + "\nMessage:  " + ex.Message,
-				"Critical error!",
+					@"Critical error!",
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Error
 				);
@@ -318,229 +319,210 @@ namespace HSF_HideAndSeek.Forms {
 		}
 
 		private void clearCarrierAndMessageButton_Click(object sender, EventArgs e) {
-			clearCarrierImage();
-			clearMessage();
+			ClearCarrierImage();
+			ClearMessage();
 		}
 
 		private void clearStegoButton_Click(object sender, EventArgs e) {
-			clearStegoImage();
+			ClearStegoImage();
 		}
 
 		private void encryptMessageButton_Click(object sender, EventArgs e) {
-			encryptMessageButton.Text = "Encrypting ...";
+			encryptMessageButton.Text = @"Encrypting ...";
 			encryptMessageButton.Enabled = false;
 			System.Threading.Thread.Sleep(150);
 			try {
-				message.Payload = AES.Encrypt(message.Payload, encryptionKeyTextbox.Text);
-				messageSizeLabel.Text = Converter.BytesToHumanReadableString(message.FullSizeInBytes);
+				_message.Payload = AES.Encrypt(_message.Payload, encryptionKeyTextbox.Text);
+				messageSizeLabel.Text = Converter.BytesToHumanReadableString(_message.FullSizeInBytes);
 			} catch (CryptographicException) {
 				MessageBox.Show(
-					"Could not encrypt the message.",
-					"Error!",
+					@"Could not encrypt the message.",
+					@"Error!",
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Error
 				);
 			}
-			encryptMessageButton.Text = "Encrypt message";
+			encryptMessageButton.Text = @"Encrypt message";
 			encryptMessageButton.Enabled = true;
 		}
 
 		private void hideMessageButton_Click(object sender, EventArgs e) {
-			hideMessageButton.Text = "Hiding ...";
+			hideMessageButton.Text = @"Hiding ...";
 			hideMessageButton.Enabled = false;
 
 			try {
 				// Generate stego image
-				if (stegoPasswordTextbox.Equals("") || stegoPasswordTextbox.Text.Equals(null)) {
-					stegoImage = embedder.HideMessage(
-						carrier,
-						message,
-						null,
-						bppComboBox.SelectedIndex + 1,
-						bitPlaneFirstRadio.Checked
-					);
-				} else {
-					stegoImage = embedder.HideMessage(
-						carrier,
-						message,
-						stegoPasswordTextbox.Text,
-						bppComboBox.SelectedIndex + 1,
-						bitPlaneFirstRadio.Checked
-					);
-				}
+				_stegoImage = _embedder.HideMessage(
+					_carrier,
+					_message,
+					stegoPasswordTextbox.Text,
+					bppComboBox.SelectedIndex + 1,
+					bitPlaneFirstRadio.Checked
+				);
 			} catch (Exception ex) {
 				MessageBox.Show(
-					"The sysem caught an exception:"
+					@"The sysem caught an exception:"
 					   + "\nType:        " + ex.GetType().Name
 					   + "\nMessage:  " + ex.Message,
-				"Critical error!",
+					@"Critical error!",
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Error
 				);
 			}
 
 			// Fill labels with data
-			stegoImageNameLabel.Text = stegoImage.Name;
-			stegoImageSizeLabel.Text = defaultLabelValue; // TODO: Change this
+			stegoImageNameLabel.Text = _stegoImage.Name;
+			stegoImageSizeLabel.Text = _defaultLabelValue; // TODO: Change this
 
 			// Display image
-			stegoImagePictureBox.Image = stegoImage.Image;
+			stegoImagePictureBox.Image = _stegoImage.Image;
 
 			// Check GUI components
-			hideMessageButton.Text = "Hide message";
-			checkEverything();
+			hideMessageButton.Text = @"Hide message";
+			CheckEverything();
 		}
 
 		private void extractMesssageButton_Click(object sender, EventArgs e) {
-			extractMessageButton.Text = "Extracting ...";
+			extractMessageButton.Text = @"Extracting ...";
 			extractMessageButton.Enabled = false;
 
 			try {
-				if (stegoPasswordTextbox.Equals("") || stegoPasswordTextbox.Text.Equals(null)) {
-					message = embedder.ExtractMessage(
-						stegoImage,
-						null,
-						bppComboBox.SelectedIndex + 1,
-						bitPlaneFirstRadio.Checked
-					);
-				} else {
-					message = embedder.ExtractMessage(
-						stegoImage,
-						stegoPasswordTextbox.Text,
-						bppComboBox.SelectedIndex + 1,
-						bitPlaneFirstRadio.Checked
-					);
-				}
+				_message = _embedder.ExtractMessage(
+					_stegoImage,
+					stegoPasswordTextbox.Text,
+					bppComboBox.SelectedIndex + 1,
+					bitPlaneFirstRadio.Checked
+				);
 			} catch (Exception ex) {
 				MessageBox.Show(
-					"The sysem caught an exception:"
+					@"The sysem caught an exception:"
 					   + "\nType:        " + ex.GetType().Name
 					   + "\nMessage:  " + ex.Message,
-				"Critical error!",
+					@"Critical error!",
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Error
 				);
 			}
 
 			// Fill labels with data
-			messageNameLabel.Text = message.Name;
-			messageSizeLabel.Text = Converter.BytesToHumanReadableString(message.FullSizeInBytes);
+			messageNameLabel.Text = _message.Name;
+			messageSizeLabel.Text = Converter.BytesToHumanReadableString(_message.FullSizeInBytes);
 
 			// Check GUI components
-			extractMessageButton.Text = "Extract message";
-			checkEverything();
+			extractMessageButton.Text = @"Extract message";
+			CheckEverything();
 		}
 
 		private void decryptMessageButton_Click(object sender, EventArgs e) {
-			decryptMessageButton.Text = "Decrypting ...";
+			decryptMessageButton.Text = @"Decrypting ...";
 			decryptMessageButton.Enabled = false;
 			try {
-				message.Payload = AES.Decrypt(message.Payload, encryptionKeyTextbox.Text);
-				messageSizeLabel.Text = Converter.BytesToHumanReadableString(message.FullSizeInBytes);
+				_message.Payload = AES.Decrypt(_message.Payload, encryptionKeyTextbox.Text);
+				messageSizeLabel.Text = Converter.BytesToHumanReadableString(_message.FullSizeInBytes);
 			} catch (CryptographicException) {
 				MessageBox.Show(
-					"Could not decrypt the message with the given key. Either the key is wrong or the message is unencrypted.",
-					"Could not decrypt the message!",
+					@"Could not decrypt the message with the given key. Either the key is wrong or the message is unencrypted.",
+					@"Could not decrypt the message!",
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Error
 				);
 			} catch (Exception ex) {
 				MessageBox.Show(
-					"The sysem caught an exception:"
+					@"The sysem caught an exception:"
 					   + "\nType:        " + ex.GetType().Name
 					   + "\nMessage:  " + ex.Message,
-				"Critical error!",
+				@"Critical error!",
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Error
 				);
 			}
-			decryptMessageButton.Text = "Decrypt message";
+			decryptMessageButton.Text = @"Decrypt message";
 			decryptMessageButton.Enabled = true;
 		}
 
 		private void rateButton_Click(object sender, EventArgs e) {
-			rateButton.Text = "Rating ...";
+			rateButton.Text = @"Rating ...";
 			rateButton.Enabled = false;
 
 			try {
-				carrierRatingLabel.Text = "" + embedder.RateCarrier(carrier, message) + "%";
+				carrierRatingLabel.Text = "" + _embedder.RateCarrier(_carrier, _message) + "%";
 			} catch (Exception ex) {
 				MessageBox.Show(
-					"The sysem caught an exception:"
+					@"The sysem caught an exception:"
 					   + "\nType:        " + ex.GetType().Name
 					   + "\nMessage:  " + ex.Message,
-				"Critical error!",
+					@"Critical error!",
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Error
 				);
 			}
-			rateButton.Text = "Rate carrier";
+			rateButton.Text = @"Rate carrier";
 			rateButton.Enabled = true;
 		}
 
 		private void showStegoImageBitplanesButton_Click(object sender, EventArgs e) {
-			showStegoImageBitplanesButton.Text = "Generating bit planes ...";
+			showStegoImageBitplanesButton.Text = @"Generating bit planes ...";
 			showStegoImageBitplanesButton.Enabled = false;
 
-			if (stegoImageBitPlaneForm == null || !stegoImageBitPlaneForm.Visible) {
-				stegoImageBitPlaneForm = new BitPlaneForm("Stego image bit planes", stegoImage.Image);
-				stegoImageBitPlaneForm.Show();
+			if (_stegoImageBitPlaneForm == null || !_stegoImageBitPlaneForm.Visible) {
+				_stegoImageBitPlaneForm = new BitPlaneForm("Stego image bit planes", _stegoImage.Image);
+				_stegoImageBitPlaneForm.Show();
 				//stegoImageBitPlaneForm.DisplayBitPlanes();
 
 			} else {
-				stegoImageBitPlaneForm.Focus();
+				_stegoImageBitPlaneForm.Focus();
 			}
 
-			showStegoImageBitplanesButton.Text = "Show stego image bit planes";
+			showStegoImageBitplanesButton.Text = @"Show stego image bit planes";
 			showStegoImageBitplanesButton.Enabled = true;
 		}
 
 		private void helpButton_Click(object sender, EventArgs e) {
-			if (aboutBox == null || !aboutBox.Visible) {
-				aboutBox = new AboutBox();
-				aboutBox.Show();
+			if (_aboutBox == null || !_aboutBox.Visible) {
+				_aboutBox = new AboutBox();
+				_aboutBox.Show();
 			} else {
-				aboutBox.Focus();
+				_aboutBox.Focus();
 			}
 		}
 
 		private void encryptionKeyTextbox_TextChanged(object sender, EventArgs e) {
-			checkEncryption();
+			CheckEncryption();
 		}
 
 		private void showCarrierBitplanesButton_Click(object sender, EventArgs e) {
-			showCarrierBitplanesButton.Text = "Generating bit planes ...";
+			showCarrierBitplanesButton.Text = @"Generating bit planes ...";
 			showCarrierBitplanesButton.Enabled = false;
 
-			if (carrierBitPlaneForm == null || !carrierBitPlaneForm.Visible) {
-				carrierBitPlaneForm = new BitPlaneForm("Carrier image bit planes", carrier.Image);
-				carrierBitPlaneForm.Show();
-				carrierBitPlaneForm.Name = "Carrier bit planes";
+			if (_carrierBitPlaneForm == null || !_carrierBitPlaneForm.Visible) {
+				_carrierBitPlaneForm = new BitPlaneForm("Carrier image bit planes", _carrier.Image);
+				_carrierBitPlaneForm.Show();
+				_carrierBitPlaneForm.Name = "Carrier bit planes";
 				//carrierBitPlaneForm.DisplayBitPlanes();
 
 			} else {
-				carrierBitPlaneForm.Focus();
+				_carrierBitPlaneForm.Focus();
 			}
 
-			showCarrierBitplanesButton.Text = "Show carrier bit planes";
+			showCarrierBitplanesButton.Text = @"Show carrier bit planes";
 			showCarrierBitplanesButton.Enabled = true;
 		}
 
 		private void saveStegoImageButton_Click(object sender, EventArgs e) {
 			SaveFileDialog sfd = new SaveFileDialog();
-			sfd.Title = "Save the stego image";
-			sfd.FileName = stegoImage.Name;
-			sfd.Filter = stegoImageExtensionsFilter;
+			sfd.Title = @"Save the stego image";
+			sfd.FileName = _stegoImage.Name;
+			sfd.Filter = _stegoImageExtensionsFilter;
 			sfd.ShowDialog();
 
 			try {
-				saveStegoImage(stegoImage, sfd.FileName);
+				SaveStegoImage(_stegoImage, sfd.FileName);
 			} catch (Exception ex) {
 				MessageBox.Show(
-					"The sysem caught an exception:"
+					@"The sysem caught an exception:"
 					   + "\nType:        " + ex.GetType().Name
 					   + "\nMessage:  " + ex.Message,
-				"Critical error!",
+					@"Critical error!",
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Error
 				);
@@ -549,19 +531,19 @@ namespace HSF_HideAndSeek.Forms {
 
 		private void saveMessageButton_Click(object sender, EventArgs e) {
 			SaveFileDialog sfd = new SaveFileDialog();
-			sfd.Title = "Save the message file";
-			sfd.FileName = message.Name;
-			sfd.Filter = messageExtensionsFilter;
+			sfd.Title = @"Save the message file";
+			sfd.FileName = _message.Name;
+			sfd.Filter = _messageExtensionsFilter;
 			sfd.ShowDialog();
 
 			try {
-				fm.WriteMessageFile(message.Payload, sfd.FileName);
+				_fm.WriteMessageFile(_message.Payload, sfd.FileName);
 			} catch (Exception ex) {
 				MessageBox.Show(
-					"The sysem caught an exception:"
+					@"The sysem caught an exception:"
 					   + "\nType:        " + ex.GetType().Name
 					   + "\nMessage:  " + ex.Message,
-				"Critical error!",
+					@"Critical error!",
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Error
 				);
@@ -571,13 +553,13 @@ namespace HSF_HideAndSeek.Forms {
 		private void bppComboBox_SelectedIndexChanged(object sender, EventArgs e) {
 
 			// Change label data
-			if (carrier != null) {
+			if (_carrier != null) {
 				carrierCapacityLabel.Text = Converter.BytesToHumanReadableString(
-				embedder.CalculateCapacity(carrier, (byte) (bppComboBox.SelectedIndex + 1)));
+				_embedder.CalculateCapacity(_carrier, (byte) (bppComboBox.SelectedIndex + 1)));
 			}
 
 			// Check GUI components
-			checkEverything();
+			CheckEverything();
 		}
 		
 		#endregion
@@ -588,17 +570,17 @@ namespace HSF_HideAndSeek.Forms {
 		/// <summary>
 		/// Wrapper for all check-methods
 		/// </summary>
-		private void checkEverything() {
-			checkShowCarrierBitPlanes();
-			checkEncryption();
-			checkEmbedding();
-			checkSavingStegoImage();
-			checkExtraction();
-			checkSavingMessage();
+		private void CheckEverything() {
+			CheckShowCarrierBitPlanes();
+			CheckEncryption();
+			CheckEmbedding();
+			CheckSavingStegoImage();
+			CheckExtraction();
+			CheckSavingMessage();
 		}
 
-		private bool checkShowCarrierBitPlanes() {
-			if (carrier == null) {
+		private bool CheckShowCarrierBitPlanes() {
+			if (_carrier == null) {
 				showCarrierBitplanesButton.Enabled = false;
 				return false;
 			}
@@ -611,14 +593,14 @@ namespace HSF_HideAndSeek.Forms {
 		/// Check whether all requirements are set to hide a message
 		/// </summary>
 		/// <returns></returns>
-		private bool checkEmbedding() {
-			if (carrier == null || message == null) {
+		private bool CheckEmbedding() {
+			if (_carrier == null || _message == null) {
 				hideMessageButton.Enabled = false;
 				rateButton.Enabled = false;
 				return false;
 			}
 
-			if (embedder.CalculateCapacity(carrier, bppComboBox.SelectedIndex+1) < message.FullSizeInBytes) {
+			if (_embedder.CalculateCapacity(_carrier, bppComboBox.SelectedIndex+1) < _message.FullSizeInBytes) {
 				hideMessageButton.Enabled = false;
 				rateButton.Enabled = false;
 				messageSizeLabel.ForeColor = Color.Red;
@@ -635,8 +617,8 @@ namespace HSF_HideAndSeek.Forms {
 		/// Check whether all requirements are set to extract a message
 		/// </summary>
 		/// <returns></returns>
-		private bool checkExtraction() {
-			if (stegoImage == null) {
+		private bool CheckExtraction() {
+			if (_stegoImage == null) {
 				showStegoImageBitplanesButton.Enabled = false;
 				extractMessageButton.Enabled = false;
 				return false;
@@ -650,8 +632,8 @@ namespace HSF_HideAndSeek.Forms {
 		/// Check whether all requirements are set to encrypt or decrypt a message
 		/// </summary>
 		/// <returns></returns>
-		private bool checkEncryption() {
-			if (message == null) {
+		private bool CheckEncryption() {
+			if (_message == null) {
 				encryptMessageButton.Enabled = false;
 				decryptMessageButton.Enabled = false;
 				return false;
@@ -672,8 +654,8 @@ namespace HSF_HideAndSeek.Forms {
 		/// Check whether all requirements are set to save a stego image to the drive
 		/// </summary>
 		/// <returns></returns>
-		private bool checkSavingStegoImage() {
-			if (stegoImage == null) {
+		private bool CheckSavingStegoImage() {
+			if (_stegoImage == null) {
 				saveStegoImageButton.Enabled = false;
 				return false;
 			}
@@ -686,8 +668,8 @@ namespace HSF_HideAndSeek.Forms {
 		/// Check whether all requirements are set to save a message file to the drive
 		/// </summary>
 		/// <returns></returns>
-		private bool checkSavingMessage() {
-			if (message == null) {
+		private bool CheckSavingMessage() {
+			if (_message == null) {
 				saveMessageButton.Enabled = false;
 				return false;
 			}

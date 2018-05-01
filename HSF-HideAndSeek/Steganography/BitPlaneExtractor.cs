@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HSF_HideAndSeek.Steganography {
 	internal class BitPlaneExtractor {
@@ -19,7 +15,6 @@ namespace HSF_HideAndSeek.Steganography {
 			// Variable declarations
 			int width = image.Width;
 			int height = image.Height;
-			int amountPixels = width * height;
 			Color black = Color.FromArgb(0, 0, 0);
 			Color white = Color.FromArgb(255, 255, 255);
 
@@ -31,11 +26,8 @@ namespace HSF_HideAndSeek.Steganography {
 					Color pixel = image.GetPixel(x, y);
 					byte red = pixel.R;
 
-					if (isBitSet(red, pos)) {
-						bitPlane.SetPixel(x, y, black);
-					} else {
-						bitPlane.SetPixel(x, y, white);
-					} // else
+					// Set the pixel to black if the bit is set and to white otherwise
+					bitPlane.SetPixel(x, y, IsBitSet(red, pos) ? black : white);
 				} // for
 			} // for
 			return bitPlane;
@@ -54,7 +46,6 @@ namespace HSF_HideAndSeek.Steganography {
 			// Variable declarations
 			int width = image.Width;
 			int height = image.Height;
-			int amountPixels = width * height;
 			Color black = Color.FromArgb(0, 0, 0);
 			Color white = Color.FromArgb(255, 255, 255);
 			Bitmap[] bitPlanes = new Bitmap[8];
@@ -69,11 +60,8 @@ namespace HSF_HideAndSeek.Steganography {
 						Color pixel = image.GetPixel(x, y);
 						byte red = pixel.R;
 
-						if (isBitSet(red, pos)) {
-							bitPlanes[pos].SetPixel(x, y, black);
-						} else {
-							bitPlanes[pos].SetPixel(x, y, white);
-						} // else
+						// Set the pixel to black if the bit is set and to white otherwise
+						bitPlanes[pos].SetPixel(x, y, IsBitSet(red, pos) ? black : white);
 					} // for
 				} // for
 			} // for
@@ -86,7 +74,7 @@ namespace HSF_HideAndSeek.Steganography {
 		/// <param name="b"></param>
 		/// <param name="pos"></param>
 		/// <returns></returns>
-		private static bool isBitSet(byte b, int pos) {
+		private static bool IsBitSet(byte b, int pos) {
 			return (b & (1 << pos)) != 0;
 		}
 	}

@@ -5,7 +5,7 @@ using System.Text;
 namespace HSF_HideAndSeek.Cryptography {
 	internal class Hasher {
 		// Salt
-		private readonly static byte[] defaultSalt = new byte[64] {
+		private readonly static byte[] DefaultSalt = {
 			0xEB, 0xAD, 0x90, 0x25, 0x2B, 0x70, 0x79, 0x48,
 			0x62, 0x5E, 0x96, 0x85, 0x86, 0x8C, 0x20, 0x99,
 			0xCA, 0xE6, 0xA0, 0xE8, 0x6B, 0xDB, 0x1A, 0x18,
@@ -28,7 +28,7 @@ namespace HSF_HideAndSeek.Cryptography {
 		/// <returns></returns>
 		public static byte[] HashSha256(string input) {
 			byte[] inputAsByteArray = Encoding.UTF8.GetBytes(input);
-			byte[] inputWithSalt = Combine(defaultSalt, inputAsByteArray);
+			byte[] inputWithSalt = Combine(DefaultSalt, inputAsByteArray);
 			return SHA256.Create().ComputeHash(inputWithSalt);
 		}
 
@@ -41,7 +41,7 @@ namespace HSF_HideAndSeek.Cryptography {
 		/// <exception cref="System.Reflection.TargetInvocationException"></exception>
 		/// <returns></returns>
 		public static byte[] HashSha256(byte[] input) {
-			byte[] inputWithSalt = Combine(defaultSalt, input);
+			byte[] inputWithSalt = Combine(DefaultSalt, input);
 			return SHA256.Create().ComputeHash(inputWithSalt);
 		}
 		#endregion

@@ -1,4 +1,5 @@
-﻿using HSF_HideAndSeek.Exceptions;
+﻿using System;
+using HSF_HideAndSeek.Exceptions;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -7,7 +8,7 @@ namespace HSF_HideAndSeek.Helper {
 	class FileManager {
 
 		#region Singleton definition
-		private static FileManager instance;
+		private static FileManager _instance;
 
 		private FileManager() {
 
@@ -15,10 +16,10 @@ namespace HSF_HideAndSeek.Helper {
 
 		public static FileManager Instance {
 			get {
-				if (instance == null) {
-					instance = new FileManager();
+				if (_instance == null) {
+					_instance = new FileManager();
 				}
-				return instance;
+				return _instance;
 			}
 		}
 		#endregion
@@ -46,6 +47,7 @@ namespace HSF_HideAndSeek.Helper {
 		/// which creates a lock to the file referenced to by the path argument
 		/// </summary>
 		/// <param name="path"></param>
+		/// <param name="forceTrueColor"></param>
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="FileNotFoundException"></exception>
 		/// <exception cref="OutOfMemoryException"></exception>
@@ -56,12 +58,6 @@ namespace HSF_HideAndSeek.Helper {
 				PixelFormat pf = img.PixelFormat;
 				bool wrongPixelFormat = false;
 				switch (pf) {
-					//case PixelFormat.Alpha:
-					//	break;
-					//case PixelFormat.PAlpha:
-					//	break;
-					//case PixelFormat.Canonical:
-					//	break;
 					case PixelFormat.Undefined:
 						wrongPixelFormat = true;
 						break;
@@ -77,22 +73,23 @@ namespace HSF_HideAndSeek.Helper {
 					case PixelFormat.Format1bppIndexed:
 						wrongPixelFormat = true;
 						break;
-					default:
-						break;
 				}
 
-				if (wrongPixelFormat) {
-					if (forceTrueColor) {
-						Bitmap bp = new Bitmap(img);
-						Bitmap newImg = new Bitmap(img.Width, img.Height);
-						newImg = bp;
-						return newImg;
-					} else {
-						throw new WrongPixelFormatException();
-					}
-				} else {
+				// If everything is okay, return the image
+				if (!wrongPixelFormat) {
 					return new Bitmap(img);
 				}
+
+				// If pixel format is wrong but the image should NOT be recreated
+				if (!forceTrueColor) {
+					throw new WrongPixelFormatException();
+				}
+
+				// If the image should be recreated
+				Bitmap bp = new Bitmap(img);
+				Bitmap newImg = new Bitmap(img.Width, img.Height);
+				newImg = bp;
+				return newImg;
 			} // using
 		}
 
@@ -101,7 +98,7 @@ namespace HSF_HideAndSeek.Helper {
 		/// </summary>
 		/// <param name="path"></param>
 		/// <returns></returns>
-		public uint getFileSizeInBytes(string path) {
+		public uint GetFileSizeInBytes(string path) {
 			return (uint) new FileInfo(path).Length;
 		}
 

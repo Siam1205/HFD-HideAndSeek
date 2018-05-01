@@ -56,14 +56,14 @@ namespace HSF_HideAndSeek.Steganography {
 		/// <summary>
 		/// Self-inversly scramble all pixels of a bitmap
 		/// </summary>
-		/// <param name="bmp"></param>
+		/// <param name="image"></param>
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="ArgumentNullException"></exception>
 		/// <exception cref="ArgumentOutOfRangeException"></exception>
 		/// <returns></returns>
 		public static Bitmap ScrambleTwo(Bitmap image) {
 			var origImage = image;
-			using (var tmpImage = new System.Drawing.Bitmap(origImage)) {
+			using (var tmpImage = new Bitmap(origImage)) {
 				{
 					int x = origImage.Width;
 					while (x > 0) {
@@ -114,7 +114,7 @@ namespace HSF_HideAndSeek.Steganography {
 		/// <summary>
 		/// Self-inversly scramble all pixels of a bitmap
 		/// </summary>
-		/// <param name="bmp"></param>
+		/// <param name="image"></param>
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="ArgumentNullException"></exception>
 		/// <exception cref="ArgumentOutOfRangeException"></exception>

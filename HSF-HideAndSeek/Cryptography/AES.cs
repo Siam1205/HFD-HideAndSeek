@@ -11,10 +11,10 @@ namespace HSF_HideAndSeek.Cryptography {
 	/// https://www.codeproject.com/Articles/769741/Csharp-AES-bits-Encryption-Library-with-Salt
 	/// although they have been modified.
 	/// </summary>
-	class AES {
+	internal class AES {
 
 		// Specify salt. It must be at least 8 bytes.
-		private static readonly byte[] defaultSalt = new byte[64] {
+		private static readonly byte[] DefaultSalt = {
 			0xD0, 0xA1, 0xF2, 0x0A, 0xF9, 0xA8, 0x57, 0xC0,
 			0xD4, 0xBE, 0xC7, 0x8B, 0xEE, 0x91, 0x4D, 0xB6,
 			0x98, 0xAE, 0xA3, 0x2D, 0xD8, 0x23, 0x33, 0x38,
@@ -40,23 +40,23 @@ namespace HSF_HideAndSeek.Cryptography {
 		/// <exception cref="OverflowException"></exception>
 		/// <returns></returns>
 		private static byte[] AES_Encrypt(byte[] bytesToBeEncrypted, byte[] passwordBytes) {
-			byte[] encryptedBytes = null;
+			byte[] encryptedBytes;
 
 			using (MemoryStream ms = new MemoryStream()) {
-				using (RijndaelManaged AES = new RijndaelManaged()) {
+				using (RijndaelManaged aes = new RijndaelManaged()) {
 
 					// Set the Rijndael parameters
-					AES.KeySize = 256;
-					AES.BlockSize = 128;
+					aes.KeySize = 256;
+					aes.BlockSize = 128;
 
-					var key = new Rfc2898DeriveBytes(passwordBytes, defaultSalt, 1000);
-					AES.Key = key.GetBytes(AES.KeySize / 8);
-					AES.IV = key.GetBytes(AES.BlockSize / 8);
+					var key = new Rfc2898DeriveBytes(passwordBytes, DefaultSalt, 1000);
+					aes.Key = key.GetBytes(aes.KeySize / 8);
+					aes.IV = key.GetBytes(aes.BlockSize / 8);
 
 					// Set the AES mode of operation
-					AES.Mode = CipherMode.CBC;
+					aes.Mode = CipherMode.CBC;
 
-					using (var cs = new CryptoStream(ms, AES.CreateEncryptor(), CryptoStreamMode.Write)) {
+					using (var cs = new CryptoStream(ms, aes.CreateEncryptor(), CryptoStreamMode.Write)) {
 						cs.Write(bytesToBeEncrypted, 0, bytesToBeEncrypted.Length);
 						//cs.Close();
 					}
@@ -81,23 +81,23 @@ namespace HSF_HideAndSeek.Cryptography {
 		/// <exception cref="OverflowException"></exception>
 		/// <returns></returns>
 		private static byte[] AES_Decrypt(byte[] bytesToBeDecrypted, byte[] passwordBytes) {
-			byte[] decryptedBytes = null;
+			byte[] decryptedBytes;
 
 			using (MemoryStream ms = new MemoryStream()) {
-				using (RijndaelManaged AES = new RijndaelManaged()) {
+				using (RijndaelManaged aes = new RijndaelManaged()) {
 
 					// Set the Rijndael parameters
-					AES.KeySize = 256;
-					AES.BlockSize = 128;
+					aes.KeySize = 256;
+					aes.BlockSize = 128;
 
-					var key = new Rfc2898DeriveBytes(passwordBytes, defaultSalt, 1000);
-					AES.Key = key.GetBytes(AES.KeySize / 8);
-					AES.IV = key.GetBytes(AES.BlockSize / 8);
+					var key = new Rfc2898DeriveBytes(passwordBytes, DefaultSalt, 1000);
+					aes.Key = key.GetBytes(aes.KeySize / 8);
+					aes.IV = key.GetBytes(aes.BlockSize / 8);
 
 					// Set the AES mode of operation
-					AES.Mode = CipherMode.CBC;
+					aes.Mode = CipherMode.CBC;
 
-					using (var cs = new CryptoStream(ms, AES.CreateDecryptor(), CryptoStreamMode.Write)) {
+					using (var cs = new CryptoStream(ms, aes.CreateDecryptor(), CryptoStreamMode.Write)) {
 						cs.Write(bytesToBeDecrypted, 0, bytesToBeDecrypted.Length);
 						//cs.Close();
 					}
