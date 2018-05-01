@@ -3,6 +3,10 @@ using System.Windows.Forms;
 
 namespace HSF_HideAndSeek.Forms {
 	public partial class AboutBox : Form {
+		
+		/// <summary>
+		/// Constructor
+		/// </summary>
 		public AboutBox() {
 			InitializeComponent();
 		}

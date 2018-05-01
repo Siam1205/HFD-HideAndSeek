@@ -5,7 +5,11 @@ using System.Threading;
 using System.Windows.Forms;
 
 namespace HSF_HideAndSeek.Forms {
-	public partial class BitPlaneForm : Form {
+	
+	/// <summary>
+	/// This class represents a form for the only purpose of displaying the eight red bit planes of a given image
+	/// </summary>
+	public sealed partial class BitPlaneForm : Form {
 
 		private readonly Bitmap _image;
 
@@ -23,12 +27,6 @@ namespace HSF_HideAndSeek.Forms {
 			// Prevent the GUI from blocking by generating the bit planes inside a new thread
 			Thread thread = new Thread(DisplayBitPlanes);
 			thread.Start();
-		}
-
-		public sealed override string Text
-		{
-			get { return base.Text; }
-			set { base.Text = value; }
 		}
 
 		/// <summary>

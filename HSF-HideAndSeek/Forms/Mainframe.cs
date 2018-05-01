@@ -10,7 +10,11 @@ using System.Security.Cryptography;
 using System.Windows.Forms;
 
 namespace HSF_HideAndSeek.Forms {
-	public partial class Mainframe : Form {
+
+	/// <summary>
+	/// This class represents the application's main frame
+	/// </summary>
+	public sealed partial class Mainframe : Form {
 
 		// About and help form (closed on start)
 		private AboutBox _aboutBox;
@@ -372,7 +376,7 @@ namespace HSF_HideAndSeek.Forms {
 
 			// Fill labels with data
 			stegoImageNameLabel.Text = _stegoImage.Name;
-			stegoImageSizeLabel.Text = _defaultLabelValue; // TODO: Change this
+			stegoImageSizeLabel.Text = _defaultLabelValue;
 
 			// Display image
 			stegoImagePictureBox.Image = _stegoImage.Image;
