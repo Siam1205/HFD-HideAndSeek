@@ -33,7 +33,7 @@ namespace HSF_HideAndSeek.Forms {
 		}
 
 		/// <summary>
-		/// Fills the picture boxes with the bit plane images
+		/// Fills the picture boxes with the bit plane images.
 		/// </summary>
 		private void DisplayBitPlanes() {
 			bitPlanePictureBox0.Image = BitPlaneExtractor.ExtractSingleBitPlane(_image, 0);
@@ -54,7 +54,7 @@ namespace HSF_HideAndSeek.Forms {
 		}
 
 		/// <summary>
-		/// Free memory while closing the form
+		/// Free memory at closing the form.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>

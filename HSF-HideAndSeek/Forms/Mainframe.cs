@@ -12,55 +12,108 @@ using System.Windows.Forms;
 namespace HSF_HideAndSeek.Forms {
 
 	/// <summary>
-	/// This class represents the application's main frame
+	/// This class represents the application's main form and therefore the central user interface.
+	/// It contains all elements the user can interact with such as buttons or combo boxes.
+	/// From this form, all logic is invoked.
 	/// </summary>
 	public sealed partial class Mainframe : Form {
-
-		// About and help form (closed on start)
+		
+		#region Fields
+		/// <summary>
+		/// The reference to the about form object.
+		/// </summary>
 		private AboutBox _aboutBox;
+
+		/// <summary>
+		/// The reference to the carrier bit planes form object
+		/// </summary>
 		private BitPlaneForm _carrierBitPlaneForm;
+
+		/// <summary>
+		/// The reference to the stego image bit planes form object
+		/// </summary>
 		private BitPlaneForm _stegoImageBitPlaneForm;
 
-		// Instances for backend logic
+		/// <summary>
+		/// The reference to the FileManager's singleton instance
+		/// </summary>
 		private readonly FileManager _fm = FileManager.Instance;
+
+		/// <summary>
+		/// The reference to the Embedder's singleton instance
+		/// </summary>
 		private readonly Embedder _embedder = Embedder.Instance;
 
-		// Main data structures
+		/// <summary>
+		/// The reference to the carrier image object the user can load into the system
+		/// </summary>
 		private StegoImage _carrier;
+
+		/// <summary>
+		/// The reference to the stego image object the user can load into the system
+		/// </summary>
 		private StegoImage _stegoImage;
+
+		/// <summary>
+		/// The reference to the message object the user can load into the system
+		/// </summary>
 		private StegoMessage _message;
 
-		// File extensions and its filter for the OpenFileDialog class
+		/// <summary>
+		/// A string list containing image extensions one of which a potential carrier image needs to have
+		/// </summary>
 		private readonly List<string> _imageExtensions = new List<string> { ".bmp", ".jpg", ".jpeg", ".jfif", ".gif", ".png" };
+
+		/// <summary>
+		/// A readonly string containing a FileDialog filter for carrier images
+		/// </summary>
 		private readonly string _carrierExtensionsFilter = "" +
 				"Image files (*.bmp, *.gif, *.jpg, *.jpeg, *.jfif, *.png) | *.bmp; *.gif; *.jpg; *.jpeg; *.jfif; *.png; |" +
 				"BMP files (*.bmp) | *.bmp; |" +
 				"GIF files (*.gif) | *.gif; |" +
 				"PNG files (*.png) | *.png; |" +
 				"JPEG files (*.jpg, *.jpeg, *.jfif)| *.jpg; *.jpeg; *.jfif;";
+
+		/// <summary>
+		/// A readonly string containing a FileDialog filter for stego images
+		/// </summary>
 		private readonly string _stegoImageExtensionsFilter = "" +
 				"Image files (*.bmp, *.png) | *.bmp; *.png; |" +
 				"BMP files (*.bmp) | *.bmp; |" +
 				"PNG files (*.png) | *.png;";
+
+		/// <summary>
+		/// A readonly string containing a FileDialog filter for message files
+		/// </summary>
 		private readonly string _messageExtensionsFilter = "" +
 				"All Files (*.*) | *.*; |" +
 				"Image files (*.bmp, *.gif, *.jpg, *.jpeg, *.jfif, *.png) | *.bmp; *.gif; *.jpg; *.jpeg; *.jfif; *.png; |" +
 				"Office files (*.doc, *.docx, *.xls, *.ppt) | *.doc; *.docx; *.xls; *.ppt; |" +
 				"Text files (*.txt, *.pdf) | *.txt; *.pdf;";
 
+		/// <summary>
+		/// A readonly string containing a default value for the labels
+		/// to use when nothing else is displayed
+		/// </summary>
 		private readonly string _defaultLabelValue = "---";
+		#endregion
 
 		/// <summary>
-		/// Constructor
+		/// Constructor: Initializes the main frame.
 		/// </summary>
 		public Mainframe() {
 			InitializeComponent();
 		}
 
 		/// <summary>
-		/// Loads a carrier image from a specified path to the GUI
+		/// Invokes the <see cref="HSF_HideAndSeek.Helper.FileManager"/> to load a carrier image from a specified path to the system.
 		/// </summary>
-		/// <param name="path">Preferably absolute path of an image</param>
+		/// <param name="path">Preferably the absolute path of a desired carrier image</param>
+		/// <exception cref="ArgumentException"></exception>
+		/// <exception cref="FileNotFoundException"></exception>
+		/// <exception cref="OutOfMemoryException"></exception>
+		/// <exception cref="Exceptions.WrongPixelFormatException"></exception>
+		/// <exception cref="FormatException"></exception>
 		private void LoadCarrierImage(string path) {
 			if (File.Exists(path)) {
 				if (_imageExtensions.Contains(Path.GetExtension(path).ToLowerInvariant())) {
@@ -88,9 +141,14 @@ namespace HSF_HideAndSeek.Forms {
 		}
 
 		/// <summary>
-		/// Loads a stego image from a specified path
+		/// Invokes the <see cref="HSF_HideAndSeek.Helper.FileManager"/> to load a stego image from a specified path to the system.
 		/// </summary>
-		/// <param name="path">Preferably absolute path of an image</param>
+		/// <param name="path">Preferably the absolute path of a desired stego image</param>
+		/// <exception cref="ArgumentException"></exception>
+		/// <exception cref="FileNotFoundException"></exception>
+		/// <exception cref="OutOfMemoryException"></exception>
+		/// <exception cref="Exceptions.WrongPixelFormatException"></exception>
+		/// <exception cref="FormatException"></exception>
 		private void LoadStegoImage(string path) {
 			if (File.Exists(path)) {
 				if (_imageExtensions.Contains(Path.GetExtension(path).ToLowerInvariant())) {
@@ -116,19 +174,29 @@ namespace HSF_HideAndSeek.Forms {
 		}
 
 		/// <summary>
-		/// Save a stego image to a specified path
+		/// Invokes the <see cref="HSF_HideAndSeek.Helper.FileManager"/> to save a stego image to a specified path.
 		/// </summary>
-		/// <param name="stegoImage"></param>
-		/// <param name="path"></param>
+		/// <param name="stegoImage">The stego image object that should be written to the file system</param>
+		/// <param name="path">Preferably the absolute path where the stego image should be written to</param>
+		/// <exception cref="ArgumentException"></exception>
+		/// <exception cref="ArgumentNullException"></exception>
+		/// <exception cref="ArgumentOutOfRangeException"></exception>
+		/// <exception cref="PathTooLongException"></exception>
+		/// <exception cref="IOException"></exception>
+		/// <exception cref="FileNotFoundException"></exception>
+		/// <exception cref="DirectoryNotFoundException"></exception>
+		/// <exception cref="NotSupportedException"></exception>
+		/// <exception cref="System.Security.SecurityException"></exception>
+		/// <exception cref="System.Runtime.InteropServices.ExternalException"></exception>
 		private void SaveStegoImage(StegoImage stegoImage, string path) {
 			_fm.WriteStegoImage(stegoImage.Image, path);
 			stegoImageSizeLabel.Text = Converter.BytesToHumanReadableString(_fm.GetFileSizeInBytes(path));
 		}
 
 		/// <summary>
-		/// Loads a message from a specified path
+		/// Invokes the <see cref="HSF_HideAndSeek.Helper.FileManager"/> to load a message from a specified path.
 		/// </summary>
-		/// <param name="path">Preferably absolute path of an arbitrary file</param>
+		/// <param name="path">Preferably the absolute path of a message file</param>
 		private void LoadMessage(string path) {
 			if (File.Exists(path)) {
 
@@ -148,7 +216,7 @@ namespace HSF_HideAndSeek.Forms {
 		}
 
 		/// <summary>
-		/// Removes the carrier image from the GUI
+		/// Removes the carrier image from the system.
 		/// </summary>
 		private void ClearCarrierImage() {
 
@@ -172,7 +240,7 @@ namespace HSF_HideAndSeek.Forms {
 		}
 
 		/// <summary>
-		/// Removes the stego image from the GUI
+		/// Removes the stego image from the system.
 		/// </summary>
 		private void ClearStegoImage() {
 
@@ -195,7 +263,7 @@ namespace HSF_HideAndSeek.Forms {
 		}
 
 		/// <summary>
-		/// Removes the message from the GUI
+		/// Removes the message from the system.
 		/// </summary>
 		private void ClearMessage() {
 
@@ -211,7 +279,7 @@ namespace HSF_HideAndSeek.Forms {
 		}
 
 		/// <summary>
-		/// Load resources for the mainframe and initialize it
+		/// Loads resources for the mainframe.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -245,7 +313,6 @@ namespace HSF_HideAndSeek.Forms {
 
 			this.rateButton.Image = (Image) (new Bitmap(HSF_HideAndSeek.Properties.Resources.star, new Size(22, 22)));
 		}
-
 
 		#region Events and listeners
 
@@ -572,7 +639,7 @@ namespace HSF_HideAndSeek.Forms {
 		#region GUI component checker methods
 
 		/// <summary>
-		/// Wrapper for all check-methods
+		/// Wraps all checker methods together.
 		/// </summary>
 		private void CheckEverything() {
 			CheckShowCarrierBitPlanes();
@@ -583,6 +650,10 @@ namespace HSF_HideAndSeek.Forms {
 			CheckSavingMessage();
 		}
 
+		/// <summary>
+		/// Checks whether all requirements are set to extract and show all of the carrier's bit planes.
+		/// </summary>
+		/// <returns>true if all requirements are set and false otherwise</returns>
 		private bool CheckShowCarrierBitPlanes() {
 			if (_carrier == null) {
 				showCarrierBitplanesButton.Enabled = false;
@@ -594,9 +665,9 @@ namespace HSF_HideAndSeek.Forms {
 		}
 
 		/// <summary>
-		/// Check whether all requirements are set to hide a message
+		/// Checks whether all requirements are set to hide a message.
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>true if all requirements are set and false otherwise</returns>
 		private bool CheckEmbedding() {
 			if (_carrier == null || _message == null) {
 				hideMessageButton.Enabled = false;
@@ -618,9 +689,9 @@ namespace HSF_HideAndSeek.Forms {
 		}
 
 		/// <summary>
-		/// Check whether all requirements are set to extract a message
+		/// Checks whether all requirements are set to extract a message.
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>true if all requirements are set and false otherwise</returns>
 		private bool CheckExtraction() {
 			if (_stegoImage == null) {
 				showStegoImageBitplanesButton.Enabled = false;
@@ -633,9 +704,9 @@ namespace HSF_HideAndSeek.Forms {
 		}
 
 		/// <summary>
-		/// Check whether all requirements are set to encrypt or decrypt a message
+		/// Checks whether all requirements are set to encrypt or decrypt a message.
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>true if all requirements are set and false otherwise</returns>
 		private bool CheckEncryption() {
 			if (_message == null) {
 				encryptMessageButton.Enabled = false;
@@ -655,9 +726,9 @@ namespace HSF_HideAndSeek.Forms {
 		}
 
 		/// <summary>
-		/// Check whether all requirements are set to save a stego image to the drive
+		/// Checks whether all requirements are set to save a stego image to the drive.
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>true if all requirements are set and false otherwise</returns>
 		private bool CheckSavingStegoImage() {
 			if (_stegoImage == null) {
 				saveStegoImageButton.Enabled = false;
@@ -669,9 +740,9 @@ namespace HSF_HideAndSeek.Forms {
 		}
 
 		/// <summary>
-		/// Check whether all requirements are set to save a message file to the drive
+		/// Checks whether all requirements are set to save a message file to the drive.
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>true if all requirements are set and false otherwise</returns>
 		private bool CheckSavingMessage() {
 			if (_message == null) {
 				saveMessageButton.Enabled = false;

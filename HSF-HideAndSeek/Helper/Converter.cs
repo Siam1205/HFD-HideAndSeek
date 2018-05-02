@@ -3,11 +3,17 @@ using System;
 using System.Text;
 
 namespace HSF_HideAndSeek.Helper {
-	class Converter {
+	
+	/// <summary>
+	/// This class provides static methods for converting data into other representations or
+	/// for converting a value from one data type into another one.
+	/// </summary>
+	internal class Converter {
 
 		#region Conversions into binary string patterns
+
 		/// <summary>
-		/// Convert a text string to a binary string pattern
+		/// Converts a text string to a binary string pattern.
 		/// </summary>
 		/// <param name="str"></param>
 		/// <param name="zeroPadding"></param>
@@ -18,6 +24,8 @@ namespace HSF_HideAndSeek.Helper {
 		/// <exception cref="MessageNameTooBigException"></exception>
 		/// <returns></returns>
 		public static string StringToBinary(string str, int zeroPadding) {
+			// TODO: Change this!
+
 			UTF8Encoding encoding = new UTF8Encoding();
 			byte[] buffer = encoding.GetBytes(str);
 
@@ -37,63 +45,61 @@ namespace HSF_HideAndSeek.Helper {
 		}
 
 		/// <summary>
-		/// Converts a long object to it's binary string representation and fills it with a
-		/// specified amount of zeros to the left
+		/// Converts a long variable to its binary string representation and fills it with a
+		/// specified amount of zeros to the left.
 		/// </summary>
-		/// <param name="decimalNumber"></param>
-		/// <param name="zeroPadding"></param>
+		/// <param name="decimalNumber">The decimal number which is to be converted into a binary number</param>
+		/// <param name="zeroPadding">The amount of zeros that the binary number should be padded with</param>
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="ArgumentOutOfRangeException"></exception>
-		/// <returns></returns>
+		/// <returns>The binary representation of the given decimal number</returns>
 		public static string DecimalToBinary(long decimalNumber, int zeroPadding) {
 			if (zeroPadding != 0) {
 				return Convert.ToString(decimalNumber, 2).PadLeft(zeroPadding, '0');
-			} else {
-				return Convert.ToString(decimalNumber, 2);
 			}
+			return Convert.ToString(decimalNumber, 2);
 		}
 
 		/// <summary>
-		/// Converts a uint object to it's binary string representation and fills it with a
-		/// specified amount of zeros to the left
+		/// Converts a uint variable to its binary string representation and fills it with a
+		/// specified amount of zeros to the left.
 		/// </summary>
-		/// <param name="decimalNumber"></param>
-		/// <param name="zeroPadding"></param>
+		/// <param name="decimalNumber">The decimal number which is to be converted into a binary number</param>
+		/// <param name="zeroPadding">The amount of zeros that the binary number should be padded with</param>
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="ArgumentOutOfRangeException"></exception>
-		/// <returns></returns>
+		/// <returns>The binary representation of the given decimal number</returns>
 		public static string DecimalToBinary(uint decimalNumber, int zeroPadding) {
 			if (zeroPadding != 0) {
 				return Convert.ToString(decimalNumber, 2).PadLeft(zeroPadding, '0');
-			} else {
-				return Convert.ToString(decimalNumber, 2);
 			}
+			return Convert.ToString(decimalNumber, 2);
 		}
 
 		/// <summary>
-		/// Converts a byte object to it's binary string representation and fills it with a
-		/// specified amount of zeros to the left
+		/// Converts a byte variable to its binary string representation and fills it with a
+		/// specified amount of zeros to the left.
 		/// </summary>
-		/// <param name="decimalNumber"></param>
-		/// <param name="zeroPadding"></param>
+		/// <param name="decimalNumber">The decimal number which is to be converted into a binary number</param>
+		/// <param name="zeroPadding">The amount of zeros that the binary number should be padded with</param>
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="ArgumentOutOfRangeException"></exception>
-		/// <returns></returns>
-		public static string DecimalToBinary(Byte decimalNumber, int zeroPadding) {
+		/// <returns>The binary representation of the given decimal number</returns>
+		public static string DecimalToBinary(byte decimalNumber, int zeroPadding) {
 			if (zeroPadding != 0) {
 				return Convert.ToString(decimalNumber, 2).PadLeft(zeroPadding, '0');
-			} else {
-				return Convert.ToString(decimalNumber, 2);
 			}
+			return Convert.ToString(decimalNumber, 2);
 		}
 
 		/// <summary>
-		/// Converts a byte array to it's binary string representation
+		/// Converts a byte array to its binary string representation.
+		/// For this purpose no padding is necessary since a byte variable always uses 8 digits.
 		/// </summary>
-		/// <param name="array"></param>
+		/// <param name="array">The byte array which is to be converted into a binary string</param>
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="ArgumentOutOfRangeException"></exception>
-		/// <returns></returns>
+		/// <returns>The binary representation of the given byte array</returns>
 		public static string ByteArrayToBinary(byte[] array) {
 			StringBuilder sb = new StringBuilder();
 			foreach (byte by in array) {
@@ -103,10 +109,10 @@ namespace HSF_HideAndSeek.Helper {
 		}
 		#endregion
 
-
 		#region Conversions from binary representations into variables or objects
+
 		/// <summary>
-		/// Converts a binary string pattern into its respective UTF8 text representation
+		/// Converts a binary string pattern into its respective UTF8 text representation.
 		/// </summary>
 		/// <param name="str"></param>
 		/// <exception cref="ArgumentException"></exception>
@@ -117,7 +123,9 @@ namespace HSF_HideAndSeek.Helper {
 		/// <exception cref="DecoderFallbackException"></exception>
 		/// <returns></returns>
 		public static string BinaryToString(string str) {
-			byte[] temp = Extensions.ConvertBitstringToByteArray(str);
+			//byte[] temp = Extensions.ConvertBitstringToByteArray(str);
+			byte[] temp = str.ConvertBitstringToByteArray();
+
 			string val = Encoding.UTF8.GetString(temp);
 			return val;
 		}
@@ -164,7 +172,6 @@ namespace HSF_HideAndSeek.Helper {
 			return unsignedInt;
 		}
 		#endregion
-
 
 		/// <summary>
 		/// Converts a uint variable storing a bit value

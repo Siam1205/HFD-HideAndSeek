@@ -113,7 +113,6 @@ namespace HSF_HideAndSeek.Helper {
 		/// <exception cref="PathTooLongException"></exception>
 		/// <exception cref="IOException"></exception>
 		/// <exception cref="FileNotFoundException"></exception>
-		/// <exception cref="PathTooLongException"></exception>
 		/// <exception cref="DirectoryNotFoundException"></exception>
 		/// <exception cref="NotSupportedException"></exception>
 		/// <exception cref="System.Security.SecurityException"></exception>
@@ -135,7 +134,6 @@ namespace HSF_HideAndSeek.Helper {
 		/// <exception cref="PathTooLongException"></exception>
 		/// <exception cref="IOException"></exception>
 		/// <exception cref="FileNotFoundException"></exception>
-		/// <exception cref="PathTooLongException"></exception>
 		/// <exception cref="DirectoryNotFoundException"></exception>
 		/// <exception cref="NotSupportedException"></exception>
 		/// <exception cref="System.Security.SecurityException"></exception>
