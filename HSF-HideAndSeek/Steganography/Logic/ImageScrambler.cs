@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Linq;
 using System.Numerics;
 
-namespace HSF_HideAndSeek.Steganography {
+namespace HSF_HideAndSeek.Steganography.Logic {
 
 	/// <summary>
 	/// This class implements algorithms used to scramble the pixels of an image.

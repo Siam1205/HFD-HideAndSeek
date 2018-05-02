@@ -1,4 +1,4 @@
-﻿using HSF_HideAndSeek.Steganography;
+﻿using HSF_HideAndSeek.Steganography.Logic;
 using System;
 using System.Drawing;
 using System.Threading;
@@ -7,18 +7,21 @@ using System.Windows.Forms;
 namespace HSF_HideAndSeek.Forms {
 	
 	/// <summary>
-	/// This class represents a form for the only purpose of displaying the eight red bit planes of a given image
+	/// This class represents a form for the only purpose of displaying the eight red bit planes of a given carrier or stego image.
 	/// </summary>
 	public sealed partial class BitPlaneForm : Form {
 
+		/// <summary>
+		/// The original image the bit planes are to be extracted from
+		/// </summary>
 		private readonly Bitmap _image;
 
 		/// <summary>
 		/// Constructor: Generates a new form with a given name and
-		/// displays the eight bit planes (red color channel) of the given image
+		/// displays the eight bit planes (red color channel) of the given image one after another.
 		/// </summary>
 		/// <param name="title">The form's title</param>
-		/// <param name="image">The image whose bit planes are to be shown</param>
+		/// <param name="image">The image whose bit planes are to be extracted from</param>
 		public BitPlaneForm(string title, Bitmap image) {
 			InitializeComponent();
 			_image = new Bitmap(image);

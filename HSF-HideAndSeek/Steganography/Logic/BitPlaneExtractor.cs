@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace HSF_HideAndSeek.Steganography {
+namespace HSF_HideAndSeek.Steganography.Logic {
 	internal class BitPlaneExtractor {
 
 		/// <summary>

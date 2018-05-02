@@ -6,14 +6,16 @@ using System.Security.Cryptography;
 namespace HSF_HideAndSeek.Cryptography {
 
 	/// <summary>
-	/// This class provides static methods for encrypting strings with supplied passwords
-	/// The class and its methods were taken from a code project found at
-	/// https://www.codeproject.com/Articles/769741/Csharp-AES-bits-Encryption-Library-with-Salt
-	/// although they have been modified.
+	/// This class provides static methods for encrypting data with supplied keys.
+	/// The whole class and its methods are modified and extended versions of the code found
+	/// <a href="https://www.codeproject.com/Articles/769741/Csharp-AES-bits-Encryption-Library-with-Salt">here</a>.
 	/// </summary>
 	internal class AES {
 
-		// Specify salt. It must be at least 8 bytes.
+		/// <summary>
+		/// Predefined salt for the encryption algorithms.
+		/// It must be at least 8 bytes
+		/// </summary>
 		private static readonly byte[] DefaultSalt = {
 			0xD0, 0xA1, 0xF2, 0x0A, 0xF9, 0xA8, 0x57, 0xC0,
 			0xD4, 0xBE, 0xC7, 0x8B, 0xEE, 0x91, 0x4D, 0xB6,
@@ -27,10 +29,10 @@ namespace HSF_HideAndSeek.Cryptography {
 
 		/// <summary>
 		/// Callback method which uses the managed Rijndael class
-		/// to encrypt arrays of bytes with a given password as array of bytes
+		/// to encrypt a data byte array with a given key byte array.
 		/// </summary>
-		/// <param name="bytesToBeEncrypted"></param>
-		/// <param name="passwordBytes"></param>
+		/// <param name="bytesToBeEncrypted">The array of bytes that should be encrypted</param>
+		/// <param name="keyBytes">They encryption key as byte array</param>
 		/// <exception cref="InvalidOperationException"></exception>
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="ArgumentNullException"></exception>
@@ -39,7 +41,7 @@ namespace HSF_HideAndSeek.Cryptography {
 		/// <exception cref="NotSupportedException"></exception>
 		/// <exception cref="OverflowException"></exception>
 		/// <returns></returns>
-		private static byte[] AES_Encrypt(byte[] bytesToBeEncrypted, byte[] passwordBytes) {
+		private static byte[] AES_Encrypt(byte[] bytesToBeEncrypted, byte[] keyBytes) {
 			byte[] encryptedBytes;
 
 			using (MemoryStream ms = new MemoryStream()) {
@@ -49,7 +51,7 @@ namespace HSF_HideAndSeek.Cryptography {
 					aes.KeySize = 256;
 					aes.BlockSize = 128;
 
-					var key = new Rfc2898DeriveBytes(passwordBytes, DefaultSalt, 1000);
+					var key = new Rfc2898DeriveBytes(keyBytes, DefaultSalt, 1000);
 					aes.Key = key.GetBytes(aes.KeySize / 8);
 					aes.IV = key.GetBytes(aes.BlockSize / 8);
 
@@ -68,10 +70,10 @@ namespace HSF_HideAndSeek.Cryptography {
 
 		/// <summary>
 		/// Callback method which uses the managed Rijndael class
-		/// to decrypt arrays of bytes with a given password as array of bytes
+		/// to decrypt a data byte array with a given key byte array.
 		/// </summary>
-		/// <param name="bytesToBeDecrypted"></param>
-		/// <param name="passwordBytes"></param>
+		/// <param name="bytesToBeDecrypted">The array of bytes that should be decrypted</param>
+		/// <param name="keyBytes">The encryption key as byte array</param>
 		/// <exception cref="InvalidOperationException"></exception>
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="ArgumentNullException"></exception>
@@ -80,7 +82,7 @@ namespace HSF_HideAndSeek.Cryptography {
 		/// <exception cref="NotSupportedException"></exception>
 		/// <exception cref="OverflowException"></exception>
 		/// <returns></returns>
-		private static byte[] AES_Decrypt(byte[] bytesToBeDecrypted, byte[] passwordBytes) {
+		private static byte[] AES_Decrypt(byte[] bytesToBeDecrypted, byte[] keyBytes) {
 			byte[] decryptedBytes;
 
 			using (MemoryStream ms = new MemoryStream()) {
@@ -90,7 +92,7 @@ namespace HSF_HideAndSeek.Cryptography {
 					aes.KeySize = 256;
 					aes.BlockSize = 128;
 
-					var key = new Rfc2898DeriveBytes(passwordBytes, DefaultSalt, 1000);
+					var key = new Rfc2898DeriveBytes(keyBytes, DefaultSalt, 1000);
 					aes.Key = key.GetBytes(aes.KeySize / 8);
 					aes.IV = key.GetBytes(aes.BlockSize / 8);
 
@@ -108,10 +110,10 @@ namespace HSF_HideAndSeek.Cryptography {
 		}
 
 		/// <summary>
-		/// Encrypts a text string using a given password
+		/// Encrypts a string using a given password-like key.
 		/// </summary>
-		/// <param name="input"></param>
-		/// <param name="password"></param>
+		/// <param name="input">The text string that should be encrypted</param>
+		/// <param name="key">The text string that should be used as key</param>
 		/// <exception cref="InvalidOperationException"></exception>
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="ArgumentNullException"></exception>
@@ -120,10 +122,10 @@ namespace HSF_HideAndSeek.Cryptography {
 		/// <exception cref="NotSupportedException"></exception>
 		/// <exception cref="OverflowException"></exception>
 		/// <returns></returns>
-		public static string EncryptText(string input, string password) {
+		public static string EncryptText(string input, string key) {
 			// Get the bytes of the string
 			byte[] bytesToBeEncrypted = Encoding.UTF8.GetBytes(input);
-			byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
+			byte[] passwordBytes = Encoding.UTF8.GetBytes(key);
 
 			// Hash the password with SHA256 and a predefined salt
 			passwordBytes = Hasher.HashSha256(passwordBytes);
@@ -136,10 +138,10 @@ namespace HSF_HideAndSeek.Cryptography {
 		}
 
 		/// <summary>
-		/// Decrypts a text string using a given password
+		/// Decrypts a string using a given password-like key.
 		/// </summary>
-		/// <param name="input"></param>
-		/// <param name="password"></param>
+		/// <param name="input">The text string that should be decrypted</param>
+		/// <param name="key">The text string that should be used as key</param>
 		/// <exception cref="InvalidOperationException"></exception>
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="ArgumentNullException"></exception>
@@ -148,10 +150,10 @@ namespace HSF_HideAndSeek.Cryptography {
 		/// <exception cref="NotSupportedException"></exception>
 		/// <exception cref="OverflowException"></exception>
 		/// <returns></returns>
-		public static string DecryptText(string input, string password) {
+		public static string DecryptText(string input, string key) {
 			// Get the bytes of the string
 			byte[] bytesToBeDecrypted = Convert.FromBase64String(input);
-			byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
+			byte[] passwordBytes = Encoding.UTF8.GetBytes(key);
 
 			// Hash the password with SHA256 and a predefined salt
 			passwordBytes = Hasher.HashSha256(passwordBytes);
@@ -164,10 +166,10 @@ namespace HSF_HideAndSeek.Cryptography {
 		}
 
 		/// <summary>
-		/// Encrypts a byte array using a given password
+		/// Encrypts a byte array using a given password-like key.
 		/// </summary>
-		/// <param name="input"></param>
-		/// <param name="password"></param>
+		/// <param name="input">The array of bytes that should be encrypted</param>
+		/// <param name="key">The text string that should be used as key</param>
 		/// <exception cref="InvalidOperationException"></exception>
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="ArgumentNullException"></exception>
@@ -178,8 +180,8 @@ namespace HSF_HideAndSeek.Cryptography {
 		/// <exception cref="System.Reflection.TargetInvocationException"></exception>
 		/// <exception cref="ObjectDisposedException"></exception>
 		/// <returns></returns>
-		public static byte[] Encrypt(byte[] input, string password) {
-			byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
+		public static byte[] Encrypt(byte[] input, string key) {
+			byte[] passwordBytes = Encoding.UTF8.GetBytes(key);
 
 			// Hash the password with SHA256 and a predefined salt
 			passwordBytes = Hasher.HashSha256(passwordBytes);
@@ -190,10 +192,10 @@ namespace HSF_HideAndSeek.Cryptography {
 		}
 
 		/// <summary>
-		/// Decrypts a byte array using a given password
+		/// Decrypts a byte array using a given password-like key.
 		/// </summary>
-		/// <param name="input"></param>
-		/// <param name="password"></param>
+		/// <param name="input">The array of bytes that should be decrypted</param>
+		/// <param name="key">The text string that should be used as key</param>
 		/// <exception cref="InvalidOperationException"></exception>
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="ArgumentNullException"></exception>
@@ -204,8 +206,8 @@ namespace HSF_HideAndSeek.Cryptography {
 		/// <exception cref="System.Reflection.TargetInvocationException"></exception>
 		/// <exception cref="ObjectDisposedException"></exception>
 		/// <returns></returns>
-		public static byte[] Decrypt(byte[] input, string password) {
-			byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
+		public static byte[] Decrypt(byte[] input, string key) {
+			byte[] passwordBytes = Encoding.UTF8.GetBytes(key);
 
 			// Hash the password with SHA256 and a predefined salt
 			passwordBytes = Hasher.HashSha256(passwordBytes);
@@ -216,11 +218,11 @@ namespace HSF_HideAndSeek.Cryptography {
 		}
 
 		/// <summary>
-		/// Encrypts a file read from a source path and writes it to a destination path
+		/// Encrypts a file read from a source path using a given key and writes it to a destination path.
 		/// </summary>
-		/// <param name="originalFilePath"></param>
-		/// <param name="password"></param>
-		/// <param name="encrptedFilePath"></param>
+		/// <param name="originalFilePath">The path of the file that should be read and encrypted</param>
+		/// <param name="key">The text string that should be used as key</param>
+		/// <param name="encryptedFilePath">The path where the encrypted file should be written</param>
 		/// <exception cref="InvalidOperationException"></exception>
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="ArgumentNullException"></exception>
@@ -233,24 +235,24 @@ namespace HSF_HideAndSeek.Cryptography {
 		/// <exception cref="UnauthorizedAccessException"></exception>
 		/// <exception cref="System.Security.SecurityException"></exception>
 		/// <exception cref="OverflowException"></exception>
-		public static void EncryptFile(string originalFilePath, string password, string encrptedFilePath) {
+		public static void EncryptFile(string originalFilePath, string key, string encryptedFilePath) {
 			byte[] bytesToBeEncrypted = File.ReadAllBytes(originalFilePath);
-			byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
+			byte[] passwordBytes = Encoding.UTF8.GetBytes(key);
 
 			// Hash the password with SHA256 and a predefined salt
 			passwordBytes = Hasher.HashSha256(passwordBytes);
 
 			byte[] bytesEncrypted = AES_Encrypt(bytesToBeEncrypted, passwordBytes);
 
-			File.WriteAllBytes(encrptedFilePath, bytesEncrypted);
+			File.WriteAllBytes(encryptedFilePath, bytesEncrypted);
 		}
 
 		/// <summary>
-		/// Decrypts a file read from a source path and writes it to a destination path
+		/// Decrypts a file read from a source path using a given key and writes it to a destination path.
 		/// </summary>
-		/// <param name="encryptedFilePath"></param>
-		/// <param name="password"></param>
-		/// <param name="decryptedFilePath"></param>
+		/// <param name="encryptedFilePath">The path of the file that should be read and decrypted</param>
+		/// <param name="password">The text string that should be used as key</param>
+		/// <param name="decryptedFilePath">The path where the decrypted file should be written</param>
 		/// <exception cref="InvalidOperationException"></exception>
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="ArgumentNullException"></exception>

@@ -7,7 +7,7 @@ using System.Drawing;
 using System.IO;
 using System.Text;
 
-namespace HSF_HideAndSeek.Steganography {
+namespace HSF_HideAndSeek.Steganography.Logic {
 
 	/// <summary>
 	/// This class contains embedding and extracting operations

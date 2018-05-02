@@ -1,6 +1,6 @@
 ﻿using HSF_HideAndSeek.Cryptography;
 using HSF_HideAndSeek.Helper;
-using HSF_HideAndSeek.Steganography;
+using HSF_HideAndSeek.Steganography.Logic;
 using HSF_HideAndSeek.Steganography.DataStructures;
 using System;
 using System.Collections.Generic;

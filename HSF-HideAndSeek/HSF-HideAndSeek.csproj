@@ -80,11 +80,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Steganography\BitPlaneExtractor.cs" />
+    <Compile Include="Steganography\Logic\BitPlaneExtractor.cs" />
     <Compile Include="Steganography\DataStructures\StegoImage.cs" />
-    <Compile Include="Steganography\Embedder.cs" />
+    <Compile Include="Steganography\Logic\Embedder.cs" />
     <Compile Include="Steganography\DataStructures\StegoMessage.cs" />
-    <Compile Include="Steganography\ImageScrambler.cs" />
+    <Compile Include="Steganography\Logic\ImageScrambler.cs" />
     <EmbeddedResource Include="Forms\AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </EmbeddedResource>
