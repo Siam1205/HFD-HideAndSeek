@@ -10,36 +10,42 @@ using System.Text;
 namespace HSF_HideAndSeek.Steganography.Logic {
 
 	/// <summary>
-	/// This class contains embedding and extracting operations
-	/// in order to hide a message inside a BMP/PNG image or to extract
-	/// a message from such an image.
+	/// This class represents a message embedder which provides methods to embed or extract steganographical messages.
+	/// Such messages can be any file. On the other hand, the medium a message can be hidden within must be a <see cref="System.Drawing.Bitmap"/> object
+	/// which is available in the Format24bppRgb pixel format. Such images are most likely BMPs or PNGs.
 	/// </summary>
 	internal class Embedder {
 
 		#region Singleton definition
+
+		/// <summary>
+		/// Singleton instance of the <see cref="HSF_HideAndSeek.Steganography.Logic.Embedder"/> class
+		/// </summary>
 		private static Embedder _instance;
 
+		/// <summary>
+		/// Private constructor according to the singleton design pattern.
+		/// </summary>
 		private Embedder() {
+
 		}
 
-		public static Embedder Instance {
-			get {
-				if (_instance == null) {
-					_instance = new Embedder();
-				}
-				return _instance;
-			}
-		}
+		/// <summary>
+		/// Returns the singleton instance of the class or creates it in case there is none.
+		/// </summary>
+		public static Embedder Instance => _instance ?? (_instance = new Embedder());
+
 		#endregion
 
 		/// <summary>
-		/// Hide a message inside a carrier image
+		/// Hides a <see cref="HSF_HideAndSeek.Steganography.DataStructures.StegoMessage"/> object inside a
+		/// <see cref="HSF_HideAndSeek.Steganography.DataStructures.StegoImage"/> object.
 		/// </summary>
 		/// <param name="carrierImage">The carrier image which is to be used to hide the message</param>
 		/// <param name="message">The message which is to be hidden inside the carrier image</param>
 		/// <param name="stegoPassword">The password which is to be used to hide the message (Randomized Hide and Seek)</param>
 		/// <param name="bitPlanes">The amount of bit planes that are to be used to hide the message</param>
-		/// <param name="bitPlanesFirst">true for bit planes first-mode; false for pixels first-mode</param>
+		/// <param name="bitPlanesFirst">true for bit planes first-mode and false for pixels first-mode</param>
 		/// <returns>The stego image containing the hidden message</returns>
 		public StegoImage HideMessage(
 			StegoImage carrierImage,
@@ -141,7 +147,7 @@ namespace HSF_HideAndSeek.Steganography.Logic {
 								}
 							}
 
-							// If a pixel should be used in full before the next pixel is chosen
+						// If a pixel should be used in full before the next pixel is chosen
 						} else {
 
 							// Go to the next bit plane
@@ -173,13 +179,14 @@ namespace HSF_HideAndSeek.Steganography.Logic {
 		}
 
 		/// <summary>
-		/// Extract a message from a carrier
+		/// Extracts a <see cref="HSF_HideAndSeek.Steganography.DataStructures.StegoMessage"/> object from a
+		/// <see cref="HSF_HideAndSeek.Steganography.DataStructures.StegoImage"/> object.
 		/// </summary>
 		/// <param name="stegoImage">The stego image which hides the message</param>
 		/// <param name="stegoPassword">The password used to hide the message (Randomized Hide and Seek)</param>
 		/// <param name="bitPlanes">The amount of bit planes that have been used to hide the message</param>
-		/// <param name="bitPlanesFirst">true for bit planes first-mode; false for pixels first-mode</param>
-		/// <returns>The message that was hidden inside the stego image</returns>
+		/// <param name="bitPlanesFirst">true for bit planes first-mode and false for pixels first-mode</param>
+		/// <returns>The message that has been hidden inside the stego image</returns>
 		public StegoMessage ExtractMessage(StegoImage stegoImage,
 			string stegoPassword,
 			int bitPlanes,
@@ -422,7 +429,7 @@ namespace HSF_HideAndSeek.Steganography.Logic {
 		}
 
 		/// <summary>
-		/// Rate a carrier image based on the amount of bits that have to be changed during the embedding process.
+		/// Rates a carrier image based on the amount of bits that have to be changed during the embedding process.
 		/// The result is the exact amount of LSBs inside a carrier that stay the same
 		/// during sequential embedding (without a stego password) in percent.
 		/// </summary>
@@ -470,12 +477,12 @@ namespace HSF_HideAndSeek.Steganography.Logic {
 
 		/// <summary>
 		/// Calculates the hiding capacity of a given carrier
-		/// based on the amount of specified bit planes and returns it in bytes
+		/// based on the amount of specified bit planes and returns it in bytes.
 		/// </summary>
-		/// <param name="carrier">The carrier which the capacity should be calculated from</param>
+		/// <param name="carrier">The carrier whose capacity should be calculated</param>
 		/// <param name="bitPlanes">The amount of the carrier's bit planes that are allowed to be used</param>
 		/// <exception cref="FormatException"></exception>
-		/// <returns></returns>
+		/// <returns>The capacity in bytes</returns>
 		public uint CalculateCapacity(StegoImage carrier, int bitPlanes) {
 			if (bitPlanes < 0 || bitPlanes > 7) {
 				throw new FormatException();
@@ -490,12 +497,13 @@ namespace HSF_HideAndSeek.Steganography.Logic {
 		}
 		
 		/// <summary>
-		/// Generates a binary bitstring from a message object
+		/// Generates a binary bit string from a <see cref="HSF_HideAndSeek.Steganography.DataStructures.StegoMessage"/> object.
+		/// At this, the message itself along with its name and its size is transformed to a series of 0s and 1s.
 		/// </summary>
-		/// <param name="message"></param>
+		/// <param name="message">The message whose bit string is to be generated</param>
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="ArgumentOutOfRangeException"></exception>
-		/// <returns></returns>
+		/// <returns>The bit string that represents the message</returns>
 		public string GenerateMessageBitPattern(StegoMessage message) {
 
 			// Extract data from the message object
@@ -518,10 +526,10 @@ namespace HSF_HideAndSeek.Steganography.Logic {
 		}
 
 		/// <summary>
-		/// Extracts a specific bit of a byte and returns it as char
+		/// Extracts a specific bit of a byte and returns it as char.
 		/// </summary>
-		/// <param name="inputByte"></param>
-		/// <param name="pos"></param>
+		/// <param name="inputByte">The byte whose bit should be extracted</param>
+		/// <param name="pos">The position of the bit which is to be extracted</param>
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="ArgumentNullException"></exception>
 		/// <exception cref="ArgumentOutOfRangeException"></exception>
@@ -538,9 +546,9 @@ namespace HSF_HideAndSeek.Steganography.Logic {
 
 		/// <summary>
 		/// Collects all LSBs of a given carrier image ordered from pixel
-		/// (0, 0) to (xMax, yMax) and from color R over G to B and returns them as string
+		/// (0, 0) to (xMax, yMax) and from color R over G to B and returns them as string.
 		/// </summary>
-		/// <param name="carrier">The carrier all LSBs are to be taken from</param>
+		/// <param name="carrier">The carrier image whose LSBs are to be taken from</param>
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="ArgumentOutOfRangeException"></exception>
 		/// <returns></returns>
@@ -562,13 +570,13 @@ namespace HSF_HideAndSeek.Steganography.Logic {
 		}
 
 		/// <summary>
-		/// Collects all bits of the given bit planes of a given carrier image
+		/// Collects the bits of all specified bit planes from a given carrier image
 		/// beginning with the least significant bit plane ordered from pixel
-		/// (0, 0) to (xMax, yMax) and from color R over G to B and returns them as string 
+		/// (0, 0) to (xMax, yMax) and from color R over G to B and returns them as string.
 		/// </summary>
-		/// <param name="carrier"></param>
-		/// <param name="bitPlanes"></param>
-		/// <param name="bitPlanesFirst"></param>
+		/// <param name="carrier">The carrier image whose bits are to be collected</param>
+		/// <param name="bitPlanes">The amount of bit planes the bits are to be collected from</param>
+		/// <param name="bitPlanesFirst">true for bit planes first-mode and false for pixels first-mode</param>
 		/// <returns></returns>
 		private string CollectCarrierBits(StegoImage carrier, int bitPlanes, bool bitPlanesFirst) {
 			StringBuilder sb = new StringBuilder();
@@ -603,10 +611,10 @@ namespace HSF_HideAndSeek.Steganography.Logic {
 		}
 
 		/// <summary>
-		/// Gets the bit of a specific position inside an arbitrary byte
+		/// Returns the bit of a specific position inside an arbitrary byte.
 		/// </summary>
-		/// <param name="arbitraryByte"></param>
-		/// <param name="bitPosition"></param>
+		/// <param name="arbitraryByte">The byte whose bit position is to be returned</param>
+		/// <param name="bitPosition">The bit's position</param>
 		/// <returns></returns>
 		public static string GetBit(byte arbitraryByte, int bitPosition) {
 			bool bit = (1 == ((arbitraryByte >> bitPosition) & 1));
@@ -614,11 +622,11 @@ namespace HSF_HideAndSeek.Steganography.Logic {
 		}
 
 		/// <summary>
-		/// Sets a bit of an arbitrary byte at a specified position to a given value
+		/// Sets a bit of an arbitrary byte at a specified position to a given value.
 		/// </summary>
-		/// <param name="arbitraryByte"></param>
-		/// <param name="bit"></param>
-		/// <param name="bitPosition"></param>
+		/// <param name="arbitraryByte">The byte whose bit is to be set</param>
+		/// <param name="bit">The value which has to be either 0 or 1</param>
+		/// <param name="bitPosition">The position of the bit to set</param>
 		/// <exception cref="ArgumentException"></exception>
 		/// <returns></returns>
 		private byte SetBit(byte arbitraryByte, byte bit, byte bitPosition) {
@@ -634,16 +642,15 @@ namespace HSF_HideAndSeek.Steganography.Logic {
 		}
 
 		/// <summary>
-		/// Sets a bit of an arbitrary byte at a specified position to a given value
+		/// Sets a bit of an arbitrary byte at a specified position to a given value.
 		/// </summary>
-		/// <param name="arbitraryByte"></param>
-		/// <param name="bit"></param>
-		/// <param name="bitPosition"></param>
-		/// <exception cref="ArgumentNullException"></exception>
+		/// <param name="arbitraryByte">The byte whose bit is to be set</param>
+		/// <param name="bit">The value which has to be either 0 or 1</param>
+		/// <param name="bitPosition">The position of the bit to set</param>
 		/// <exception cref="ArgumentNullException"></exception>
 		/// <exception cref="FormatException"></exception>
 		/// <exception cref="OverflowException"></exception>
-		/// <returns></returns>
+		/// <returns>The new byte</returns>
 		private byte SetBit(byte arbitraryByte, string bit, byte bitPosition) {
 			return SetBit(arbitraryByte, byte.Parse(bit), bitPosition);
 		}

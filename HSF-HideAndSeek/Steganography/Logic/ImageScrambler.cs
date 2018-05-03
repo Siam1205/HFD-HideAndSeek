@@ -6,21 +6,21 @@ using System.Numerics;
 namespace HSF_HideAndSeek.Steganography.Logic {
 
 	/// <summary>
-	/// This class implements algorithms used to scramble the pixels of an image.
-	/// All algorithms have been found at:
-	/// https://codegolf.stackexchange.com/questions/35005/rearrange-pixels-in-image-so-it-cant-be-recognized-and-then-get-it-back/35034
+	/// This class provides static methods for scramblinga the pixels of a <see cref="System.Drawing.Bitmap"/> object.
+	/// The whole class and its methods are slightly modified versions of the code found
+	/// <a href="https://codegolf.stackexchange.com/questions/35005/rearrange-pixels-in-image-so-it-cant-be-recognized-and-then-get-it-back/35034">here</a>.
 	/// </summary>
 	internal class ImageScrambler {
 
 		#region First algorithm
 		/// <summary>
-		/// Self-inversly scramble all pixels of a bitmap
+		/// Self-inversly scramble all pixels of a <see cref="System.Drawing.Bitmap"/> object.
 		/// </summary>
-		/// <param name="bmp"></param>
+		/// <param name="bmp">The image whose pixels are to be scrambled</param>
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="ArgumentNullException"></exception>
 		/// <exception cref="ArgumentOutOfRangeException"></exception>
-		/// <returns></returns>
+		/// <returns>The image with scrambled pixels</returns>
 		public static Bitmap ScrambleOne(Bitmap bmp) {
 			var res = new Bitmap(bmp);
 			var r = new Random(1);
@@ -54,13 +54,13 @@ namespace HSF_HideAndSeek.Steganography.Logic {
 
 		#region Second algorithm
 		/// <summary>
-		/// Self-inversly scramble all pixels of a bitmap
+		/// Self-inversly scramble all pixels of a <see cref="System.Drawing.Bitmap"/> object.
 		/// </summary>
-		/// <param name="image"></param>
+		/// <param name="image">The image whose pixels are to be scrambled</param>
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="ArgumentNullException"></exception>
 		/// <exception cref="ArgumentOutOfRangeException"></exception>
-		/// <returns></returns>
+		/// <returns>The image with scrambled pixels</returns>
 		public static Bitmap ScrambleTwo(Bitmap image) {
 			var origImage = image;
 			using (var tmpImage = new Bitmap(origImage)) {
@@ -94,6 +94,13 @@ namespace HSF_HideAndSeek.Steganography.Logic {
 				return origImage;
 			}
 		}
+
+		/// <summary>
+		/// Helper method for the second algorithm
+		/// </summary>
+		/// <param name="n"></param>
+		/// <param name="bit"></param>
+		/// <returns></returns>
 		private static int BitReverse(int n, int bit) {
 			if (bit < 4) {
 				return n;
@@ -112,13 +119,13 @@ namespace HSF_HideAndSeek.Steganography.Logic {
 
 		#region Third algorithm
 		/// <summary>
-		/// Self-inversly scramble all pixels of a bitmap
+		/// Self-inversly scramble all pixels of a <see cref="System.Drawing.Bitmap"/> object.
 		/// </summary>
-		/// <param name="image"></param>
+		/// <param name="image">The image whose pixels are to be scrambled</param>
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="ArgumentNullException"></exception>
 		/// <exception cref="ArgumentOutOfRangeException"></exception>
-		/// <returns></returns>
+		/// <returns>The image with scrambled pixels</returns>
 		public static Bitmap ScrambleThree(Bitmap image) {
 			var origImage = image;
 			var newImage = new Bitmap(origImage);
@@ -135,14 +142,31 @@ namespace HSF_HideAndSeek.Steganography.Logic {
 			return newImage;
 		}
 
+		/// <summary>
+		/// Helper method for the third algorithm
+		/// </summary>
+		/// <param name="point"></param>
+		/// <param name="totalSize"></param>
+		/// <returns></returns>
 		private static BigInteger GetPixelNumber(Point point, Size totalSize) {
 			return totalSize.Width * point.Y + point.X;
 		}
 
+		/// <summary>
+		/// Helper method for the third algorithm
+		/// </summary>
+		/// <param name="pixelNumber"></param>
+		/// <param name="totalSize"></param>
+		/// <returns></returns>
 		private static Point GetPoint(BigInteger pixelNumber, Size totalSize) {
 			return new Point((int) (pixelNumber % totalSize.Width), (int) (pixelNumber / totalSize.Width));
 		}
 
+		/// <summary>
+		/// Helper method for the third algorithm
+		/// </summary>
+		/// <param name="modulo"></param>
+		/// <returns></returns>
 		private static BigInteger GetSquareRootOf1(BigInteger modulo) {
 			for (var i = (BigInteger) 2; i < modulo - 1; i++) {
 				if ((i * i) % modulo == 1)

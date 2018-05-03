@@ -3,15 +3,20 @@ using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace HSF_HideAndSeek.Helper {
+
+	/// <summary>
+	/// This class adds extension methods for to strings
+	/// </summary>
 	internal static class Extensions {
 
 		/// <summary>
-		/// Extension method used to split a string into chunks of a specified length
+		/// Extension method:
+		/// Splits string into chunks of a specified length.
 		/// </summary>
-		/// <param name="source"></param>
-		/// <param name="maxLength"></param>
+		/// <param name="source">The string that should be splitted</param>
+		/// <param name="maxLength">The chunk length</param>
 		/// <exception cref="ArgumentNullException"></exception>
-		/// <returns></returns>
+		/// <returns>The string array containing the chunks</returns>
 		public static string[] SplitToChunks(this string source, int maxLength) {
 			return source
 				.Where((x, i) => i % maxLength == 0)
@@ -24,18 +29,19 @@ namespace HSF_HideAndSeek.Helper {
 		}
 
 		/// <summary>
-		/// Extension method used to convert an arbitrary string into an array of bytes
+		/// Extension method:
+		/// Converts a string into an array of bytes.
 		/// </summary>
-		/// <param name="source"></param>
+		/// <param name="str">The string that should be converted</param>
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="ArgumentNullException"></exception>
 		/// <exception cref="ArgumentOutOfRangeException"></exception>
 		/// <exception cref="FormatException"></exception>
 		/// <exception cref="OverflowException"></exception>
-		/// <returns></returns>
-		public static byte[] ConvertBitstringToByteArray(this string source) {
+		/// <returns>The byte array representation of the string</returns>
+		public static byte[] ConvertBitstringToByteArray(this string str) {
 			byte[] data =
-			  Regex.Matches(source, ".{8}").Cast<Match>()
+			  Regex.Matches(str, ".{8}").Cast<Match>()
 			  .Select(m => Convert.ToByte(m.Groups[0].Value, 2))
 			  .ToArray();
 			return data;

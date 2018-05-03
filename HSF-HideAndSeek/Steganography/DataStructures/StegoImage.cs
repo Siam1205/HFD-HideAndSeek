@@ -1,7 +1,21 @@
 ﻿using System.Drawing;
 
 namespace HSF_HideAndSeek.Steganography.DataStructures {
-	class StegoImage {
+
+	/// <summary>
+	/// This class represents an image as it is used for Steganography
+	/// which means it can either be a carrier or a stego image.
+	/// It simply contains the image itself along with its file name
+	/// and its file size in bytes.
+	/// </summary>
+	internal sealed class StegoImage {
+
+		/// <summary>
+		/// Constructor: Creates a <see cref="HSF_HideAndSeek.Steganography.DataStructures.StegoImage"/> object.
+		/// </summary>
+		/// <param name="image">The image itself</param>
+		/// <param name="name">The image's file name</param>
+		/// <param name="sizeInBytes">The file's size in bytes</param>
 		public StegoImage(Bitmap image, string name, uint sizeInBytes) {
 			Image = image;
 			Name = name;

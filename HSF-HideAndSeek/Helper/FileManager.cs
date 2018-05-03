@@ -5,29 +5,39 @@ using System.Drawing.Imaging;
 using System.IO;
 
 namespace HSF_HideAndSeek.Helper {
-	class FileManager {
+
+	/// <summary>
+	/// This class represents a file manager which offers methods for reading or writing files
+	/// and getting the size of files saved on the drive.
+	/// There will only be one instance of this class be active at a time.
+	/// </summary>
+	internal class FileManager {
 
 		#region Singleton definition
+
+		/// <summary>
+		/// Singleton instance of the <see cref="HSF_HideAndSeek.Helper.FileManager"/> class
+		/// </summary>
 		private static FileManager _instance;
 
+		/// <summary>
+		/// Private constructor according to the singleton design pattern.
+		/// </summary>
 		private FileManager() {
 
 		}
 
-		public static FileManager Instance {
-			get {
-				if (_instance == null) {
-					_instance = new FileManager();
-				}
-				return _instance;
-			}
-		}
+		/// <summary>
+		/// Returns the singleton instance of the class or creates it in case there is none.
+		/// </summary>
+		public static FileManager Instance => _instance ?? (_instance = new FileManager());
+
 		#endregion
 
 		/// <summary>
-		/// Read a message file and return it using an array of bytes
+		/// Reads a message file from a given path and returns it as a byte array.
 		/// </summary>
-		/// <param name="path"></param>
+		/// <param name="path">Preferably the absolute path of the file to read</param>
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="ArgumentNullException"></exception>
 		/// <exception cref="PathTooLongException"></exception>
@@ -37,22 +47,23 @@ namespace HSF_HideAndSeek.Helper {
 		/// <exception cref="FileNotFoundException"></exception>
 		/// <exception cref="System.Security.SecurityException"></exception>
 		/// <exception cref="NotSupportedException"></exception>
-		/// <returns></returns>
+		/// <returns>The byte array that represents the read file</returns>
 		public byte[] ReadMessageFile(string path) {
 			return File.ReadAllBytes(path);
 		}
 
 		/// <summary>
-		/// Loads an image without creating a memory-mapped file
-		/// which creates a lock to the file referenced to by the path argument
+		/// Loads an image from the drive and returns it as <see cref="System.Drawing.Bitmap"/> object.
+		/// Thereby, no memory-mapped file is created which would create a lock
+		/// to the file referenced by the path argument.
 		/// </summary>
-		/// <param name="path"></param>
-		/// <param name="forceTrueColor"></param>
+		/// <param name="path">Preferably the absolute path of the image to read</param>
+		/// <param name="forceTrueColor">True if the image should be recreated in case it uses a wrong pixel format and false otherwise</param>
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="FileNotFoundException"></exception>
 		/// <exception cref="OutOfMemoryException"></exception>
-		/// <exception cref="WrongPixelFormatException"></exception>
-		/// <returns></returns>
+		/// <exception cref="WrongPixelFormatException">Always thrown when forceTrueColor is false but the image uses a wrong pixel format</exception>
+		/// <returns>The <see cref="System.Drawing.Bitmap"/> object that represents the loaded image</returns>
 		public Bitmap ReadImageFile(string path, bool forceTrueColor) {
 			using (var img = Image.FromFile(path)) {
 				PixelFormat pf = img.PixelFormat;
@@ -94,19 +105,19 @@ namespace HSF_HideAndSeek.Helper {
 		}
 
 		/// <summary>
-		/// Returns a long variable storing the size of a file specified by a path in bytes
+		/// Returns the size of a file specified by the path argument in bytes.
 		/// </summary>
-		/// <param name="path"></param>
-		/// <returns></returns>
+		/// <param name="path">Preferably the absolute path of the file whose size is to be returned</param>
+		/// <returns>The size of the file in bytes</returns>
 		public uint GetFileSizeInBytes(string path) {
 			return (uint) new FileInfo(path).Length;
 		}
 
 		/// <summary>
-		/// Write a message file to the specified path
+		/// Writes a message file to the specified path.
 		/// </summary>
-		/// <param name="message"></param>
-		/// <param name="path"></param>
+		/// <param name="message">The message file that should be saved to the drive</param>
+		/// <param name="path">Preferably the absolute path that specifies where the file should be saved</param>
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="ArgumentNullException"></exception>
 		/// <exception cref="ArgumentOutOfRangeException"></exception>
@@ -124,10 +135,10 @@ namespace HSF_HideAndSeek.Helper {
 		}
 
 		/// <summary>
-		/// Writes a stego image to the given path
+		/// Writes a carrier or stego image to the given path.
 		/// </summary>
-		/// <param name="stegoImage"></param>
-		/// <param name="path"></param>
+		/// <param name="stegoImage">The stego image that should be saved to the drive</param>
+		/// <param name="path">Preferably the absolute path that specifies where the image should be saved</param>
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="ArgumentNullException"></exception>
 		/// <exception cref="ArgumentOutOfRangeException"></exception>

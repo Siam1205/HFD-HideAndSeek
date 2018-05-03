@@ -112,19 +112,19 @@ namespace HSF_HideAndSeek.Helper {
 		#region Conversions from binary representations into variables or objects
 
 		/// <summary>
-		/// Converts a binary string pattern into its respective UTF8 text representation.
+		/// Converts a binary string pattern to its respective UTF8 text representation.
 		/// </summary>
-		/// <param name="str"></param>
+		/// <param name="text">The binary string that should be converted to a text</param>
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="ArgumentOutOfRangeException"></exception>
 		/// <exception cref="ArgumentNullException"></exception>
 		/// <exception cref="FormatException"></exception>
 		/// <exception cref="OverflowException"></exception>
 		/// <exception cref="DecoderFallbackException"></exception>
-		/// <returns></returns>
-		public static string BinaryToString(string str) {
+		/// <returns>The textual representation of the given binary string</returns>
+		public static string BinaryToString(string text) {
 			//byte[] temp = Extensions.ConvertBitstringToByteArray(str);
-			byte[] temp = str.ConvertBitstringToByteArray();
+			byte[] temp = text.ConvertBitstringToByteArray();
 
 			string val = Encoding.UTF8.GetString(temp);
 			return val;
@@ -133,27 +133,27 @@ namespace HSF_HideAndSeek.Helper {
 		/// <summary>
 		/// Converts a binary string pattern to a byte variable
 		/// </summary>
-		/// <param name="binary"></param>
+		/// <param name="binary">The binary string pattern</param>
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="ArgumentOutOfRangeException"></exception>
 		/// <exception cref="FormatException"></exception>
 		/// <exception cref="OverflowException"></exception>
-		/// <returns></returns>
+		/// <returns>The byte value</returns>
 		public static byte BinaryToByte(string binary) {
 			byte by = Convert.ToByte(binary, 2);
 			return by;
 		}
 
-		/// <summary>
-		/// Calls an extension method to convert a binary string pattern to a byte array
+		/// <summary>,
+		/// Converts a binary string pattern to a byte array
 		/// </summary>
-		/// <param name="binary"></param>
+		/// <param name="binary">The binary string pattern</param>
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="ArgumentNullException"></exception>
 		/// <exception cref="ArgumentOutOfRangeException"></exception>
 		/// <exception cref="FormatException"></exception>
 		/// <exception cref="OverflowException"></exception>
-		/// <returns></returns>
+		/// <returns>The byte array</returns>
 		public static byte[] BinaryToByteArray(string binary) {
 			return binary.ConvertBitstringToByteArray();
 		}
@@ -161,12 +161,12 @@ namespace HSF_HideAndSeek.Helper {
 		/// <summary>
 		/// Converts a binary string pattern to a uint variable
 		/// </summary>
-		/// <param name="binary"></param>
+		/// <param name="binary">The binary string pattern</param>
 		/// /// <exception cref="ArgumentException"></exception>
 		/// /// <exception cref="ArgumentOutOfRangeException"></exception>
 		/// /// <exception cref="FormatException"></exception>
 		/// /// <exception cref="OverflowException"></exception>
-		/// <returns></returns>
+		/// <returns>The uint variable</returns>
 		public static uint BinaryToUint(string binary) {
 			uint unsignedInt = Convert.ToUInt32(binary, 2);
 			return unsignedInt;
@@ -174,12 +174,12 @@ namespace HSF_HideAndSeek.Helper {
 		#endregion
 
 		/// <summary>
-		/// Converts a uint variable storing a bit value
-		/// into a double variable storing the value in kB
+		/// Converts a uint variable storing a value in bits
+		/// to a double variable storing the same value but in kB
 		/// </summary>
-		/// <param name="bits"></param>
+		/// <param name="bits">The value in bits</param>
 		/// <exception cref="ArgumentOutOfRangeException"></exception>
-		/// <returns></returns>
+		/// <returns>The value in kilo bytes</returns>
 		public static double BitsToKiloBytes(uint bits) {
 			// ReSharper disable once PossibleLossOfFraction
 			float bytes = bits / 8;
@@ -188,18 +188,18 @@ namespace HSF_HideAndSeek.Helper {
 		}
 
 		/// <summary>
-		/// Converts a double value of bytes into its human readable string representation
+		/// Converts a value in bytes to its human readable string representation
 		/// </summary>
-		/// <param name="len"></param>
-		/// <returns></returns>
-		public static string BytesToHumanReadableString(double len) {
+		/// <param name="bytes">The value in bytes</param>
+		/// <returns>The string containing the value with a suiting SI unit</returns>
+		public static string BytesToHumanReadableString(double bytes) {
 			string[] sizes = { "B", "KB", "MB", "GB", "TB" };
 			int order = 0;
-			while (len >= 1024 && order < sizes.Length - 1) {
+			while (bytes >= 1024 && order < sizes.Length - 1) {
 				order++;
-				len = len / 1024;
+				bytes = bytes / 1024;
 			}
-			return String.Format("{0:0.##} {1}", len, sizes[order]);
+			return String.Format("{0:0.##} {1}", bytes, sizes[order]);
 		}
 	}
 }

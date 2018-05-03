@@ -2,14 +2,19 @@
 using System.Drawing;
 
 namespace HSF_HideAndSeek.Steganography.Logic {
+
+	/// <summary>
+	/// This class represents a bit plane extractor which provides methods to extract the individual
+	/// bit planes of a <see cref="System.Drawing.Bitmap"/> object.
+	/// </summary>
 	internal class BitPlaneExtractor {
 
 		/// <summary>
-		/// Extracts and returns a single bit planes of a given image's red color channel at a given position
+		/// Extracts and returns a single bit planes of a given image's red color channel at a given position.
 		/// </summary>
-		/// <param name="image"></param>
-		/// <param name="pos"></param>
-		/// <returns></returns>
+		/// <param name="image">The image of which the bit plane should be extracted</param>
+		/// <param name="pos">The bit plane's bit position</param>
+		/// <returns>A <see cref="System.Drawing.Bitmap"/> object representing the bit plane</returns>
 		public static Bitmap ExtractSingleBitPlane(Bitmap image, byte pos) {
 
 			// Variable declarations
@@ -34,13 +39,13 @@ namespace HSF_HideAndSeek.Steganography.Logic {
 		}
 
 		/// <summary>
-		/// Extracts and returns all of bit planes of a given image's red color channel inside an array
+		/// Returns an array containing all bit planes of a given image's red color channel.
 		/// </summary>
-		/// <param name="image"></param>
+		/// <param name="image">The image of which the bit planes should be extracted</param>
 		/// <exception cref="Exception"></exception>
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="ArgumentOutOfRangeException"></exception>
-		/// <returns></returns>
+		/// <returns>An array containing eight <see cref="System.Drawing.Bitmap"/> objects all of which represent one bit plane</returns>
 		public static Bitmap[] ExtractRBitPlanes(Bitmap image) {
 
 			// Variable declarations
@@ -69,10 +74,10 @@ namespace HSF_HideAndSeek.Steganography.Logic {
 		}
 
 		/// <summary>
-		/// Checks if a given bit inside a byte is set or not
+		/// Checks if a given bit inside a byte is set or not.
 		/// </summary>
-		/// <param name="b"></param>
-		/// <param name="pos"></param>
+		/// <param name="b">The byte whose bit should be checked</param>
+		/// <param name="pos">The position of the bit inside the byte</param>
 		/// <returns></returns>
 		private static bool IsBitSet(byte b, int pos) {
 			return (b & (1 << pos)) != 0;
