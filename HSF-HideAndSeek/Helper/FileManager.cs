@@ -14,7 +14,6 @@ namespace HSF_HideAndSeek.Helper {
 	internal class FileManager {
 
 		#region Singleton definition
-
 		/// <summary>
 		/// Singleton instance of the <see cref="HSF_HideAndSeek.Helper.FileManager"/> class
 		/// </summary>
@@ -31,7 +30,6 @@ namespace HSF_HideAndSeek.Helper {
 		/// Returns the singleton instance of the class or creates it in case there is none.
 		/// </summary>
 		public static FileManager Instance => _instance ?? (_instance = new FileManager());
-
 		#endregion
 
 		/// <summary>

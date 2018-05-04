@@ -1,5 +1,4 @@
-﻿using HSF_HideAndSeek.Exceptions;
-using System;
+﻿using System;
 using System.Text;
 
 namespace HSF_HideAndSeek.Helper {
@@ -11,35 +10,22 @@ namespace HSF_HideAndSeek.Helper {
 	internal class Converter {
 
 		#region Conversions into binary string patterns
-
 		/// <summary>
-		/// Converts a text string to a binary string pattern.
+		/// Converts a string to a binary string pattern
 		/// </summary>
-		/// <param name="str"></param>
-		/// <param name="zeroPadding"></param>
+		/// <param name="text">The text that should be converted into a series of bits</param>
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="ArgumentOutOfRangeException"></exception>
 		/// <exception cref="ArgumentNullException"></exception>
 		/// <exception cref="EncoderFallbackException"></exception>
-		/// <exception cref="MessageNameTooBigException"></exception>
 		/// <returns></returns>
-		public static string StringToBinary(string str, int zeroPadding) {
-			// TODO: Change this!
-
+		public static string StringToBinary(string text) {
 			UTF8Encoding encoding = new UTF8Encoding();
-			byte[] buffer = encoding.GetBytes(str);
-
-			if (buffer.Length > 64) {
-				throw new MessageNameTooBigException();
-			}
-
-			if (buffer.Length < 64) {
-				Array.Resize(ref buffer, zeroPadding);
-			}
+			byte[] buffer = encoding.GetBytes(text);
 
 			StringBuilder sb = new StringBuilder();
 			foreach (byte element in buffer) {
-				sb.Append(Convert.ToString(element, 2).PadLeft(8, '0'));
+				sb.Append(Convert.ToString(element, 2));
 			}
 			return sb.ToString();
 		}
@@ -109,8 +95,6 @@ namespace HSF_HideAndSeek.Helper {
 		}
 		#endregion
 
-		#region Conversions from binary representations into variables or objects
-
 		/// <summary>
 		/// Converts a binary string pattern to its respective UTF8 text representation.
 		/// </summary>
@@ -123,7 +107,7 @@ namespace HSF_HideAndSeek.Helper {
 		/// <exception cref="DecoderFallbackException"></exception>
 		/// <returns>The textual representation of the given binary string</returns>
 		public static string BinaryToString(string text) {
-			//byte[] temp = Extensions.ConvertBitstringToByteArray(str);
+			//byte[] temp = Extensions.ConvertBitstringToByteArray(text);
 			byte[] temp = text.ConvertBitstringToByteArray();
 
 			string val = Encoding.UTF8.GetString(temp);
@@ -171,7 +155,6 @@ namespace HSF_HideAndSeek.Helper {
 			uint unsignedInt = Convert.ToUInt32(binary, 2);
 			return unsignedInt;
 		}
-		#endregion
 
 		/// <summary>
 		/// Converts a uint variable storing a value in bits

@@ -83,29 +83,9 @@ namespace HSF_HideAndSeek.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap chooseAnImage {
-            get {
-                object obj = ResourceManager.GetObject("chooseAnImage", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap clear {
             get {
                 object obj = ResourceManager.GetObject("clear", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Final_cropped {
-            get {
-                object obj = ResourceManager.GetObject("Final_cropped", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -136,6 +116,16 @@ namespace HSF_HideAndSeek.Properties {
         internal static System.Drawing.Bitmap help_2 {
             get {
                 object obj = ResourceManager.GetObject("help_2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap HSF_Logo {
+            get {
+                object obj = ResourceManager.GetObject("HSF_Logo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

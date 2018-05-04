@@ -171,7 +171,7 @@
 			// iconPictureBox
 			// 
 			this.iconPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.iconPictureBox.Image = global::HSF_HideAndSeek.Properties.Resources.Final_cropped;
+			this.iconPictureBox.Image = global::HSF_HideAndSeek.Properties.Resources.HSF_Logo;
 			this.iconPictureBox.Location = new System.Drawing.Point(3, 3);
 			this.iconPictureBox.Name = "iconPictureBox";
 			this.iconPictureBox.Size = new System.Drawing.Size(251, 251);

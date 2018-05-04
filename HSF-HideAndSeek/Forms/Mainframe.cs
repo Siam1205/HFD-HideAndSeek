@@ -8,6 +8,7 @@ using System.Drawing;
 using System.IO;
 using System.Security.Cryptography;
 using System.Windows.Forms;
+using HSF_HideAndSeek.Exceptions;
 
 namespace HSF_HideAndSeek.Forms {
 
@@ -115,29 +116,35 @@ namespace HSF_HideAndSeek.Forms {
 		/// <exception cref="Exceptions.WrongPixelFormatException"></exception>
 		/// <exception cref="FormatException"></exception>
 		private void LoadCarrierImage(string path) {
-			if (File.Exists(path)) {
-				if (_imageExtensions.Contains(Path.GetExtension(path).ToLowerInvariant())) {
 
-					// Generate carrier image object
-					_carrier = new StegoImage(
-						_fm.ReadImageFile(path, true),
-						Path.GetFileName(path),
-						_fm.GetFileSizeInBytes(path)
-					);
-
-					// Display image
-					carrierImagePictureBox.Image = _carrier.Image;
-
-					// Fill labels with data
-					carrierNameLabel.Text = _carrier.Name;
-					carrierSizeLabel.Text = Converter.BytesToHumanReadableString(_carrier.SizeInBytes);
-					carrierCapacityLabel.Text = Converter.BytesToHumanReadableString(
-						_embedder.CalculateCapacity(_carrier, (byte) (bppComboBox.SelectedIndex + 1)));
-
-					// Check GUI components
-					CheckEverything();
-				}
+			// Do nothing if the file does not exist 
+			if (!File.Exists(path)) {
+				return;
 			}
+
+			//  Do nothing if the image is stored using an inappropriate format
+			if (!_imageExtensions.Contains(Path.GetExtension(path).ToLowerInvariant())) {
+				return;
+			}
+
+			// Generate carrier image object
+			_carrier = new StegoImage(
+				_fm.ReadImageFile(path, true),
+				Path.GetFileName(path),
+				_fm.GetFileSizeInBytes(path)
+			);
+
+			// Display image
+			carrierImagePictureBox.Image = _carrier.Image;
+
+			// Fill labels with data
+			carrierNameLabel.Text = _carrier.Name;
+			carrierSizeLabel.Text = Converter.BytesToHumanReadableString(_carrier.SizeInBytes);
+			carrierCapacityLabel.Text = Converter.BytesToHumanReadableString(
+				_embedder.CalculateCapacity(_carrier, (byte) (bppComboBox.SelectedIndex + 1)));
+
+			// Check GUI components
+			CheckEverything();
 		}
 
 		/// <summary>
@@ -150,27 +157,33 @@ namespace HSF_HideAndSeek.Forms {
 		/// <exception cref="Exceptions.WrongPixelFormatException"></exception>
 		/// <exception cref="FormatException"></exception>
 		private void LoadStegoImage(string path) {
-			if (File.Exists(path)) {
-				if (_imageExtensions.Contains(Path.GetExtension(path).ToLowerInvariant())) {
 
-					// Generate stego image object
-					_stegoImage = new StegoImage(
-						_fm.ReadImageFile(path, false),
-						Path.GetFileName(path),
-						_fm.GetFileSizeInBytes(path)
-					);
-
-					// Display image
-					stegoImagePictureBox.Image = _stegoImage.Image;
-
-					// Fill labels with data
-					stegoImageNameLabel.Text = _stegoImage.Name;
-					stegoImageSizeLabel.Text = Converter.BytesToHumanReadableString(_stegoImage.SizeInBytes);
-
-					// Check GUI components
-					CheckEverything();
-				}
+			// Do nothing if the file does not exist 
+			if (!File.Exists(path)) {
+				return;
 			}
+
+			//  Do nothing if the image is stored using an inappropriate format
+			if (!_imageExtensions.Contains(Path.GetExtension(path).ToLowerInvariant())) {
+				return;
+			}
+
+			// Generate stego image object
+			_stegoImage = new StegoImage(
+				_fm.ReadImageFile(path, false),
+				Path.GetFileName(path),
+				_fm.GetFileSizeInBytes(path)
+			);
+
+			// Display image
+			stegoImagePictureBox.Image = _stegoImage.Image;
+
+			// Fill labels with data
+			stegoImageNameLabel.Text = _stegoImage.Name;
+			stegoImageSizeLabel.Text = Converter.BytesToHumanReadableString(_stegoImage.SizeInBytes);
+
+			// Check GUI components
+			CheckEverything();
 		}
 
 		/// <summary>
@@ -198,21 +211,24 @@ namespace HSF_HideAndSeek.Forms {
 		/// </summary>
 		/// <param name="path">Preferably the absolute path of a message file</param>
 		private void LoadMessage(string path) {
-			if (File.Exists(path)) {
 
-				// Generate message object
-				_message = new StegoMessage(
-					Path.GetFileName(path),
-					_fm.ReadMessageFile(path)
-				);
-
-				// Fill labels with data
-				messageNameLabel.Text = _message.Name;
-				messageSizeLabel.Text = Converter.BytesToHumanReadableString(_message.FullSizeInBytes);
-
-				// Check GUI components
-				CheckEverything();
+			//  Do nothing if the file does not exist
+			if (!File.Exists(path)) {
+				return;
 			}
+
+			// Generate message object
+			_message = new StegoMessage(
+				Path.GetFileName(path),
+				_fm.ReadMessageFile(path)
+			);
+
+			// Fill labels with data
+			messageNameLabel.Text = _message.Name;
+			messageSizeLabel.Text = Converter.BytesToHumanReadableString(_message.FullSizeInBytes);
+
+			// Check GUI components
+			CheckEverything();
 		}
 
 		/// <summary>
@@ -315,7 +331,6 @@ namespace HSF_HideAndSeek.Forms {
 		}
 
 		#region Events and listeners
-
 		private void loadCarrierButton_Click(object sender, EventArgs e) {
 			OpenFileDialog ofd = new OpenFileDialog {
 				InitialDirectory = @"C:\",
@@ -430,6 +445,28 @@ namespace HSF_HideAndSeek.Forms {
 					bppComboBox.SelectedIndex + 1,
 					bitPlaneFirstRadio.Checked
 				);
+
+				// Fill labels with data
+				stegoImageNameLabel.Text = _stegoImage.Name;
+				stegoImageSizeLabel.Text = _defaultLabelValue;
+
+				// Display image
+				stegoImagePictureBox.Image = _stegoImage.Image;
+
+			} catch (MessageTooBigException) {
+				MessageBox.Show(
+					@"Could not hide the message since it is too big!",
+					@"Error!",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Error
+				);
+			} catch (MessageNameTooBigException) {
+				MessageBox.Show(
+					@"Could not hide the message since its file name is too long!",
+					@"Error!",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Error
+				);
 			} catch (Exception ex) {
 				MessageBox.Show(
 					@"The sysem caught an exception:"
@@ -440,13 +477,6 @@ namespace HSF_HideAndSeek.Forms {
 					MessageBoxIcon.Error
 				);
 			}
-
-			// Fill labels with data
-			stegoImageNameLabel.Text = _stegoImage.Name;
-			stegoImageSizeLabel.Text = _defaultLabelValue;
-
-			// Display image
-			stegoImagePictureBox.Image = _stegoImage.Image;
 
 			// Check GUI components
 			hideMessageButton.Text = @"Hide message";
@@ -464,7 +494,12 @@ namespace HSF_HideAndSeek.Forms {
 					bppComboBox.SelectedIndex + 1,
 					bitPlaneFirstRadio.Checked
 				);
-			} catch (Exception ex) {
+
+				// Fill labels with data
+				messageNameLabel.Text = _message.Name;
+				messageSizeLabel.Text = Converter.BytesToHumanReadableString(_message.FullSizeInBytes);
+
+			} catch (OverflowException ex) {
 				MessageBox.Show(
 					@"The sysem caught an exception:"
 					   + "\nType:        " + ex.GetType().Name
@@ -474,10 +509,6 @@ namespace HSF_HideAndSeek.Forms {
 					MessageBoxIcon.Error
 				);
 			}
-
-			// Fill labels with data
-			messageNameLabel.Text = _message.Name;
-			messageSizeLabel.Text = Converter.BytesToHumanReadableString(_message.FullSizeInBytes);
 
 			// Check GUI components
 			extractMessageButton.Text = @"Extract message";
@@ -517,6 +548,13 @@ namespace HSF_HideAndSeek.Forms {
 
 			try {
 				carrierRatingLabel.Text = "" + _embedder.RateCarrier(_carrier, _message) + "%";
+			} catch (MessageNameTooBigException) {
+				MessageBox.Show(
+					@"Could not rate the carrier since the message file's name is too long!",
+					@"Error!",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Error
+				);
 			} catch (Exception ex) {
 				MessageBox.Show(
 					@"The sysem caught an exception:"
@@ -635,9 +673,7 @@ namespace HSF_HideAndSeek.Forms {
 		
 		#endregion
 
-
 		#region GUI component checker methods
-
 		/// <summary>
 		/// Wraps all checker methods together.
 		/// </summary>
@@ -751,7 +787,6 @@ namespace HSF_HideAndSeek.Forms {
 			saveMessageButton.Enabled = true;
 			return true;
 		}
-
 		#endregion
 	}
 }

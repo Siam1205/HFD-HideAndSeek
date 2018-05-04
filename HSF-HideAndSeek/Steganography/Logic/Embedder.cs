@@ -46,6 +46,16 @@ namespace HSF_HideAndSeek.Steganography.Logic {
 		/// <param name="stegoPassword">The password which is to be used to hide the message (Randomized Hide and Seek)</param>
 		/// <param name="bitPlanes">The amount of bit planes that are to be used to hide the message</param>
 		/// <param name="bitPlanesFirst">true for bit planes first-mode and false for pixels first-mode</param>
+		/// <exception cref="MessageNameTooBigException"></exception>
+		/// <exception cref="MessageTooBigException"></exception>
+		/// <exception cref="ArgumentException"></exception>
+		/// <exception cref="ArgumentNullException"></exception>
+		/// <exception cref="ArgumentOutOfRangeException"></exception>
+		/// <exception cref="FormatException"></exception>
+		/// <exception cref="EncoderFallbackException"></exception>
+		/// <exception cref="ObjectDisposedException"></exception>
+		/// <exception cref="System.Reflection.TargetInvocationException"></exception>
+		/// <exception cref="Exception"></exception>
 		/// <returns>The stego image containing the hidden message</returns>
 		public StegoImage HideMessage(
 			StegoImage carrierImage,
@@ -65,6 +75,8 @@ namespace HSF_HideAndSeek.Steganography.Logic {
 				carrierImage.Name,
 				carrierImage.SizeInBytes
 			);
+
+			// Rename the stego image
 			stegoImage.Name = "stegged_" + Path.GetFileNameWithoutExtension(stegoImage.Name) + ".png";
 
 			// Base variable declaration
@@ -186,11 +198,23 @@ namespace HSF_HideAndSeek.Steganography.Logic {
 		/// <param name="stegoPassword">The password used to hide the message (Randomized Hide and Seek)</param>
 		/// <param name="bitPlanes">The amount of bit planes that have been used to hide the message</param>
 		/// <param name="bitPlanesFirst">true for bit planes first-mode and false for pixels first-mode</param>
+		/// <exception cref="ArgumentException"></exception>
+		/// <exception cref="ArgumentNullException"></exception>
+		/// <exception cref="ArgumentOutOfRangeException"></exception>
+		/// <exception cref="ObjectDisposedException"></exception>
+		/// <exception cref="System.Reflection.TargetInvocationException"></exception>
+		/// <exception cref="FormatException"></exception>
+		/// <exception cref="OverflowException"></exception>
+		/// <exception cref="DecoderFallbackException"></exception>
+		/// <exception cref="Exception"></exception>
 		/// <returns>The message that has been hidden inside the stego image</returns>
 		public StegoMessage ExtractMessage(StegoImage stegoImage,
 			string stegoPassword,
 			int bitPlanes,
 			bool bitPlanesFirst) {
+
+			// Generate new stego image object to omit fucking pass by reference
+			Bitmap stegoImageCopy = new Bitmap(stegoImage.Image);
 
 			// Set extraction option
 			bool passwordSet = !(stegoPassword.Equals(""));
@@ -199,8 +223,8 @@ namespace HSF_HideAndSeek.Steganography.Logic {
 			StringBuilder messageNameBuilder = new StringBuilder();
 			StringBuilder payloadSizeBuilder = new StringBuilder();
 			StringBuilder payloadBuilder = new StringBuilder();
-			int stegoWidth = stegoImage.Image.Width;
-			int stegoHeight = stegoImage.Image.Height;
+			int stegoWidth = stegoImageCopy.Width;
+			int stegoHeight = stegoImageCopy.Height;
 			uint maxStegoPixels = (uint) (stegoWidth * stegoHeight);
 			uint pixelDistance = 1;
 
@@ -213,9 +237,9 @@ namespace HSF_HideAndSeek.Steganography.Logic {
 				pixelDistance = (uint) ((ulong) BitConverter.ToInt64(passwordBytes, 0) % maxStegoPixels);
 
 				// Scramble image
-				stegoImage.Image = ImageScrambler.ScrambleOne(stegoImage.Image);
-				stegoImage.Image = ImageScrambler.ScrambleThree(stegoImage.Image);
-				stegoImage.Image = ImageScrambler.ScrambleTwo(stegoImage.Image);
+				stegoImageCopy = ImageScrambler.ScrambleOne(stegoImageCopy);
+				stegoImageCopy = ImageScrambler.ScrambleThree(stegoImageCopy);
+				stegoImageCopy = ImageScrambler.ScrambleTwo(stegoImageCopy);
 			}
 
 			// Variables for LSB extraction
@@ -233,7 +257,7 @@ namespace HSF_HideAndSeek.Steganography.Logic {
 				// Get current pixel
 				currentPixelXValue = (int) currentPixel % stegoWidth;
 				currentPixelYValue = (int) currentPixel / stegoWidth;
-				pixel = stegoImage.Image.GetPixel(currentPixelXValue, currentPixelYValue);
+				pixel = stegoImageCopy.GetPixel(currentPixelXValue, currentPixelYValue);
 
 				switch (messageBitCounter % 3) {
 					case 0:
@@ -299,7 +323,7 @@ namespace HSF_HideAndSeek.Steganography.Logic {
 				// Get current pixel
 				currentPixelXValue = (int) currentPixel % stegoWidth;
 				currentPixelYValue = (int) currentPixel / stegoWidth;
-				pixel = stegoImage.Image.GetPixel(currentPixelXValue, currentPixelYValue);
+				pixel = stegoImageCopy.GetPixel(currentPixelXValue, currentPixelYValue);
 
 				switch (messageBitCounter % 3) {
 					case 0:
@@ -365,7 +389,7 @@ namespace HSF_HideAndSeek.Steganography.Logic {
 				// Get current pixel
 				currentPixelXValue = (int) currentPixel % stegoWidth;
 				currentPixelYValue = (int) currentPixel / stegoWidth;
-				pixel = stegoImage.Image.GetPixel(currentPixelXValue, currentPixelYValue);
+				pixel = stegoImageCopy.GetPixel(currentPixelXValue, currentPixelYValue);
 
 				switch (messageBitCounter % 3) {
 					case 0:
@@ -435,7 +459,12 @@ namespace HSF_HideAndSeek.Steganography.Logic {
 		/// </summary>
 		/// <param name="carrier">The carrier image which is to be rated</param>
 		/// <param name="message">The message which is to be hidden inside the carrier image</param>
-		/// <returns></returns>
+		/// <exception cref="MessageNameTooBigException"></exception>
+		/// <exception cref="ArgumentException"></exception>
+		/// <exception cref="ArgumentNullException"></exception>
+		/// <exception cref="ArgumentOutOfRangeException"></exception>
+		/// <exception cref="EncoderFallbackException"></exception>
+		/// <returns>The suitability rating of the carrier for the specific message</returns>
 		public float RateCarrier(StegoImage carrier, StegoMessage message) {
 
 			// Get all necessary information of the carrier
@@ -495,7 +524,7 @@ namespace HSF_HideAndSeek.Steganography.Logic {
 			// which is embedded before the actual payload
 			return (uint) (((bitPlanes * 3 * width * height) / 8) - 67);
 		}
-		
+
 		/// <summary>
 		/// Generates a binary bit string from a <see cref="HSF_HideAndSeek.Steganography.DataStructures.StegoMessage"/> object.
 		/// At this, the message itself along with its name and its size is transformed to a series of 0s and 1s.
@@ -503,6 +532,9 @@ namespace HSF_HideAndSeek.Steganography.Logic {
 		/// <param name="message">The message whose bit string is to be generated</param>
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="ArgumentOutOfRangeException"></exception>
+		/// <exception cref="ArgumentNullException"></exception>
+		/// <exception cref="EncoderFallbackException"></exception>
+		/// <exception cref="MessageNameTooBigException"></exception>
 		/// <returns>The bit string that represents the message</returns>
 		public string GenerateMessageBitPattern(StegoMessage message) {
 
@@ -511,8 +543,7 @@ namespace HSF_HideAndSeek.Steganography.Logic {
 			byte[] payload = message.Payload;
 			long payloadSize = message.PayloadSizeInBits;
 
-			// Convert data to binary strings
-			string payloadNameBinary = Converter.StringToBinary(messageName, 64);
+			string payloadNameBinary = EncodeMessageName(messageName, 64);
 			string payloadSizeBinary = Converter.DecimalToBinary(payloadSize, 24);
 			string payloadBinary = Converter.ByteArrayToBinary(payload);
 
@@ -523,25 +554,6 @@ namespace HSF_HideAndSeek.Steganography.Logic {
 			sb.Append(payloadBinary);
 
 			return sb.ToString();
-		}
-
-		/// <summary>
-		/// Extracts a specific bit of a byte and returns it as char.
-		/// </summary>
-		/// <param name="inputByte">The byte whose bit should be extracted</param>
-		/// <param name="pos">The position of the bit which is to be extracted</param>
-		/// <exception cref="ArgumentException"></exception>
-		/// <exception cref="ArgumentNullException"></exception>
-		/// <exception cref="ArgumentOutOfRangeException"></exception>
-		/// <exception cref="FormatException"></exception>
-		/// <returns>The bit of inputByte at position pos</returns>
-		private char ExtractBitFromByte(byte inputByte, int pos) {
-			if (pos < 0 || pos > 7) {
-				throw new ArgumentException();
-			}
-			string bitPattern = Converter.DecimalToBinary(inputByte, 8);
-			string lsb = bitPattern.Substring(pos, 1);
-			return Convert.ToChar(lsb);
 		}
 
 		/// <summary>
@@ -570,43 +582,33 @@ namespace HSF_HideAndSeek.Steganography.Logic {
 		}
 
 		/// <summary>
-		/// Collects the bits of all specified bit planes from a given carrier image
-		/// beginning with the least significant bit plane ordered from pixel
-		/// (0, 0) to (xMax, yMax) and from color R over G to B and returns them as string.
+		/// Converts a message name string to a binary string pattern and adds a zero-padding.
 		/// </summary>
-		/// <param name="carrier">The carrier image whose bits are to be collected</param>
-		/// <param name="bitPlanes">The amount of bit planes the bits are to be collected from</param>
-		/// <param name="bitPlanesFirst">true for bit planes first-mode and false for pixels first-mode</param>
-		/// <returns></returns>
-		private string CollectCarrierBits(StegoImage carrier, int bitPlanes, bool bitPlanesFirst) {
-			StringBuilder sb = new StringBuilder();
-			int width = carrier.Image.Width;
-			int height = carrier.Image.Height;
-			Color pixel;
+		/// <param name="messageName">The message name that should be converted into a series of bits</param>
+		/// <param name="zeroPadding">The amount of bytes the resulting string should be padded to</param>
+		/// <exception cref="ArgumentException"></exception>
+		/// <exception cref="ArgumentOutOfRangeException"></exception>
+		/// <exception cref="ArgumentNullException"></exception>
+		/// <exception cref="EncoderFallbackException"></exception>
+		/// <exception cref="MessageNameTooBigException"></exception>
+		/// <returns>The message name as binary string padded with zeros up to the given amount of bytes</returns>
+		private string EncodeMessageName(string messageName, int zeroPadding) {
 
-			if (bitPlanesFirst) {
-				for (int currentBitPlane = 0; currentBitPlane <= bitPlanes; currentBitPlane++) {
-					for (int y = 0; y < height; y++) {
-						for (int x = 0; x < width; x++) {
-							pixel = carrier.Image.GetPixel(x, y);
-							sb.Append(GetBit(pixel.R, currentBitPlane));
-							sb.Append(GetBit(pixel.G, currentBitPlane));
-							sb.Append(GetBit(pixel.B, currentBitPlane));
-						} // for
-					} // for
-				} // for
-			} else {
-				for (int y = 0; y < height; y++) {
-					for (int x = 0; x < width; x++) {
-						for (int currentBitPlane = 0; currentBitPlane < bitPlanes; currentBitPlane++) {
-							pixel = carrier.Image.GetPixel(x, y);
-							sb.Append(GetBit(pixel.R, currentBitPlane));
-							sb.Append(GetBit(pixel.G, currentBitPlane));
-							sb.Append(GetBit(pixel.B, currentBitPlane)); 
-						} // for
-					} // for
-				} // for
-			} // else
+			UTF8Encoding encoding = new UTF8Encoding();
+			byte[] buffer = encoding.GetBytes(messageName);
+
+			if (buffer.Length > 64) {
+				throw new MessageNameTooBigException();
+			}
+
+			if (buffer.Length < 64) {
+				Array.Resize(ref buffer, zeroPadding);
+			}
+
+			StringBuilder sb = new StringBuilder();
+			foreach (byte element in buffer) {
+				sb.Append(Convert.ToString(element, 2).PadLeft(8, '0'));
+			}
 			return sb.ToString();
 		}
 
@@ -654,5 +656,68 @@ namespace HSF_HideAndSeek.Steganography.Logic {
 		private byte SetBit(byte arbitraryByte, string bit, byte bitPosition) {
 			return SetBit(arbitraryByte, byte.Parse(bit), bitPosition);
 		}
+
+		#region Unused methods
+		/// <summary>
+		/// Collects the bits of all specified bit planes from a given carrier image
+		/// beginning with the least significant bit plane ordered from pixel
+		/// (0, 0) to (xMax, yMax) and from color R over G to B and returns them as string.
+		/// </summary>
+		/// <param name="carrier">The carrier image whose bits are to be collected</param>
+		/// <param name="bitPlanes">The amount of bit planes the bits are to be collected from</param>
+		/// <param name="bitPlanesFirst">true for bit planes first-mode and false for pixels first-mode</param>
+		/// <exception cref="ArgumentOutOfRangeException"></exception>
+		/// <returns>The binary pattern containing all desired bits from the carrier image</returns>
+		private string CollectCarrierBits(StegoImage carrier, int bitPlanes, bool bitPlanesFirst) {
+			StringBuilder sb = new StringBuilder();
+			int width = carrier.Image.Width;
+			int height = carrier.Image.Height;
+			Color pixel;
+
+			if (bitPlanesFirst) {
+				for (int currentBitPlane = 0; currentBitPlane <= bitPlanes; currentBitPlane++) {
+					for (int y = 0; y < height; y++) {
+						for (int x = 0; x < width; x++) {
+							pixel = carrier.Image.GetPixel(x, y);
+							sb.Append(GetBit(pixel.R, currentBitPlane));
+							sb.Append(GetBit(pixel.G, currentBitPlane));
+							sb.Append(GetBit(pixel.B, currentBitPlane));
+						} // for
+					} // for
+				} // for
+			} else {
+				for (int y = 0; y < height; y++) {
+					for (int x = 0; x < width; x++) {
+						for (int currentBitPlane = 0; currentBitPlane < bitPlanes; currentBitPlane++) {
+							pixel = carrier.Image.GetPixel(x, y);
+							sb.Append(GetBit(pixel.R, currentBitPlane));
+							sb.Append(GetBit(pixel.G, currentBitPlane));
+							sb.Append(GetBit(pixel.B, currentBitPlane));
+						} // for
+					} // for
+				} // for
+			} // else
+			return sb.ToString();
+		}
+
+		/// <summary>
+		/// Extracts a specific bit of a byte and returns it as char.
+		/// </summary>
+		/// <param name="inputByte">The byte whose bit should be extracted</param>
+		/// <param name="pos">The position of the bit which is to be extracted</param>
+		/// <exception cref="ArgumentException"></exception>
+		/// <exception cref="ArgumentNullException"></exception>
+		/// <exception cref="ArgumentOutOfRangeException"></exception>
+		/// <exception cref="FormatException"></exception>
+		/// <returns>The bit of inputByte at position pos</returns>
+		private char ExtractBitFromByte(byte inputByte, int pos) {
+			if (pos < 0 || pos > 7) {
+				throw new ArgumentException();
+			}
+			string bitPattern = Converter.DecimalToBinary(inputByte, 8);
+			string lsb = bitPattern.Substring(pos, 1);
+			return Convert.ToChar(lsb);
+		}
+		#endregion
 	}
 }

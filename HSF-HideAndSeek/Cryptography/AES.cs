@@ -13,7 +13,7 @@ namespace HSF_HideAndSeek.Cryptography {
 	internal class AES {
 
 		/// <summary>
-		/// Predefined salt for the encryption algorithms.
+		/// Predefined salt for the encryption and decryption algorithms.
 		/// It must be at least 8 bytes
 		/// </summary>
 		private static readonly byte[] DefaultSalt = {
@@ -123,6 +123,7 @@ namespace HSF_HideAndSeek.Cryptography {
 		/// <exception cref="OverflowException"></exception>
 		/// <returns></returns>
 		public static string EncryptText(string input, string key) {
+			
 			// Get the bytes of the string
 			byte[] bytesToBeEncrypted = Encoding.UTF8.GetBytes(input);
 			byte[] passwordBytes = Encoding.UTF8.GetBytes(key);
@@ -130,10 +131,9 @@ namespace HSF_HideAndSeek.Cryptography {
 			// Hash the password with SHA256 and a predefined salt
 			passwordBytes = Hasher.HashSha256(passwordBytes);
 
+			// Encrypt and return the result
 			byte[] bytesEncrypted = AES_Encrypt(bytesToBeEncrypted, passwordBytes);
-
 			string result = Convert.ToBase64String(bytesEncrypted);
-
 			return result;
 		}
 
@@ -158,10 +158,9 @@ namespace HSF_HideAndSeek.Cryptography {
 			// Hash the password with SHA256 and a predefined salt
 			passwordBytes = Hasher.HashSha256(passwordBytes);
 
+			// Decrypt and return the result
 			byte[] bytesDecrypted = AES_Decrypt(bytesToBeDecrypted, passwordBytes);
-
 			string result = Encoding.UTF8.GetString(bytesDecrypted);
-
 			return result;
 		}
 
@@ -242,8 +241,8 @@ namespace HSF_HideAndSeek.Cryptography {
 			// Hash the password with SHA256 and a predefined salt
 			passwordBytes = Hasher.HashSha256(passwordBytes);
 
+			// Encrypt and write the result to the file system
 			byte[] bytesEncrypted = AES_Encrypt(bytesToBeEncrypted, passwordBytes);
-
 			File.WriteAllBytes(encryptedFilePath, bytesEncrypted);
 		}
 
@@ -272,8 +271,8 @@ namespace HSF_HideAndSeek.Cryptography {
 			// Hash the password with SHA256 and a predefined salt
 			passwordBytes = Hasher.HashSha256(passwordBytes);
 
+			// Decrypt and write the result to the file system
 			byte[] bytesDecrypted = AES_Decrypt(bytesToBeDecrypted, passwordBytes);
-
 			File.WriteAllBytes(decryptedFilePath, bytesDecrypted);
 		}
 	}
