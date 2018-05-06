@@ -56,36 +56,23 @@ namespace HSF_HideAndSeek.Helper {
 		/// to the file referenced by the path argument.
 		/// </summary>
 		/// <param name="path">Preferably the absolute path of the image to read</param>
-		/// <param name="forceTrueColor">True if the image should be recreated in case it uses a wrong pixel format and false otherwise</param>
+		/// <param name="forceTrueColor">True if the image should be recreated in case it is not RGB-based</param>
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="FileNotFoundException"></exception>
 		/// <exception cref="OutOfMemoryException"></exception>
-		/// <exception cref="WrongPixelFormatException">Always thrown when forceTrueColor is false but the image uses a wrong pixel format</exception>
+		/// <exception cref="WrongPixelFormatException">Always thrown when forceTrueColor is false but the image is not RGB-based</exception>
 		/// <returns>The <see cref="System.Drawing.Bitmap"/> object that represents the loaded image</returns>
 		public Bitmap ReadImageFile(string path, bool forceTrueColor) {
 			using (var img = Image.FromFile(path)) {
 				PixelFormat pf = img.PixelFormat;
-				bool wrongPixelFormat = false;
-				switch (pf) {
-					case PixelFormat.Undefined:
-						wrongPixelFormat = true;
-						break;
-					case PixelFormat.Indexed:
-						wrongPixelFormat = true;
-						break;
-					case PixelFormat.Format8bppIndexed:
-						wrongPixelFormat = true;
-						break;
-					case PixelFormat.Format4bppIndexed:
-						wrongPixelFormat = true;
-						break;
-					case PixelFormat.Format1bppIndexed:
-						wrongPixelFormat = true;
-						break;
-				}
 
-				// If everything is okay, return the image
-				if (!wrongPixelFormat) {
+				// Check whether the image is RGB-based
+				if (pf == PixelFormat.Format24bppRgb ||
+				    pf == PixelFormat.Format32bppRgb ||
+				    pf == PixelFormat.Format48bppRgb ||
+				    pf == PixelFormat.Format32bppArgb ||
+				    pf == PixelFormat.Format64bppArgb) {
+
 					return new Bitmap(img);
 				}
 

@@ -110,12 +110,13 @@ namespace HSF_HideAndSeek.Forms {
 		/// Invokes the <see cref="HSF_HideAndSeek.Helper.FileManager"/> to load a carrier image from a specified path to the system.
 		/// </summary>
 		/// <param name="path">Preferably the absolute path of a desired carrier image</param>
+		/// <param name="forceTrueColor">True if the image should be recreated in case it uses a wrong pixel format and false otherwise</param>
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="FileNotFoundException"></exception>
 		/// <exception cref="OutOfMemoryException"></exception>
-		/// <exception cref="Exceptions.WrongPixelFormatException"></exception>
+		/// <exception cref="Exceptions.WrongPixelFormatException">Always thrown when forceTrueColor is false but the image is not RGB-based</exception>
 		/// <exception cref="FormatException"></exception>
-		private void LoadCarrierImage(string path) {
+		private void LoadCarrierImage(string path, bool forceTrueColor) {
 
 			// Do nothing if the file does not exist 
 			if (!File.Exists(path)) {
@@ -129,7 +130,7 @@ namespace HSF_HideAndSeek.Forms {
 
 			// Generate carrier image object
 			_carrier = new StegoImage(
-				_fm.ReadImageFile(path, true),
+				_fm.ReadImageFile(path, forceTrueColor),
 				Path.GetFileName(path),
 				_fm.GetFileSizeInBytes(path)
 			);
@@ -343,7 +344,29 @@ namespace HSF_HideAndSeek.Forms {
 			ofd.ShowDialog();
 
 			try {
-				LoadCarrierImage(ofd.FileName);
+				LoadCarrierImage(ofd.FileName, false);
+			} catch (WrongPixelFormatException) {
+				DialogResult dialogResult = MessageBox.Show("Your image has an improper image file format" +
+				                                            "which means that it is not RGB-based. " +
+				                                            "Most likely the image is not a BMP or PNG\n\n" +
+				                                            "Do you want the image to be losslessly transformed\nto an RGB-based image?",
+					@"Improper pixel format!",
+					MessageBoxButtons.YesNo);
+				if (dialogResult == DialogResult.Yes) {
+					try {
+						LoadCarrierImage(ofd.FileName, true);
+					}
+					catch (Exception ex) {
+						MessageBox.Show(
+							@"The sysem caught an exception:"
+							+ "\nType:        " + ex.GetType().Name
+							+ "\nMessage:  " + ex.Message,
+							@"Critical error!",
+							MessageBoxButtons.OK,
+							MessageBoxIcon.Error
+						);
+					}
+				}
 			} catch (Exception ex) {
 				MessageBox.Show(
 					@"The sysem caught an exception:"
@@ -357,13 +380,14 @@ namespace HSF_HideAndSeek.Forms {
 		}
 
 		private void loadMessageButton_Click(object sender, EventArgs e) {
-			OpenFileDialog ofd = new OpenFileDialog();
-			ofd.InitialDirectory = @"C:\";
-			ofd.Multiselect = false;
-			ofd.CheckPathExists = true;
-			ofd.CheckFileExists = true;
-			ofd.Title = @"Please select a message file";
-			ofd.Filter = _messageExtensionsFilter;
+			OpenFileDialog ofd = new OpenFileDialog {
+				InitialDirectory = @"C:\",
+				Multiselect = false,
+				CheckPathExists = true,
+				CheckFileExists = true,
+				Title = @"Please select a message file",
+				Filter = _messageExtensionsFilter
+			};
 			ofd.ShowDialog();
 
 			try {
@@ -381,17 +405,26 @@ namespace HSF_HideAndSeek.Forms {
 		}
 
 		private void loadStegoImageButton_Click(object sender, EventArgs e) {
-			OpenFileDialog ofd = new OpenFileDialog();
-			ofd.InitialDirectory = @"C:\";
-			ofd.Multiselect = false;
-			ofd.CheckPathExists = true;
-			ofd.CheckFileExists = true;
-			ofd.Title = @"Please select a stego image file";
-			ofd.Filter = _stegoImageExtensionsFilter;
+			OpenFileDialog ofd = new OpenFileDialog {
+				InitialDirectory = @"C:\",
+				Multiselect = false,
+				CheckPathExists = true,
+				CheckFileExists = true,
+				Title = @"Please select a stego image file",
+				Filter = _stegoImageExtensionsFilter
+			};
 			ofd.ShowDialog();
 
 			try {
 				LoadStegoImage(ofd.FileName);
+			}
+			catch (WrongPixelFormatException) {
+				MessageBox.Show(
+					@"The provided stego image is not available in the RGB color space!",
+					@"Improper stego image!",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Asterisk
+				);
 			} catch (Exception ex) {
 				MessageBox.Show(
 					@"The sysem caught an exception:"
@@ -670,7 +703,6 @@ namespace HSF_HideAndSeek.Forms {
 			// Check GUI components
 			CheckEverything();
 		}
-		
 		#endregion
 
 		#region GUI component checker methods
