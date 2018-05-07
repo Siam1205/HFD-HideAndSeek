@@ -7,7 +7,8 @@
 *.com
 *.class
 *.dll
-*.exe
+*.exe.*
+*.vshost.exe
 *.pdb
 *.dll.config
 *.cache
@@ -23,7 +24,6 @@ _UpgradeReport_Files/
 ###############
 # Directories #
 ###############
-bin/
 obj/
 TestResults/
 ###################
@@ -70,7 +70,6 @@ Thumbs.db
 *.userprefs
 
 # Build results
-[Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/
@@ -78,7 +77,6 @@ x64/
 x86/
 build/
 bld/
-[Bb]in/
 [Oo]bj/
 
 # Visual Studo 2015 cache/options directory
