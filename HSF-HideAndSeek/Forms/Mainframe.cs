@@ -346,9 +346,9 @@ namespace HSF_HideAndSeek.Forms {
 			try {
 				LoadCarrierImage(ofd.FileName, false);
 			} catch (WrongPixelFormatException) {
-				DialogResult dialogResult = MessageBox.Show("Your image has an improper image file format" +
+				DialogResult dialogResult = MessageBox.Show("Your image has an improper image file format " +
 				                                            "which means that it is not RGB-based. " +
-				                                            "Most likely the image is not a BMP or PNG\n\n" +
+				                                            "Most likely the image is not a BMP or PNG.\n\n" +
 				                                            "Do you want the image to be losslessly transformed\nto an RGB-based image?",
 					@"Improper pixel format!",
 					MessageBoxButtons.YesNo);
@@ -460,6 +460,15 @@ namespace HSF_HideAndSeek.Forms {
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Error
 				);
+			} catch (Exception ex) {
+				MessageBox.Show(
+					@"The sysem caught an exception:"
+					+ "\nType:        " + ex.GetType().Name
+					+ "\nMessage:  " + ex.Message,
+					@"Critical error!",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Error
+				);
 			}
 			encryptMessageButton.Text = @"Encrypt message";
 			encryptMessageButton.Enabled = true;
@@ -564,9 +573,9 @@ namespace HSF_HideAndSeek.Forms {
 			} catch (Exception ex) {
 				MessageBox.Show(
 					@"The sysem caught an exception:"
-					   + "\nType:        " + ex.GetType().Name
-					   + "\nMessage:  " + ex.Message,
-				@"Critical error!",
+					+ "\nType:        " + ex.GetType().Name
+					+ "\nMessage:  " + ex.Message,
+					@"Critical error!",
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Error
 				);
@@ -606,13 +615,24 @@ namespace HSF_HideAndSeek.Forms {
 			showStegoImageBitplanesButton.Text = @"Generating bit planes ...";
 			showStegoImageBitplanesButton.Enabled = false;
 
-			if (_stegoImageBitPlaneForm == null || !_stegoImageBitPlaneForm.Visible) {
-				_stegoImageBitPlaneForm = new BitPlaneForm("Stego image bit planes", _stegoImage.Image);
-				_stegoImageBitPlaneForm.Show();
-				//stegoImageBitPlaneForm.DisplayBitPlanes();
+			try {
+				if (_stegoImageBitPlaneForm == null || !_stegoImageBitPlaneForm.Visible) {
+					_stegoImageBitPlaneForm = new BitPlaneForm("Stego image bit planes", _stegoImage.Image);
+					_stegoImageBitPlaneForm.Show();
+					//stegoImageBitPlaneForm.DisplayBitPlanes();
 
-			} else {
-				_stegoImageBitPlaneForm.Focus();
+				} else {
+					_stegoImageBitPlaneForm.Focus();
+				}
+			} catch (Exception ex) {
+				MessageBox.Show(
+					@"The sysem caught an exception:"
+					+ "\nType:        " + ex.GetType().Name
+					+ "\nMessage:  " + ex.Message,
+					@"Critical error!",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Error
+				);
 			}
 
 			showStegoImageBitplanesButton.Text = @"Show stego image bit planes";
@@ -636,14 +656,25 @@ namespace HSF_HideAndSeek.Forms {
 			showCarrierBitplanesButton.Text = @"Generating bit planes ...";
 			showCarrierBitplanesButton.Enabled = false;
 
-			if (_carrierBitPlaneForm == null || !_carrierBitPlaneForm.Visible) {
-				_carrierBitPlaneForm = new BitPlaneForm("Carrier image bit planes", _carrier.Image);
-				_carrierBitPlaneForm.Show();
-				_carrierBitPlaneForm.Name = "Carrier bit planes";
-				//carrierBitPlaneForm.DisplayBitPlanes();
+			try {
+				if (_carrierBitPlaneForm == null || !_carrierBitPlaneForm.Visible) {
+					_carrierBitPlaneForm = new BitPlaneForm("Carrier image bit planes", _carrier.Image);
+					_carrierBitPlaneForm.Show();
+					_carrierBitPlaneForm.Name = "Carrier bit planes";
+					//carrierBitPlaneForm.DisplayBitPlanes();
 
-			} else {
-				_carrierBitPlaneForm.Focus();
+				} else {
+					_carrierBitPlaneForm.Focus();
+				}
+			} catch (Exception ex) {
+				MessageBox.Show(
+					@"The sysem caught an exception:"
+					+ "\nType:        " + ex.GetType().Name
+					+ "\nMessage:  " + ex.Message,
+					@"Critical error!",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Error
+				);
 			}
 
 			showCarrierBitplanesButton.Text = @"Show carrier bit planes";

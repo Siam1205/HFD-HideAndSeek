@@ -12,28 +12,28 @@ Slightly simplified, digital images are nothing more than a set of pixels storin
 ### Bit planes
 A bit plane of a digital image is a set of bits corresponding to a given bit position over all bytes of an image's color channel. It can also be represented as a binary image drawn with the values of the original image's bit position whereas black pixels illustrate a bit value of 1 and white pixels illustrate a value of 0.
 <p align="center">
-  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/pumpkins.png" width="30%"/>
+  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/pumpkins.png" alt="Original image: pumpkins.png" width="30%"/>
 </p>
 <p align="center">
-  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/pumpkins_red/pumpkins_0_red.png" width="22%"/>
-  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/pumpkins_red/pumpkins_1_red.png" width="22%"/>
-  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/pumpkins_red/pumpkins_2_red.png" width="22%"/>
-  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/pumpkins_red/pumpkins_3_red.png" width="22%"/>
+  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/pumpkins_red/pumpkins_0_red.png" alt="Carrier image: Bit plane 0" width="22%"/>
+  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/pumpkins_red/pumpkins_1_red.png" alt="Carrier image: Bit plane 1" width="22%"/>
+  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/pumpkins_red/pumpkins_2_red.png" alt="Carrier image: Bit plane 2" width="22%"/>
+  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/pumpkins_red/pumpkins_3_red.png" alt="Carrier image: Bit plane 3" width="22%"/>
 </p>
 <p align="center">
-  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/pumpkins_red/pumpkins_4_red.png" width="22%"/>
-  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/pumpkins_red/pumpkins_5_red.png" width="22%"/>
-  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/pumpkins_red/pumpkins_6_red.png" width="22%"/>
-  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/pumpkins_red/pumpkins_7_red.png" width="22%"/>
+  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/pumpkins_red/pumpkins_4_red.png" alt="Carrier image: Bit plane 4" width="22%"/>
+  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/pumpkins_red/pumpkins_5_red.png" alt="Carrier image: Bit plane 5" width="22%"/>
+  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/pumpkins_red/pumpkins_6_red.png" alt="Carrier image: Bit plane 6" width="22%"/>
+  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/pumpkins_red/pumpkins_7_red.png" alt="Carrier image: Bit plane 7" width="22%"/>
 </p>
 <p>
   While embedding a message, bit planes are manipulated which may in some cases lead to the fact that a message has been embedded into the respective carrier. This is processed is called a visual attack:
 </p>
 <p align="center">
-  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/seq_stegged_pumpkins_12bpp_pfm_red/seq_stegged_pumpkins_12bpp_pfm_0_red.png" width="22%"/>
-  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/seq_stegged_pumpkins_12bpp_pfm_red/seq_stegged_pumpkins_12bpp_pfm_1_red.png" width="22%"/>
-  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/seq_stegged_pumpkins_12bpp_pfm_red/seq_stegged_pumpkins_12bpp_pfm_2_red.png" width="22%"/>
-  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/seq_stegged_pumpkins_12bpp_pfm_red/seq_stegged_pumpkins_12bpp_pfm_3_red.png" width="22%"/>
+  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/seq_stegged_pumpkins_12bpp_pfm_red/seq_stegged_pumpkins_12bpp_pfm_0_red.png" alt="Stego image: Bit plane 0" width="22%"/>
+  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/seq_stegged_pumpkins_12bpp_pfm_red/seq_stegged_pumpkins_12bpp_pfm_1_red.png" alt="Stego image: Bit plane 1" width="22%"/>
+  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/seq_stegged_pumpkins_12bpp_pfm_red/seq_stegged_pumpkins_12bpp_pfm_2_red.png" alt="Stego image: Bit plane 2" width="22%"/>
+  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/pumpkins/seq_stegged_pumpkins_12bpp_pfm_red/seq_stegged_pumpkins_12bpp_pfm_3_red.png" alt="Stego image: Bit plane 3" width="22%"/>
 </p>
 HSF-HAS provides the possibility to show the individual bit planes so that the risk that a message may be detected due to visual attacks can be reduced by selecting a proper carrier image (unlike the one shown in this example) and especially the most proper embedding scheme and options.
 
@@ -44,7 +44,7 @@ HSF-HAS provides message embedding in all but the highest bit plane as well as i
 ## HSF-HAS usage
 Upon starting the tool, the HSF-HAS mainframe appears:
 <p align="center">
-  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/GUI.png" width="90%"/>
+  <img src="https://github.com/Siam1205/HSF-HideAndSeek/blob/master/Example/GUI.png" alt="Example image: HSF-HAS Graphical User Interface (GUI)" width="90%"/>
 </p>
 At this point, one carrier image, one message file and one stego image can be loaded at a time. All operations that address the respective object will overwrite it or its counterpart. As an example, if a carrier is loaded while another one has already been loaded, it will be overwritten. Furthermore, if a stego image is loaded and a message is hidden, the existing stego image is overwritten with the newly generated stego image.<br />
 The following paragraph describes the function of the available controls:
@@ -52,7 +52,8 @@ The following paragraph describes the function of the available controls:
   <li><b>Load carrier: </b>Opens a file dialog in order to load a carrier image from the file system.</li>
   <li><b>Load message: </b>Opens a file dialog in order to load a message file from the file system.</li>
   <li><b>Show carrier bit planes: </b>Opens a new window and displays the eight individual bit planes of the carrier's red color channel.</li>
-  <li><b>Rate carrier: </b>Rates a carrier based on its suitability to hide the message. Ratings above 90% are considered secure. A carrier with a rating below 90% might be exposed as such by statistical attacks.</li>
+  <li><b>Rate carrier: </b>Rates a carrier based on its suitability to hide the message. Ratings above 90% are considered secure.<br />
+  A carrier with a rating below 90% might be exposed as such by statistical attacks.</li>
   <li><b>Encrypt message: </b>Encrypts the currently loaded message with AES256-CBC.</li>
   <li><b>Decrypt message: </b>Decrypts the currently loaded message with AES256-CBC.</li>
   <li><b>Hide message: </b>Hides the message inside the carrier image based on the specified options.</li>
@@ -66,4 +67,5 @@ The following paragraph describes the function of the available controls:
 </ul>
 
 ## Private Comment
-I developed this tool for the purpose of teaching one possible type of steganographic algorithm in a 'quick and dirty' way under no license. There was no time wasted for efficiency or high quality code.
+This tool has been developed in 2018 - under no license - for "Cryptography - theory and practice" at the Fulda University of Applied Sciences hence for the purpose of teaching. It is <b>properly documented</b> in order to facilitate further changes and improvements by anyone or to provide maintainability in general.<br />
+Although effective, the implemented algorithms are not necessarily efficient regarding the amount of time it takes to hide or extract messages.

@@ -14,6 +14,9 @@ namespace HSF_HideAndSeek.Steganography.Logic {
 		/// </summary>
 		/// <param name="image">The image of which the bit plane should be extracted</param>
 		/// <param name="pos">The bit plane's bit position</param>
+		/// <exception cref="ArgumentException"></exception>
+		/// <exception cref="ArgumentOutOfRangeException"></exception>
+		/// <exception cref="Exception"></exception>
 		/// <returns>A <see cref="System.Drawing.Bitmap"/> object representing the bit plane</returns>
 		public static Bitmap ExtractSingleBitPlane(Bitmap image, byte pos) {
 

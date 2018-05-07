@@ -22,6 +22,10 @@ namespace HSF_HideAndSeek.Forms {
 		/// </summary>
 		/// <param name="title">The form's title</param>
 		/// <param name="image">The image whose bit planes are to be extracted from</param>
+		/// <exception cref="ArgumentNullException"></exception>
+		/// <exception cref="ArgumentException"></exception>
+		/// <exception cref="ArgumentOutOfRangeException"></exception>
+		/// <exception cref="Exception"></exception>
 		public BitPlaneForm(string title, Bitmap image) {
 			InitializeComponent();
 			_image = new Bitmap(image);
@@ -34,6 +38,9 @@ namespace HSF_HideAndSeek.Forms {
 
 		/// <summary>
 		/// Fills the picture boxes with the bit plane images.
+		/// <exception cref="ArgumentException"></exception>
+		/// <exception cref="ArgumentOutOfRangeException"></exception>
+		/// <exception cref="Exception"></exception>
 		/// </summary>
 		private void DisplayBitPlanes() {
 			bitPlanePictureBox0.Image = BitPlaneExtractor.ExtractSingleBitPlane(_image, 0);
