@@ -110,7 +110,7 @@ namespace HSF_HideAndSeek.Forms {
 		/// Invokes the <see cref="HSF_HideAndSeek.Helper.FileManager"/> to load a carrier image from a specified path to the system.
 		/// </summary>
 		/// <param name="path">Preferably the absolute path of a desired carrier image</param>
-		/// <param name="forceTrueColor">True if the image should be recreated in case it uses a wrong pixel format and false otherwise</param>
+		/// <param name="forceTrueColor">true if the image should be recreated in case it uses a wrong pixel format and false otherwise</param>
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="FileNotFoundException"></exception>
 		/// <exception cref="OutOfMemoryException"></exception>

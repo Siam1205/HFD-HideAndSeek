@@ -69,3 +69,6 @@ The following paragraph describes the function of the available controls:
 ## Private Comment
 This tool has been developed in 2018 - under no license - for "Cryptography - theory and practice" at the Fulda University of Applied Sciences hence for the purpose of teaching. It is <b>properly documented</b> in order to facilitate further changes and improvements by anyone or to provide maintainability in general.<br />
 Although effective, the implemented algorithms are not necessarily efficient regarding the amount of time it takes to hide or extract messages.
+
+## Contact
+If you have any questions regarding the tool, if you find bugs or in case you would like a feature to be added while being too lazy to implement it yourself, contact me at <a href="mailto:s.amelunxen@gmx.de">s.amelunxen@gmx.de</a>.
