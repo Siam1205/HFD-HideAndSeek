@@ -17,6 +17,11 @@ namespace HSF_HideAndSeek.Forms {
 		private readonly Bitmap _image;
 
 		/// <summary>
+		/// Array storing the eight red bit planes of the specified image
+		/// </summary>
+		private Bitmap[] _bitPlanes = new Bitmap[8];
+
+		/// <summary>
 		/// Constructor: Generates a new form with a given name and
 		/// displays the eight bit planes (red color channel) of the given image one after another.
 		/// </summary>
@@ -37,27 +42,29 @@ namespace HSF_HideAndSeek.Forms {
 		}
 
 		/// <summary>
-		/// Fills the picture boxes with the bit plane images.
+		/// Extracts the eight red bit planes and
+		/// fills the picture boxes with them.
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="ArgumentOutOfRangeException"></exception>
 		/// <exception cref="Exception"></exception>
 		/// </summary>
 		private void DisplayBitPlanes() {
-			bitPlanePictureBox0.Image = BitPlaneExtractor.ExtractSingleBitPlane(_image, 0);
-			//Update();
-			bitPlanePictureBox1.Image = BitPlaneExtractor.ExtractSingleBitPlane(_image, 1);
-			//Update();
-			bitPlanePictureBox2.Image = BitPlaneExtractor.ExtractSingleBitPlane(_image, 2);
-			//Update();
-			bitPlanePictureBox3.Image = BitPlaneExtractor.ExtractSingleBitPlane(_image, 3);
-			//Update();
-			bitPlanePictureBox4.Image = BitPlaneExtractor.ExtractSingleBitPlane(_image, 4);
-			//Update();
-			bitPlanePictureBox5.Image = BitPlaneExtractor.ExtractSingleBitPlane(_image, 5);
-			//Update();
-			bitPlanePictureBox6.Image = BitPlaneExtractor.ExtractSingleBitPlane(_image, 6);
-			//Update();
-			bitPlanePictureBox7.Image = BitPlaneExtractor.ExtractSingleBitPlane(_image, 7);
+			_bitPlanes[0] = BitPlaneExtractor.ExtractSingleBitPlane(_image, 0);
+			bitPlanePictureBox0.Image = _bitPlanes[0];
+			_bitPlanes[1] = BitPlaneExtractor.ExtractSingleBitPlane(_image, 1);
+			bitPlanePictureBox1.Image = _bitPlanes[1];
+			_bitPlanes[2] = BitPlaneExtractor.ExtractSingleBitPlane(_image, 2);
+			bitPlanePictureBox2.Image = _bitPlanes[2];
+			_bitPlanes[3] = BitPlaneExtractor.ExtractSingleBitPlane(_image, 3);
+			bitPlanePictureBox3.Image = _bitPlanes[3];
+			_bitPlanes[4] = BitPlaneExtractor.ExtractSingleBitPlane(_image, 4);
+			bitPlanePictureBox4.Image = _bitPlanes[4];
+			_bitPlanes[5] = BitPlaneExtractor.ExtractSingleBitPlane(_image, 5);
+			bitPlanePictureBox5.Image = _bitPlanes[5];
+			_bitPlanes[6] = BitPlaneExtractor.ExtractSingleBitPlane(_image, 6);
+			bitPlanePictureBox6.Image = _bitPlanes[6];
+			_bitPlanes[7] = BitPlaneExtractor.ExtractSingleBitPlane(_image, 7);
+			bitPlanePictureBox7.Image = _bitPlanes[7];
 		}
 
 		/// <summary>
@@ -66,6 +73,7 @@ namespace HSF_HideAndSeek.Forms {
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void BitPlaneForm_FormClosing(object sender, FormClosingEventArgs e) {
+			_bitPlanes = null;
 			try {
 				bitPlanePictureBox0.Image.Dispose();
 				bitPlanePictureBox1.Image.Dispose();

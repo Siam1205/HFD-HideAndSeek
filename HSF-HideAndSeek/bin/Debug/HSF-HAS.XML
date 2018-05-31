@@ -55,6 +55,11 @@
             The original image the bit planes are to be extracted from
             </summary>
         </member>
+        <member name="F:HSF_HideAndSeek.Forms.BitPlaneForm._bitPlanes">
+            <summary>
+            Array storing the eight red bit planes of the specified image
+            </summary>
+        </member>
         <member name="M:HSF_HideAndSeek.Forms.BitPlaneForm.#ctor(System.String,System.Drawing.Bitmap)">
             <summary>
             Constructor: Generates a new form with a given name and
@@ -69,7 +74,8 @@
         </member>
         <member name="M:HSF_HideAndSeek.Forms.BitPlaneForm.DisplayBitPlanes">
             <summary>
-            Fills the picture boxes with the bit plane images.
+            Extracts the eight red bit planes and
+            fills the picture boxes with them.
             <exception cref="T:System.ArgumentException"></exception>
             <exception cref="T:System.ArgumentOutOfRangeException"></exception>
             <exception cref="T:System.Exception"></exception>
