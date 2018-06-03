@@ -203,7 +203,7 @@ namespace HSF_HideAndSeek.Forms {
 		/// <exception cref="System.Security.SecurityException"></exception>
 		/// <exception cref="System.Runtime.InteropServices.ExternalException"></exception>
 		private void SaveStegoImage(StegoImage stegoImage, string path) {
-			_fm.WriteStegoImage(stegoImage.Image, path);
+			_fm.WriteImageFile(stegoImage.Image, path);
 			stegoImageSizeLabel.Text = Converter.BytesToHumanReadableString(_fm.GetFileSizeInBytes(path));
 		}
 
