@@ -120,9 +120,9 @@ namespace HSF_HideAndSeek.Helper {
 		}
 
 		/// <summary>
-		/// Writes a carrier or stego image to the given path.
+		/// Writes am image to the given path.
 		/// </summary>
-		/// <param name="stegoImage">The stego image that should be saved to the drive</param>
+		/// <param name="image">The image that should be saved to the drive</param>
 		/// <param name="path">Preferably the absolute path that specifies where the image should be saved</param>
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="ArgumentNullException"></exception>
@@ -134,7 +134,7 @@ namespace HSF_HideAndSeek.Helper {
 		/// <exception cref="NotSupportedException"></exception>
 		/// <exception cref="System.Security.SecurityException"></exception>
 		/// <exception cref="System.Runtime.InteropServices.ExternalException"></exception>
-		public void WriteStegoImage(Bitmap stegoImage, string path) {
+		public void WriteImageFile(Bitmap image, string path) {
 
 			// Retrieve the image extension from the destination path
 			string extension = Path.GetExtension(path);
@@ -150,8 +150,23 @@ namespace HSF_HideAndSeek.Helper {
 					break;
 			}
 			using (FileStream fs = new FileStream(path, FileMode.Create)) {
-				stegoImage.Save(fs, format);
+				image.Save(fs, format);
 			}
+		}
+
+		/// <summary>
+		/// Creates all directories and subdirectories in the specified path unless they already exist.
+		/// </summary>
+		/// <param name="path">The path along which the directories are to be created</param>
+		/// <exception cref="IOException"></exception>
+		/// <exception cref="UnauthorizedAccessException"></exception>
+		/// <exception cref="ArgumentException"></exception>
+		/// <exception cref="ArgumentNullException"></exception>
+		/// <exception cref="PathTooLongException"></exception>
+		/// <exception cref="DirectoryNotFoundException"></exception>
+		/// <exception cref="NotSupportedException"></exception>
+		public void MakeDirectory(string path) {
+			Directory.CreateDirectory(path);
 		}
 	}
 }

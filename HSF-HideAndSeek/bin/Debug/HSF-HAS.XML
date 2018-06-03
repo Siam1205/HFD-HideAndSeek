@@ -50,6 +50,11 @@
             This class represents a form for the only purpose of displaying the eight red bit planes of a given carrier or stego image.
             </summary>
         </member>
+        <member name="F:HSF_HideAndSeek.Forms.BitPlaneForm._fm">
+            <summary>
+            The reference to the FileManager's singleton instance
+            </summary>
+        </member>
         <member name="F:HSF_HideAndSeek.Forms.BitPlaneForm._image">
             <summary>
             The original image the bit planes are to be extracted from
@@ -80,6 +85,12 @@
             <exception cref="T:System.ArgumentOutOfRangeException"></exception>
             <exception cref="T:System.Exception"></exception>
             </summary>
+        </member>
+        <member name="M:HSF_HideAndSeek.Forms.BitPlaneForm.SaveBitPlanes(System.String)">
+            <summary>
+            Saves the right red bit planes to a given path
+            </summary>
+            <param name="path">Preferably absolute path to save the bit planes to</param>
         </member>
         <member name="M:HSF_HideAndSeek.Forms.BitPlaneForm.BitPlaneForm_FormClosing(System.Object,System.Windows.Forms.FormClosingEventArgs)">
             <summary>
@@ -743,11 +754,11 @@
             <exception cref="T:System.Security.SecurityException"></exception>
             <exception cref="T:System.ObjectDisposedException"></exception>
         </member>
-        <member name="M:HSF_HideAndSeek.Helper.FileManager.WriteStegoImage(System.Drawing.Bitmap,System.String)">
+        <member name="M:HSF_HideAndSeek.Helper.FileManager.WriteImageFile(System.Drawing.Bitmap,System.String)">
             <summary>
-            Writes a carrier or stego image to the given path.
+            Writes am image to the given path.
             </summary>
-            <param name="stegoImage">The stego image that should be saved to the drive</param>
+            <param name="image">The image that should be saved to the drive</param>
             <param name="path">Preferably the absolute path that specifies where the image should be saved</param>
             <exception cref="T:System.ArgumentException"></exception>
             <exception cref="T:System.ArgumentNullException"></exception>
@@ -759,6 +770,19 @@
             <exception cref="T:System.NotSupportedException"></exception>
             <exception cref="T:System.Security.SecurityException"></exception>
             <exception cref="T:System.Runtime.InteropServices.ExternalException"></exception>
+        </member>
+        <member name="M:HSF_HideAndSeek.Helper.FileManager.MakeDirectory(System.String)">
+            <summary>
+            Creates all directories and subdirectories in the specified path unless they already exist.
+            </summary>
+            <param name="path">The path along which the directories are to be created</param>
+            <exception cref="T:System.IO.IOException"></exception>
+            <exception cref="T:System.UnauthorizedAccessException"></exception>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.IO.PathTooLongException"></exception>
+            <exception cref="T:System.IO.DirectoryNotFoundException"></exception>
+            <exception cref="T:System.NotSupportedException"></exception>
         </member>
         <member name="T:HSF_HideAndSeek.Program">
             <summary>
