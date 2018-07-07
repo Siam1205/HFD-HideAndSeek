@@ -1,16 +1,16 @@
 var searchData=
 [
-  ['iconpicturebox',['iconPictureBox',['../class_h_s_f___hide_and_seek_1_1_forms_1_1_about_box.html#a5dc023b9a254a2eb32928eac338fb80e',1,'HSF_HideAndSeek::Forms::AboutBox']]],
-  ['icontablelayout',['iconTableLayout',['../class_h_s_f___hide_and_seek_1_1_forms_1_1_about_box.html#af4a6f17dce6827daf10f26de456c6317',1,'HSF_HideAndSeek::Forms::AboutBox']]],
-  ['infcarriercapacitylabel',['infCarrierCapacityLabel',['../class_h_s_f___hide_and_seek_1_1_forms_1_1_mainframe.html#a19109c9546c8eee67a1e9183c1509dbb',1,'HSF_HideAndSeek::Forms::Mainframe']]],
-  ['infcarriernamelabel',['infCarrierNameLabel',['../class_h_s_f___hide_and_seek_1_1_forms_1_1_mainframe.html#a8d6ec48971e128c24bd356233a1e57ca',1,'HSF_HideAndSeek::Forms::Mainframe']]],
-  ['infcarrierratinglabel',['infCarrierRatingLabel',['../class_h_s_f___hide_and_seek_1_1_forms_1_1_mainframe.html#a8934da4216eb39f704eab82f3df1cec6',1,'HSF_HideAndSeek::Forms::Mainframe']]],
-  ['infcarriersizelabel',['infCarrierSizeLabel',['../class_h_s_f___hide_and_seek_1_1_forms_1_1_mainframe.html#afb3e00b1d4187ea83ea8299308ce4056',1,'HSF_HideAndSeek::Forms::Mainframe']]],
-  ['infdescriptionlabel',['infDescriptionLabel',['../class_h_s_f___hide_and_seek_1_1_forms_1_1_about_box.html#a370e5a0198e73815f2669232be937090',1,'HSF_HideAndSeek::Forms::AboutBox']]],
-  ['infmessagenamelabel',['infMessageNameLabel',['../class_h_s_f___hide_and_seek_1_1_forms_1_1_mainframe.html#ad36058d58483bb53419a5e9c28d2b47b',1,'HSF_HideAndSeek::Forms::Mainframe']]],
-  ['infmessagesizelabel',['infMessageSizeLabel',['../class_h_s_f___hide_and_seek_1_1_forms_1_1_mainframe.html#a41f38ab035dcfa74b0cbcb38f1faf5c3',1,'HSF_HideAndSeek::Forms::Mainframe']]],
-  ['informationtablelayout',['informationTableLayout',['../class_h_s_f___hide_and_seek_1_1_forms_1_1_mainframe.html#a94084da3dfec2b4f90d0776ff650f8e8',1,'HSF_HideAndSeek::Forms::Mainframe']]],
-  ['infstegoimagenamelabel',['infStegoImageNameLabel',['../class_h_s_f___hide_and_seek_1_1_forms_1_1_mainframe.html#a3647b7a613ba2747a3f07d424f8ba328',1,'HSF_HideAndSeek::Forms::Mainframe']]],
-  ['infstegoimagesizelabel',['infStegoImageSizeLabel',['../class_h_s_f___hide_and_seek_1_1_forms_1_1_mainframe.html#acc0f4a4ad5a5ca109ab61027c1a4dcff',1,'HSF_HideAndSeek::Forms::Mainframe']]],
-  ['instance',['Instance',['../class_h_s_f___hide_and_seek_1_1_helper_1_1_file_manager.html#a05fb1370ffe26aaf5c17424b1fb05a69',1,'HSF_HideAndSeek.Helper.FileManager.Instance()'],['../class_h_s_f___hide_and_seek_1_1_steganography_1_1_logic_1_1_embedder.html#aaca5be8f8333db8615fb166deba06a1d',1,'HSF_HideAndSeek.Steganography.Logic.Embedder.Instance()']]]
+  ['iconpicturebox',['iconPictureBox',['../class_h_f_d___hide_and_seek_1_1_forms_1_1_about_box.html#a10d402e762c9b6611467d17de7a52735',1,'HFD_HideAndSeek::Forms::AboutBox']]],
+  ['icontablelayout',['iconTableLayout',['../class_h_f_d___hide_and_seek_1_1_forms_1_1_about_box.html#a0a5a54df825f787be52d209787a84590',1,'HFD_HideAndSeek::Forms::AboutBox']]],
+  ['infcarriercapacitylabel',['infCarrierCapacityLabel',['../class_h_f_d___hide_and_seek_1_1_forms_1_1_mainframe.html#a852d002aa2ddac83b51e39508e93d4f5',1,'HFD_HideAndSeek::Forms::Mainframe']]],
+  ['infcarriernamelabel',['infCarrierNameLabel',['../class_h_f_d___hide_and_seek_1_1_forms_1_1_mainframe.html#ab1326927cae9bb4e4b04f9ca7f440eba',1,'HFD_HideAndSeek::Forms::Mainframe']]],
+  ['infcarrierratinglabel',['infCarrierRatingLabel',['../class_h_f_d___hide_and_seek_1_1_forms_1_1_mainframe.html#af7b8df079418f711362a86af4991a3be',1,'HFD_HideAndSeek::Forms::Mainframe']]],
+  ['infcarriersizelabel',['infCarrierSizeLabel',['../class_h_f_d___hide_and_seek_1_1_forms_1_1_mainframe.html#a5da3008a71bce83161fbe315c4708caa',1,'HFD_HideAndSeek::Forms::Mainframe']]],
+  ['infdescriptionlabel',['infDescriptionLabel',['../class_h_f_d___hide_and_seek_1_1_forms_1_1_about_box.html#ac10c75ee9ee1259aacb96cac4f2a467f',1,'HFD_HideAndSeek::Forms::AboutBox']]],
+  ['infmessagenamelabel',['infMessageNameLabel',['../class_h_f_d___hide_and_seek_1_1_forms_1_1_mainframe.html#a7d8a57c4303376bcbfa0d308d52af913',1,'HFD_HideAndSeek::Forms::Mainframe']]],
+  ['infmessagesizelabel',['infMessageSizeLabel',['../class_h_f_d___hide_and_seek_1_1_forms_1_1_mainframe.html#a26a84cb7acd08a0b9df8ffebe7dace39',1,'HFD_HideAndSeek::Forms::Mainframe']]],
+  ['informationtablelayout',['informationTableLayout',['../class_h_f_d___hide_and_seek_1_1_forms_1_1_mainframe.html#a5a4709ad65d61428cd148e2543a7f732',1,'HFD_HideAndSeek::Forms::Mainframe']]],
+  ['infstegoimagenamelabel',['infStegoImageNameLabel',['../class_h_f_d___hide_and_seek_1_1_forms_1_1_mainframe.html#ae34b8663efb61610ece7d67bacd0dc64',1,'HFD_HideAndSeek::Forms::Mainframe']]],
+  ['infstegoimagesizelabel',['infStegoImageSizeLabel',['../class_h_f_d___hide_and_seek_1_1_forms_1_1_mainframe.html#a82daab397a0263c154afb12e6e7fc5bf',1,'HFD_HideAndSeek::Forms::Mainframe']]],
+  ['instance',['Instance',['../class_h_f_d___hide_and_seek_1_1_helper_1_1_file_manager.html#a81bf534c7cd4576e8b8304c695e8caf0',1,'HFD_HideAndSeek.Helper.FileManager.Instance()'],['../class_h_f_d___hide_and_seek_1_1_steganography_1_1_logic_1_1_embedder.html#a5863c458e961a1fb2905c3917a1fccb8',1,'HFD_HideAndSeek.Steganography.Logic.Embedder.Instance()']]]
 ];

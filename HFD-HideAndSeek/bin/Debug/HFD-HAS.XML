@@ -1,0 +1,1199 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>HFD-HAS</name>
+    </assembly>
+    <members>
+        <member name="T:HFD_HideAndSeek.Forms.AboutBox">
+            <summary>
+            This class represents a form for displaying the information about the tool itself and its developer.
+            </summary>
+        </member>
+        <member name="M:HFD_HideAndSeek.Forms.AboutBox.#ctor">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:HFD_HideAndSeek.Forms.AboutBox.emailLinkLabel_LinkClicked(System.Object,System.Windows.Forms.LinkLabelLinkClickedEventArgs)">
+            <summary>
+            Opens the default email application right when the email link label is clicked.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:HFD_HideAndSeek.Forms.AboutBox.okButton_Click(System.Object,System.EventArgs)">
+            <summary>
+            Closes the form when the OK-button is clicked.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="F:HFD_HideAndSeek.Forms.AboutBox.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:HFD_HideAndSeek.Forms.AboutBox.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:HFD_HideAndSeek.Forms.AboutBox.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:HFD_HideAndSeek.Forms.BitPlaneForm">
+            <summary>
+            This class represents a form for the only purpose of displaying the eight red bit planes of a given carrier or stego image.
+            </summary>
+        </member>
+        <member name="F:HFD_HideAndSeek.Forms.BitPlaneForm._fm">
+            <summary>
+            The reference to the FileManager's singleton instance
+            </summary>
+        </member>
+        <member name="F:HFD_HideAndSeek.Forms.BitPlaneForm._image">
+            <summary>
+            The original image the bit planes are to be extracted from
+            </summary>
+        </member>
+        <member name="F:HFD_HideAndSeek.Forms.BitPlaneForm._bitPlanes">
+            <summary>
+            Array storing the eight red bit planes of the specified image
+            </summary>
+        </member>
+        <member name="M:HFD_HideAndSeek.Forms.BitPlaneForm.#ctor(System.String,System.Drawing.Bitmap)">
+            <summary>
+            Constructor: Generates a new form with a given name and
+            displays the eight bit planes (red color channel) of the given image one after another.
+            </summary>
+            <param name="title">The form's title</param>
+            <param name="image">The image whose bit planes are to be extracted from</param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="M:HFD_HideAndSeek.Forms.BitPlaneForm.DisplayBitPlanes">
+            <summary>
+            Extracts the eight red bit planes and
+            fills the picture boxes with them.
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <exception cref="T:System.Exception"></exception>
+            </summary>
+        </member>
+        <member name="M:HFD_HideAndSeek.Forms.BitPlaneForm.SaveBitPlanes(System.String)">
+            <summary>
+            Saves the right red bit planes to a given path
+            </summary>
+            <param name="path">Preferably absolute path specifying where to save the bit planes</param>
+        </member>
+        <member name="M:HFD_HideAndSeek.Forms.BitPlaneForm.BitPlaneForm_FormClosing(System.Object,System.Windows.Forms.FormClosingEventArgs)">
+            <summary>
+            Free memory at closing the form.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="F:HFD_HideAndSeek.Forms.BitPlaneForm.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:HFD_HideAndSeek.Forms.BitPlaneForm.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:HFD_HideAndSeek.Forms.BitPlaneForm.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:HFD_HideAndSeek.Forms.Mainframe">
+            <summary>
+            This class represents the application's main form and therefore the central user interface.
+            It contains all elements the user can interact with such as buttons or combo boxes.
+            From this form, all logic is invoked.
+            </summary>
+        </member>
+        <member name="F:HFD_HideAndSeek.Forms.Mainframe._aboutBox">
+            <summary>
+            The reference to the about form object.
+            </summary>
+        </member>
+        <member name="F:HFD_HideAndSeek.Forms.Mainframe._carrierBitPlaneForm">
+            <summary>
+            The reference to the carrier bit planes form object
+            </summary>
+        </member>
+        <member name="F:HFD_HideAndSeek.Forms.Mainframe._stegoImageBitPlaneForm">
+            <summary>
+            The reference to the stego image bit planes form object
+            </summary>
+        </member>
+        <member name="F:HFD_HideAndSeek.Forms.Mainframe._fm">
+            <summary>
+            The reference to the FileManager's singleton instance
+            </summary>
+        </member>
+        <member name="F:HFD_HideAndSeek.Forms.Mainframe._embedder">
+            <summary>
+            The reference to the Embedder's singleton instance
+            </summary>
+        </member>
+        <member name="F:HFD_HideAndSeek.Forms.Mainframe._carrier">
+            <summary>
+            The reference to the carrier image object the user can load into the system
+            </summary>
+        </member>
+        <member name="F:HFD_HideAndSeek.Forms.Mainframe._stegoImage">
+            <summary>
+            The reference to the stego image object the user can load into the system
+            </summary>
+        </member>
+        <member name="F:HFD_HideAndSeek.Forms.Mainframe._message">
+            <summary>
+            The reference to the message object the user can load into the system
+            </summary>
+        </member>
+        <member name="F:HFD_HideAndSeek.Forms.Mainframe._imageExtensions">
+            <summary>
+            A string list containing image extensions one of which a potential carrier image needs to have
+            </summary>
+        </member>
+        <member name="F:HFD_HideAndSeek.Forms.Mainframe._carrierExtensionsFilter">
+            <summary>
+            A readonly string containing a FileDialog filter for carrier images
+            </summary>
+        </member>
+        <member name="F:HFD_HideAndSeek.Forms.Mainframe._stegoImageExtensionsFilter">
+            <summary>
+            A readonly string containing a FileDialog filter for stego images
+            </summary>
+        </member>
+        <member name="F:HFD_HideAndSeek.Forms.Mainframe._messageExtensionsFilter">
+            <summary>
+            A readonly string containing a FileDialog filter for message files
+            </summary>
+        </member>
+        <member name="F:HFD_HideAndSeek.Forms.Mainframe._defaultLabelValue">
+            <summary>
+            A readonly string containing a default value for the labels
+            to use when nothing else is displayed
+            </summary>
+        </member>
+        <member name="M:HFD_HideAndSeek.Forms.Mainframe.#ctor">
+            <summary>
+            Constructor: Initializes the main frame.
+            </summary>
+        </member>
+        <member name="M:HFD_HideAndSeek.Forms.Mainframe.LoadCarrierImage(System.String,System.Boolean)">
+            <summary>
+            Invokes the <see cref="T:HFD_HideAndSeek.Helper.FileManager"/> to load a carrier image from a specified path to the system.
+            </summary>
+            <param name="path">Preferably the absolute path of a desired carrier image</param>
+            <param name="forceTrueColor">true if the image should be recreated in case it uses a wrong pixel format and false otherwise</param>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.IO.FileNotFoundException"></exception>
+            <exception cref="T:System.OutOfMemoryException"></exception>
+            <exception cref="T:HFD_HideAndSeek.Exceptions.WrongPixelFormatException">Always thrown when forceTrueColor is false but the image is not RGB-based</exception>
+            <exception cref="T:System.FormatException"></exception>
+        </member>
+        <member name="M:HFD_HideAndSeek.Forms.Mainframe.LoadStegoImage(System.String)">
+            <summary>
+            Invokes the <see cref="T:HFD_HideAndSeek.Helper.FileManager"/> to load a stego image from a specified path to the system.
+            </summary>
+            <param name="path">Preferably the absolute path of a desired stego image</param>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.IO.FileNotFoundException"></exception>
+            <exception cref="T:System.OutOfMemoryException"></exception>
+            <exception cref="T:HFD_HideAndSeek.Exceptions.WrongPixelFormatException"></exception>
+            <exception cref="T:System.FormatException"></exception>
+        </member>
+        <member name="M:HFD_HideAndSeek.Forms.Mainframe.SaveStegoImage(HFD_HideAndSeek.Steganography.DataStructures.StegoImage,System.String)">
+            <summary>
+            Invokes the <see cref="T:HFD_HideAndSeek.Helper.FileManager"/> to save a stego image to a specified path.
+            </summary>
+            <param name="stegoImage">The stego image object that should be written to the file system</param>
+            <param name="path">Preferably the absolute path where the stego image should be written to</param>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <exception cref="T:System.IO.PathTooLongException"></exception>
+            <exception cref="T:System.IO.IOException"></exception>
+            <exception cref="T:System.IO.FileNotFoundException"></exception>
+            <exception cref="T:System.IO.DirectoryNotFoundException"></exception>
+            <exception cref="T:System.NotSupportedException"></exception>
+            <exception cref="T:System.Security.SecurityException"></exception>
+            <exception cref="T:System.Runtime.InteropServices.ExternalException"></exception>
+        </member>
+        <member name="M:HFD_HideAndSeek.Forms.Mainframe.LoadMessage(System.String)">
+            <summary>
+            Invokes the <see cref="T:HFD_HideAndSeek.Helper.FileManager"/> to load a message from a specified path.
+            </summary>
+            <param name="path">Preferably the absolute path of a message file</param>
+        </member>
+        <member name="M:HFD_HideAndSeek.Forms.Mainframe.ClearCarrierImage">
+            <summary>
+            Removes the carrier image from the system.
+            </summary>
+        </member>
+        <member name="M:HFD_HideAndSeek.Forms.Mainframe.ClearStegoImage">
+            <summary>
+            Removes the stego image from the system.
+            </summary>
+        </member>
+        <member name="M:HFD_HideAndSeek.Forms.Mainframe.ClearMessage">
+            <summary>
+            Removes the message from the system.
+            </summary>
+        </member>
+        <member name="M:HFD_HideAndSeek.Forms.Mainframe.mainframe_Load(System.Object,System.EventArgs)">
+            <summary>
+            Loads resources for the mainframe.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:HFD_HideAndSeek.Forms.Mainframe.CheckEverything">
+            <summary>
+            Wraps all checker methods together.
+            </summary>
+        </member>
+        <member name="M:HFD_HideAndSeek.Forms.Mainframe.CheckShowCarrierBitPlanes">
+            <summary>
+            Checks whether all requirements are set to extract and show all of the carrier's bit planes.
+            </summary>
+            <returns>true if all requirements are set and false otherwise</returns>
+        </member>
+        <member name="M:HFD_HideAndSeek.Forms.Mainframe.CheckEmbedding">
+            <summary>
+            Checks whether all requirements are set to hide a message.
+            </summary>
+            <returns>true if all requirements are set and false otherwise</returns>
+        </member>
+        <member name="M:HFD_HideAndSeek.Forms.Mainframe.CheckExtraction">
+            <summary>
+            Checks whether all requirements are set to extract a message.
+            </summary>
+            <returns>true if all requirements are set and false otherwise</returns>
+        </member>
+        <member name="M:HFD_HideAndSeek.Forms.Mainframe.CheckEncryption">
+            <summary>
+            Checks whether all requirements are set to encrypt or decrypt a message.
+            </summary>
+            <returns>true if all requirements are set and false otherwise</returns>
+        </member>
+        <member name="M:HFD_HideAndSeek.Forms.Mainframe.CheckSavingStegoImage">
+            <summary>
+            Checks whether all requirements are set to save a stego image to the drive.
+            </summary>
+            <returns>true if all requirements are set and false otherwise</returns>
+        </member>
+        <member name="M:HFD_HideAndSeek.Forms.Mainframe.CheckSavingMessage">
+            <summary>
+            Checks whether all requirements are set to save a message file to the drive.
+            </summary>
+            <returns>true if all requirements are set and false otherwise</returns>
+        </member>
+        <member name="F:HFD_HideAndSeek.Forms.Mainframe.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:HFD_HideAndSeek.Forms.Mainframe.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:HFD_HideAndSeek.Forms.Mainframe.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:HFD_HideAndSeek.Cryptography.AES">
+            <summary>
+            This class provides static methods for encrypting data with supplied keys.
+            The whole class and its methods are modified and extended versions of the code found
+            <a href="https://www.codeproject.com/Articles/769741/Csharp-AES-bits-Encryption-Library-with-Salt">here</a>.
+            </summary>
+        </member>
+        <member name="F:HFD_HideAndSeek.Cryptography.AES.DefaultSalt">
+            <summary>
+            Predefined salt for the encryption and decryption algorithms.
+            It must be at least 8 bytes
+            </summary>
+        </member>
+        <member name="M:HFD_HideAndSeek.Cryptography.AES.AES_Encrypt(System.Byte[],System.Byte[])">
+            <summary>
+            Callback method which uses the managed Rijndael class
+            to encrypt a data byte array with a given key byte array.
+            </summary>
+            <param name="bytesToBeEncrypted">The array of bytes that should be encrypted</param>
+            <param name="keyBytes">They encryption key as byte array</param>
+            <exception cref="T:System.InvalidOperationException"></exception>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <exception cref="T:System.Security.Cryptography.CryptographicException"></exception>
+            <exception cref="T:System.NotSupportedException"></exception>
+            <exception cref="T:System.OverflowException"></exception>
+            <returns></returns>
+        </member>
+        <member name="M:HFD_HideAndSeek.Cryptography.AES.AES_Decrypt(System.Byte[],System.Byte[])">
+            <summary>
+            Callback method which uses the managed Rijndael class
+            to decrypt a data byte array with a given key byte array.
+            </summary>
+            <param name="bytesToBeDecrypted">The array of bytes that should be decrypted</param>
+            <param name="keyBytes">The encryption key as byte array</param>
+            <exception cref="T:System.InvalidOperationException"></exception>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <exception cref="T:System.Security.Cryptography.CryptographicException"></exception>
+            <exception cref="T:System.NotSupportedException"></exception>
+            <exception cref="T:System.OverflowException"></exception>
+            <returns></returns>
+        </member>
+        <member name="M:HFD_HideAndSeek.Cryptography.AES.EncryptText(System.String,System.String)">
+            <summary>
+            Encrypts a string using a given password-like key.
+            </summary>
+            <param name="input">The text string that should be encrypted</param>
+            <param name="key">The text string that should be used as key</param>
+            <exception cref="T:System.InvalidOperationException"></exception>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <exception cref="T:System.Security.Cryptography.CryptographicException"></exception>
+            <exception cref="T:System.NotSupportedException"></exception>
+            <exception cref="T:System.OverflowException"></exception>
+            <returns></returns>
+        </member>
+        <member name="M:HFD_HideAndSeek.Cryptography.AES.DecryptText(System.String,System.String)">
+            <summary>
+            Decrypts a string using a given password-like key.
+            </summary>
+            <param name="input">The text string that should be decrypted</param>
+            <param name="key">The text string that should be used as key</param>
+            <exception cref="T:System.InvalidOperationException"></exception>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <exception cref="T:System.Security.Cryptography.CryptographicException"></exception>
+            <exception cref="T:System.NotSupportedException"></exception>
+            <exception cref="T:System.OverflowException"></exception>
+            <returns></returns>
+        </member>
+        <member name="M:HFD_HideAndSeek.Cryptography.AES.Encrypt(System.Byte[],System.String)">
+            <summary>
+            Encrypts a byte array using a given password-like key.
+            </summary>
+            <param name="input">The array of bytes that should be encrypted</param>
+            <param name="key">The text string that should be used as key</param>
+            <exception cref="T:System.InvalidOperationException"></exception>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <exception cref="T:System.Security.Cryptography.CryptographicException"></exception>
+            <exception cref="T:System.NotSupportedException"></exception>
+            <exception cref="T:System.OverflowException"></exception>
+            <exception cref="T:System.Reflection.TargetInvocationException"></exception>
+            <exception cref="T:System.ObjectDisposedException"></exception>
+            <returns></returns>
+        </member>
+        <member name="M:HFD_HideAndSeek.Cryptography.AES.Decrypt(System.Byte[],System.String)">
+            <summary>
+            Decrypts a byte array using a given password-like key.
+            </summary>
+            <param name="input">The array of bytes that should be decrypted</param>
+            <param name="key">The text string that should be used as key</param>
+            <exception cref="T:System.InvalidOperationException"></exception>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <exception cref="T:System.Security.Cryptography.CryptographicException"></exception>
+            <exception cref="T:System.NotSupportedException"></exception>
+            <exception cref="T:System.OverflowException"></exception>
+            <exception cref="T:System.Reflection.TargetInvocationException"></exception>
+            <exception cref="T:System.ObjectDisposedException"></exception>
+            <returns></returns>
+        </member>
+        <member name="M:HFD_HideAndSeek.Cryptography.AES.EncryptFile(System.String,System.String,System.String)">
+            <summary>
+            Encrypts a file read from a source path using a given key and writes it to a destination path.
+            </summary>
+            <param name="originalFilePath">The path of the file that should be read and encrypted</param>
+            <param name="key">The text string that should be used as key</param>
+            <param name="encryptedFilePath">The path where the encrypted file should be written</param>
+            <exception cref="T:System.InvalidOperationException"></exception>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <exception cref="T:System.Security.Cryptography.CryptographicException"></exception>
+            <exception cref="T:System.NotSupportedException"></exception>
+            <exception cref="T:System.IO.DirectoryNotFoundException"></exception>
+            <exception cref="T:System.IO.IOException"></exception>
+            <exception cref="T:System.IO.PathTooLongException"></exception>
+            <exception cref="T:System.UnauthorizedAccessException"></exception>
+            <exception cref="T:System.Security.SecurityException"></exception>
+            <exception cref="T:System.OverflowException"></exception>
+        </member>
+        <member name="M:HFD_HideAndSeek.Cryptography.AES.DecryptFile(System.String,System.String,System.String)">
+            <summary>
+            Decrypts a file read from a source path using a given key and writes it to a destination path.
+            </summary>
+            <param name="encryptedFilePath">The path of the file that should be read and decrypted</param>
+            <param name="password">The text string that should be used as key</param>
+            <param name="decryptedFilePath">The path where the decrypted file should be written</param>
+            <exception cref="T:System.InvalidOperationException"></exception>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <exception cref="T:System.Security.Cryptography.CryptographicException"></exception>
+            <exception cref="T:System.NotSupportedException"></exception>
+            <exception cref="T:System.OverflowException"></exception>
+            <exception cref="T:System.IO.DirectoryNotFoundException"></exception>
+            <exception cref="T:System.IO.IOException"></exception>
+            <exception cref="T:System.IO.PathTooLongException"></exception>
+            <exception cref="T:System.UnauthorizedAccessException"></exception>
+            <exception cref="T:System.Security.SecurityException"></exception>
+        </member>
+        <member name="T:HFD_HideAndSeek.Cryptography.Hasher">
+            <summary>
+            This class provides static methods for hashing input data with Sha256 and a predefined salt.
+            </summary>
+        </member>
+        <member name="F:HFD_HideAndSeek.Cryptography.Hasher.DefaultSalt">
+            <summary>
+            Predefined salt for the hashing algorithms.
+            It must be at least 8 bytes.
+            </summary>
+        </member>
+        <member name="M:HFD_HideAndSeek.Cryptography.Hasher.HashSha256(System.String)">
+            <summary>
+            Hashes an arbitrary string and returns the hash value as byte array.
+            </summary>
+            <param name="input">The string which should be hashed</param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.ObjectDisposedException"></exception>
+            <exception cref="T:System.Reflection.TargetInvocationException"></exception>
+            <exception cref="T:System.Text.EncoderFallbackException"></exception>
+            <returns>The hashed string as byte array</returns>
+        </member>
+        <member name="M:HFD_HideAndSeek.Cryptography.Hasher.HashSha256(System.Byte[])">
+            <summary>
+            Hashes an arbitrary byte array and returns the hash value as byte array.
+            </summary>
+            <param name="input">The byte array which should be hashed</param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.ObjectDisposedException"></exception>
+            <exception cref="T:System.Reflection.TargetInvocationException"></exception>
+            <returns>The hashed byte array</returns>
+        </member>
+        <member name="M:HFD_HideAndSeek.Cryptography.Hasher.Combine(System.Byte[],System.Byte[])">
+            <summary>
+            Combines two arrays and returns the new array
+            </summary>
+            <param name="first">The first array</param>
+            <param name="second">The second array</param>
+            <returns>The single combined array</returns>
+        </member>
+        <member name="T:HFD_HideAndSeek.Exceptions.MessageNameTooBigException">
+            <summary>
+            The exception that is thrown when the name of a message is too big
+            to fit into the bytes allocated for encoding it within the carrier.
+            </summary>
+        </member>
+        <member name="T:HFD_HideAndSeek.Exceptions.MessageTooBigException">
+            <summary>
+            The exception that is thrown when the message is too big
+            to fit into the carrier.
+            </summary>
+        </member>
+        <member name="T:HFD_HideAndSeek.Exceptions.WrongPixelFormatException">
+            <summary>
+            The exception that is thrown when an image has the wrong pixel format
+            to be used for LSB-based steganographic algorithms.
+            </summary>
+        </member>
+        <member name="T:HFD_HideAndSeek.Helper.Converter">
+            <summary>
+            This class provides static methods for converting data into other representations or
+            for converting a value from one data type into another one.
+            </summary>
+        </member>
+        <member name="M:HFD_HideAndSeek.Helper.Converter.StringToBinary(System.String)">
+            <summary>
+            Converts a string to a binary string pattern
+            </summary>
+            <param name="text">The text that should be converted into a series of bits</param>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.Text.EncoderFallbackException"></exception>
+            <returns></returns>
+        </member>
+        <member name="M:HFD_HideAndSeek.Helper.Converter.DecimalToBinary(System.Int64,System.Int32)">
+            <summary>
+            Converts a long variable to its binary string representation and fills it with a
+            specified amount of zeros to the left.
+            </summary>
+            <param name="decimalNumber">The decimal number which is to be converted into a binary number</param>
+            <param name="zeroPadding">The amount of zeros that the binary number should be padded with</param>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <returns>The binary representation of the given decimal number</returns>
+        </member>
+        <member name="M:HFD_HideAndSeek.Helper.Converter.DecimalToBinary(System.UInt32,System.Int32)">
+            <summary>
+            Converts a uint variable to its binary string representation and fills it with a
+            specified amount of zeros to the left.
+            </summary>
+            <param name="decimalNumber">The decimal number which is to be converted into a binary number</param>
+            <param name="zeroPadding">The amount of zeros that the binary number should be padded with</param>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <returns>The binary representation of the given decimal number</returns>
+        </member>
+        <member name="M:HFD_HideAndSeek.Helper.Converter.DecimalToBinary(System.Byte,System.Int32)">
+            <summary>
+            Converts a byte variable to its binary string representation and fills it with a
+            specified amount of zeros to the left.
+            </summary>
+            <param name="decimalNumber">The decimal number which is to be converted into a binary number</param>
+            <param name="zeroPadding">The amount of zeros that the binary number should be padded with</param>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <returns>The binary representation of the given decimal number</returns>
+        </member>
+        <member name="M:HFD_HideAndSeek.Helper.Converter.ByteArrayToBinary(System.Byte[])">
+            <summary>
+            Converts a byte array to its binary string representation.
+            For this purpose no padding is necessary since a byte variable always uses 8 digits.
+            </summary>
+            <param name="array">The byte array which is to be converted into a binary string</param>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <returns>The binary representation of the given byte array</returns>
+        </member>
+        <member name="M:HFD_HideAndSeek.Helper.Converter.BinaryToString(System.String)">
+            <summary>
+            Converts a binary string pattern to its respective UTF8 text representation.
+            </summary>
+            <param name="text">The binary string that should be converted to a text</param>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.FormatException"></exception>
+            <exception cref="T:System.OverflowException"></exception>
+            <exception cref="T:System.Text.DecoderFallbackException"></exception>
+            <returns>The textual representation of the given binary string</returns>
+        </member>
+        <member name="M:HFD_HideAndSeek.Helper.Converter.BinaryToByte(System.String)">
+            <summary>
+            Converts a binary string pattern to a byte variable
+            </summary>
+            <param name="binary">The binary string pattern</param>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <exception cref="T:System.FormatException"></exception>
+            <exception cref="T:System.OverflowException"></exception>
+            <returns>The byte value</returns>
+        </member>
+        <member name="M:HFD_HideAndSeek.Helper.Converter.BinaryToByteArray(System.String)">
+            <summary>,
+            Converts a binary string pattern to a byte array
+            </summary>
+            <param name="binary">The binary string pattern</param>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <exception cref="T:System.FormatException"></exception>
+            <exception cref="T:System.OverflowException"></exception>
+            <returns>The byte array</returns>
+        </member>
+        <member name="M:HFD_HideAndSeek.Helper.Converter.BinaryToUint(System.String)">
+            <summary>
+            Converts a binary string pattern to a uint variable
+            </summary>
+            <param name="binary">The binary string pattern</param>
+            /// <exception cref="T:System.ArgumentException"></exception>
+            /// <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            /// <exception cref="T:System.FormatException"></exception>
+            /// <exception cref="T:System.OverflowException"></exception>
+            <returns>The uint variable</returns>
+        </member>
+        <member name="M:HFD_HideAndSeek.Helper.Converter.BitsToKiloBytes(System.UInt32)">
+            <summary>
+            Converts a uint variable storing a value in bits
+            to a double variable storing the same value but in kB
+            </summary>
+            <param name="bits">The value in bits</param>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <returns>The value in kilo bytes</returns>
+        </member>
+        <member name="M:HFD_HideAndSeek.Helper.Converter.BytesToHumanReadableString(System.Double)">
+            <summary>
+            Converts a value in bytes to its human readable string representation
+            </summary>
+            <param name="bytes">The value in bytes</param>
+            <returns>The string containing the value with a suiting SI unit</returns>
+        </member>
+        <member name="T:HFD_HideAndSeek.Helper.Extensions">
+            <summary>
+            This class adds extension methods for to strings
+            </summary>
+        </member>
+        <member name="M:HFD_HideAndSeek.Helper.Extensions.SplitToChunks(System.String,System.Int32)">
+            <summary>
+            Extension method:
+            Splits string into chunks of a specified length.
+            </summary>
+            <param name="source">The string that should be splitted</param>
+            <param name="maxLength">The chunk length</param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <returns>The string array containing the chunks</returns>
+        </member>
+        <member name="M:HFD_HideAndSeek.Helper.Extensions.ConvertBitstringToByteArray(System.String)">
+            <summary>
+            Extension method:
+            Converts a string into an array of bytes.
+            </summary>
+            <param name="str">The string that should be converted</param>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <exception cref="T:System.FormatException"></exception>
+            <exception cref="T:System.OverflowException"></exception>
+            <returns>The byte array representation of the string</returns>
+        </member>
+        <member name="T:HFD_HideAndSeek.Helper.FileManager">
+            <summary>
+            This class represents a file manager which offers methods for reading or writing files
+            and getting the size of files saved on the drive.
+            There will only be one instance of this class be active at a time.
+            </summary>
+        </member>
+        <member name="F:HFD_HideAndSeek.Helper.FileManager._instance">
+            <summary>
+            Singleton instance of the <see cref="T:HFD_HideAndSeek.Helper.FileManager"/> class
+            </summary>
+        </member>
+        <member name="M:HFD_HideAndSeek.Helper.FileManager.#ctor">
+            <summary>
+            Private constructor according to the singleton design pattern.
+            </summary>
+        </member>
+        <member name="P:HFD_HideAndSeek.Helper.FileManager.Instance">
+            <summary>
+            Returns the singleton instance of the class or creates it in case there is none.
+            </summary>
+        </member>
+        <member name="M:HFD_HideAndSeek.Helper.FileManager.ReadMessageFile(System.String)">
+            <summary>
+            Reads a message file from a given path and returns it as a byte array.
+            </summary>
+            <param name="path">Preferably the absolute path of the file to read</param>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.IO.PathTooLongException"></exception>
+            <exception cref="T:System.IO.DirectoryNotFoundException"></exception>
+            <exception cref="T:System.UnauthorizedAccessException"></exception>
+            <exception cref="T:System.IO.IOException"></exception>
+            <exception cref="T:System.IO.FileNotFoundException"></exception>
+            <exception cref="T:System.Security.SecurityException"></exception>
+            <exception cref="T:System.NotSupportedException"></exception>
+            <returns>The byte array that represents the read file</returns>
+        </member>
+        <member name="M:HFD_HideAndSeek.Helper.FileManager.ReadImageFile(System.String,System.Boolean)">
+            <summary>
+            Loads an image from the drive and returns it as <see cref="T:System.Drawing.Bitmap"/> object.
+            Thereby, no memory-mapped file is created which would create a lock
+            to the file referenced by the path argument.
+            </summary>
+            <param name="path">Preferably the absolute path of the image to read</param>
+            <param name="forceTrueColor">True if the image should be recreated in case it is not RGB-based</param>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.IO.FileNotFoundException"></exception>
+            <exception cref="T:System.OutOfMemoryException"></exception>
+            <exception cref="T:HFD_HideAndSeek.Exceptions.WrongPixelFormatException">Always thrown when forceTrueColor is false but the image is not RGB-based</exception>
+            <returns>The <see cref="T:System.Drawing.Bitmap"/> object that represents the loaded image</returns>
+        </member>
+        <member name="M:HFD_HideAndSeek.Helper.FileManager.GetFileSizeInBytes(System.String)">
+            <summary>
+            Returns the size of a file specified by the path argument in bytes.
+            </summary>
+            <param name="path">Preferably the absolute path of the file whose size is to be returned</param>
+            <returns>The size of the file in bytes</returns>
+        </member>
+        <member name="M:HFD_HideAndSeek.Helper.FileManager.WriteMessageFile(System.Byte[],System.String)">
+            <summary>
+            Writes a message file to the specified path.
+            </summary>
+            <param name="message">The message file that should be saved to the drive</param>
+            <param name="path">Preferably the absolute path that specifies where the file should be saved</param>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <exception cref="T:System.IO.PathTooLongException"></exception>
+            <exception cref="T:System.IO.IOException"></exception>
+            <exception cref="T:System.IO.FileNotFoundException"></exception>
+            <exception cref="T:System.IO.DirectoryNotFoundException"></exception>
+            <exception cref="T:System.NotSupportedException"></exception>
+            <exception cref="T:System.Security.SecurityException"></exception>
+            <exception cref="T:System.ObjectDisposedException"></exception>
+        </member>
+        <member name="M:HFD_HideAndSeek.Helper.FileManager.WriteImageFile(System.Drawing.Bitmap,System.String)">
+            <summary>
+            Writes am image to the given path.
+            </summary>
+            <param name="image">The image that should be saved to the drive</param>
+            <param name="path">Preferably the absolute path that specifies where the image should be saved</param>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <exception cref="T:System.IO.PathTooLongException"></exception>
+            <exception cref="T:System.IO.IOException"></exception>
+            <exception cref="T:System.IO.FileNotFoundException"></exception>
+            <exception cref="T:System.IO.DirectoryNotFoundException"></exception>
+            <exception cref="T:System.NotSupportedException"></exception>
+            <exception cref="T:System.Security.SecurityException"></exception>
+            <exception cref="T:System.Runtime.InteropServices.ExternalException"></exception>
+        </member>
+        <member name="M:HFD_HideAndSeek.Helper.FileManager.MakeDirectory(System.String)">
+            <summary>
+            Creates all directories and subdirectories in the specified path unless they already exist.
+            </summary>
+            <param name="path">The path along which the directories are to be created</param>
+            <exception cref="T:System.IO.IOException"></exception>
+            <exception cref="T:System.UnauthorizedAccessException"></exception>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.IO.PathTooLongException"></exception>
+            <exception cref="T:System.IO.DirectoryNotFoundException"></exception>
+            <exception cref="T:System.NotSupportedException"></exception>
+        </member>
+        <member name="T:HFD_HideAndSeek.Program">
+            <summary>
+            Main class which runs the application.
+            It only consists of the main method
+            </summary>
+        </member>
+        <member name="M:HFD_HideAndSeek.Program.Main">
+            <summary>
+            The main entry point for the application.
+            </summary>
+        </member>
+        <member name="T:HFD_HideAndSeek.Steganography.Logic.BitPlaneExtractor">
+            <summary>
+            This class represents a bit plane extractor which provides methods to extract the individual
+            bit planes of a <see cref="T:System.Drawing.Bitmap"/> object.
+            </summary>
+        </member>
+        <member name="M:HFD_HideAndSeek.Steganography.Logic.BitPlaneExtractor.ExtractSingleBitPlane(System.Drawing.Bitmap,System.Byte)">
+            <summary>
+            Extracts and returns a single bit planes of a given image's red color channel at a given position.
+            </summary>
+            <param name="image">The image of which the bit plane should be extracted</param>
+            <param name="pos">The bit plane's bit position</param>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <exception cref="T:System.Exception"></exception>
+            <returns>A <see cref="T:System.Drawing.Bitmap"/> object representing the bit plane</returns>
+        </member>
+        <member name="M:HFD_HideAndSeek.Steganography.Logic.BitPlaneExtractor.ExtractRBitPlanes(System.Drawing.Bitmap)">
+            <summary>
+            Returns an array containing all bit planes of a given image's red color channel.
+            </summary>
+            <param name="image">The image of which the bit planes should be extracted</param>
+            <exception cref="T:System.Exception"></exception>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <returns>An array containing eight <see cref="T:System.Drawing.Bitmap"/> objects all of which represent one bit plane</returns>
+        </member>
+        <member name="M:HFD_HideAndSeek.Steganography.Logic.BitPlaneExtractor.IsBitSet(System.Byte,System.Int32)">
+            <summary>
+            Checks if a given bit inside a byte is set or not.
+            </summary>
+            <param name="b">The byte whose bit should be checked</param>
+            <param name="pos">The position of the bit inside the byte</param>
+            <returns></returns>
+        </member>
+        <member name="T:HFD_HideAndSeek.Steganography.Logic.Embedder">
+            <summary>
+            This class represents a message embedder which provides methods to embed or extract steganographical messages.
+            Such messages can be any file. On the other hand, the medium a message can be hidden within must be a <see cref="T:System.Drawing.Bitmap"/> object
+            which is available in the Format24bppRgb pixel format. Such images are most likely BMPs or PNGs.
+            </summary>
+        </member>
+        <member name="F:HFD_HideAndSeek.Steganography.Logic.Embedder._instance">
+            <summary>
+            Singleton instance of the <see cref="T:HFD_HideAndSeek.Steganography.Logic.Embedder"/> class
+            </summary>
+        </member>
+        <member name="M:HFD_HideAndSeek.Steganography.Logic.Embedder.#ctor">
+            <summary>
+            Private constructor according to the singleton design pattern.
+            </summary>
+        </member>
+        <member name="P:HFD_HideAndSeek.Steganography.Logic.Embedder.Instance">
+            <summary>
+            Returns the singleton instance of the class or creates it in case there is none.
+            </summary>
+        </member>
+        <member name="M:HFD_HideAndSeek.Steganography.Logic.Embedder.HideMessage(HFD_HideAndSeek.Steganography.DataStructures.StegoImage,HFD_HideAndSeek.Steganography.DataStructures.StegoMessage,System.String,System.Int32,System.Boolean)">
+            <summary>
+            Hides a <see cref="T:HFD_HideAndSeek.Steganography.DataStructures.StegoMessage"/> object inside a
+            <see cref="T:HFD_HideAndSeek.Steganography.DataStructures.StegoImage"/> object.
+            </summary>
+            <param name="carrierImage">The carrier image which is to be used to hide the message</param>
+            <param name="message">The message which is to be hidden inside the carrier image</param>
+            <param name="stegoPassword">The password which is to be used to hide the message (Randomized Hide and Seek)</param>
+            <param name="bitPlanes">The amount of bit planes that are to be used to hide the message</param>
+            <param name="bitPlanesFirst">true for bit planes first-mode and false for pixels first-mode</param>
+            <exception cref="T:HFD_HideAndSeek.Exceptions.MessageNameTooBigException"></exception>
+            <exception cref="T:HFD_HideAndSeek.Exceptions.MessageTooBigException"></exception>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <exception cref="T:System.FormatException"></exception>
+            <exception cref="T:System.Text.EncoderFallbackException"></exception>
+            <exception cref="T:System.ObjectDisposedException"></exception>
+            <exception cref="T:System.Reflection.TargetInvocationException"></exception>
+            <exception cref="T:System.Exception"></exception>
+            <returns>The stego image containing the hidden message</returns>
+        </member>
+        <member name="M:HFD_HideAndSeek.Steganography.Logic.Embedder.ExtractMessage(HFD_HideAndSeek.Steganography.DataStructures.StegoImage,System.String,System.Int32,System.Boolean)">
+            <summary>
+            Extracts a <see cref="T:HFD_HideAndSeek.Steganography.DataStructures.StegoMessage"/> object from a
+            <see cref="T:HFD_HideAndSeek.Steganography.DataStructures.StegoImage"/> object.
+            </summary>
+            <param name="stegoImage">The stego image which hides the message</param>
+            <param name="stegoPassword">The password used to hide the message (Randomized Hide and Seek)</param>
+            <param name="bitPlanes">The amount of bit planes that have been used to hide the message</param>
+            <param name="bitPlanesFirst">true for bit planes first-mode and false for pixels first-mode</param>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <exception cref="T:System.ObjectDisposedException"></exception>
+            <exception cref="T:System.Reflection.TargetInvocationException"></exception>
+            <exception cref="T:System.FormatException"></exception>
+            <exception cref="T:System.OverflowException"></exception>
+            <exception cref="T:System.Text.DecoderFallbackException"></exception>
+            <exception cref="T:System.Exception"></exception>
+            <returns>The message that has been hidden inside the stego image</returns>
+        </member>
+        <member name="M:HFD_HideAndSeek.Steganography.Logic.Embedder.RateCarrier(HFD_HideAndSeek.Steganography.DataStructures.StegoImage,HFD_HideAndSeek.Steganography.DataStructures.StegoMessage)">
+            <summary>
+            Rates a carrier image based on the amount of bits that have to be changed during the embedding process.
+            The result is the exact amount of LSBs inside a carrier that stay the same
+            during sequential embedding (without a stego password) in percent.
+            </summary>
+            <param name="carrier">The carrier image which is to be rated</param>
+            <param name="message">The message which is to be hidden inside the carrier image</param>
+            <exception cref="T:HFD_HideAndSeek.Exceptions.MessageNameTooBigException"></exception>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <exception cref="T:System.Text.EncoderFallbackException"></exception>
+            <returns>The suitability rating of the carrier for the specific message</returns>
+        </member>
+        <member name="M:HFD_HideAndSeek.Steganography.Logic.Embedder.CalculateCapacity(HFD_HideAndSeek.Steganography.DataStructures.StegoImage,System.Int32)">
+            <summary>
+            Calculates the hiding capacity of a given carrier
+            based on the amount of specified bit planes and returns it in bytes.
+            </summary>
+            <param name="carrier">The carrier whose capacity should be calculated</param>
+            <param name="bitPlanes">The amount of the carrier's bit planes that are allowed to be used</param>
+            <exception cref="T:System.FormatException"></exception>
+            <returns>The capacity in bytes</returns>
+        </member>
+        <member name="M:HFD_HideAndSeek.Steganography.Logic.Embedder.GenerateMessageBitPattern(HFD_HideAndSeek.Steganography.DataStructures.StegoMessage)">
+            <summary>
+            Generates a binary bit string from a <see cref="T:HFD_HideAndSeek.Steganography.DataStructures.StegoMessage"/> object.
+            At this, the message itself along with its name and its size is transformed to a series of 0s and 1s.
+            </summary>
+            <param name="message">The message whose bit string is to be generated</param>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.Text.EncoderFallbackException"></exception>
+            <exception cref="T:HFD_HideAndSeek.Exceptions.MessageNameTooBigException"></exception>
+            <returns>The bit string that represents the message</returns>
+        </member>
+        <member name="M:HFD_HideAndSeek.Steganography.Logic.Embedder.CollectCarrierLsbs(HFD_HideAndSeek.Steganography.DataStructures.StegoImage)">
+            <summary>
+            Collects all LSBs of a given carrier image ordered from pixel
+            (0, 0) to (xMax, yMax) and from color R over G to B and returns them as string.
+            </summary>
+            <param name="carrier">The carrier image whose LSBs are to be taken from</param>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <returns></returns>
+        </member>
+        <member name="M:HFD_HideAndSeek.Steganography.Logic.Embedder.EncodeMessageName(System.String,System.Int32)">
+            <summary>
+            Converts a message name string to a binary string pattern and adds a zero-padding.
+            </summary>
+            <param name="messageName">The message name that should be converted into a series of bits</param>
+            <param name="zeroPadding">The amount of bytes the resulting string should be padded to</param>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.Text.EncoderFallbackException"></exception>
+            <exception cref="T:HFD_HideAndSeek.Exceptions.MessageNameTooBigException"></exception>
+            <returns>The message name as binary string padded with zeros up to the given amount of bytes</returns>
+        </member>
+        <member name="M:HFD_HideAndSeek.Steganography.Logic.Embedder.GetBit(System.Byte,System.Int32)">
+            <summary>
+            Returns the bit of a specific position inside an arbitrary byte.
+            </summary>
+            <param name="arbitraryByte">The byte whose bit position is to be returned</param>
+            <param name="bitPosition">The bit's position</param>
+            <returns></returns>
+        </member>
+        <member name="M:HFD_HideAndSeek.Steganography.Logic.Embedder.SetBit(System.Byte,System.Byte,System.Byte)">
+            <summary>
+            Sets a bit of an arbitrary byte at a specified position to a given value.
+            </summary>
+            <param name="arbitraryByte">The byte whose bit is to be set</param>
+            <param name="bit">The value which has to be either 0 or 1</param>
+            <param name="bitPosition">The position of the bit to set</param>
+            <exception cref="T:System.ArgumentException"></exception>
+            <returns></returns>
+        </member>
+        <member name="M:HFD_HideAndSeek.Steganography.Logic.Embedder.SetBit(System.Byte,System.String,System.Byte)">
+            <summary>
+            Sets a bit of an arbitrary byte at a specified position to a given value.
+            </summary>
+            <param name="arbitraryByte">The byte whose bit is to be set</param>
+            <param name="bit">The value which has to be either 0 or 1</param>
+            <param name="bitPosition">The position of the bit to set</param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.FormatException"></exception>
+            <exception cref="T:System.OverflowException"></exception>
+            <returns>The new byte</returns>
+        </member>
+        <member name="M:HFD_HideAndSeek.Steganography.Logic.Embedder.CollectCarrierBits(HFD_HideAndSeek.Steganography.DataStructures.StegoImage,System.Int32,System.Boolean)">
+            <summary>
+            Collects the bits of all specified bit planes from a given carrier image
+            beginning with the least significant bit plane ordered from pixel
+            (0, 0) to (xMax, yMax) and from color R over G to B and returns them as string.
+            </summary>
+            <param name="carrier">The carrier image whose bits are to be collected</param>
+            <param name="bitPlanes">The amount of bit planes the bits are to be collected from</param>
+            <param name="bitPlanesFirst">true for bit planes first-mode and false for pixels first-mode</param>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <returns>The binary pattern containing all desired bits from the carrier image</returns>
+        </member>
+        <member name="M:HFD_HideAndSeek.Steganography.Logic.Embedder.ExtractBitFromByte(System.Byte,System.Int32)">
+            <summary>
+            Extracts a specific bit of a byte and returns it as char.
+            </summary>
+            <param name="inputByte">The byte whose bit should be extracted</param>
+            <param name="pos">The position of the bit which is to be extracted</param>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <exception cref="T:System.FormatException"></exception>
+            <returns>The bit of inputByte at position pos</returns>
+        </member>
+        <member name="T:HFD_HideAndSeek.Steganography.Logic.ImageScrambler">
+            <summary>
+            This class provides static methods for scramblinga the pixels of a <see cref="T:System.Drawing.Bitmap"/> object.
+            The whole class and its methods are slightly modified versions of the code found
+            <a href="https://codegolf.stackexchange.com/questions/35005/rearrange-pixels-in-image-so-it-cant-be-recognized-and-then-get-it-back/35034">here</a>.
+            </summary>
+        </member>
+        <member name="M:HFD_HideAndSeek.Steganography.Logic.ImageScrambler.ScrambleOne(System.Drawing.Bitmap)">
+            <summary>
+            Self-inversly scramble all pixels of a <see cref="T:System.Drawing.Bitmap"/> object.
+            </summary>
+            <param name="bmp">The image whose pixels are to be scrambled</param>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <returns>The image with scrambled pixels</returns>
+        </member>
+        <member name="M:HFD_HideAndSeek.Steganography.Logic.ImageScrambler.ScrambleTwo(System.Drawing.Bitmap)">
+            <summary>
+            Self-inversly scramble all pixels of a <see cref="T:System.Drawing.Bitmap"/> object.
+            </summary>
+            <param name="image">The image whose pixels are to be scrambled</param>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <returns>The image with scrambled pixels</returns>
+        </member>
+        <member name="M:HFD_HideAndSeek.Steganography.Logic.ImageScrambler.BitReverse(System.Int32,System.Int32)">
+            <summary>
+            Helper method for the second algorithm
+            </summary>
+            <param name="n"></param>
+            <param name="bit"></param>
+            <returns></returns>
+        </member>
+        <member name="M:HFD_HideAndSeek.Steganography.Logic.ImageScrambler.ScrambleThree(System.Drawing.Bitmap)">
+            <summary>
+            Self-inversly scramble all pixels of a <see cref="T:System.Drawing.Bitmap"/> object.
+            </summary>
+            <param name="image">The image whose pixels are to be scrambled</param>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <returns>The image with scrambled pixels</returns>
+        </member>
+        <member name="M:HFD_HideAndSeek.Steganography.Logic.ImageScrambler.GetPixelNumber(System.Drawing.Point,System.Drawing.Size)">
+            <summary>
+            Helper method for the third algorithm
+            </summary>
+            <param name="point"></param>
+            <param name="totalSize"></param>
+            <returns></returns>
+        </member>
+        <member name="M:HFD_HideAndSeek.Steganography.Logic.ImageScrambler.GetPoint(System.Numerics.BigInteger,System.Drawing.Size)">
+            <summary>
+            Helper method for the third algorithm
+            </summary>
+            <param name="pixelNumber"></param>
+            <param name="totalSize"></param>
+            <returns></returns>
+        </member>
+        <member name="M:HFD_HideAndSeek.Steganography.Logic.ImageScrambler.GetSquareRootOf1(System.Numerics.BigInteger)">
+            <summary>
+            Helper method for the third algorithm
+            </summary>
+            <param name="modulo"></param>
+            <returns></returns>
+        </member>
+        <member name="T:HFD_HideAndSeek.Steganography.DataStructures.StegoImage">
+            <summary>
+            This class represents an image as it is used for Steganography
+            which means it can either be a carrier or a stego image.
+            It simply contains the image itself along with its file name
+            and its file size in bytes.
+            </summary>
+        </member>
+        <member name="M:HFD_HideAndSeek.Steganography.DataStructures.StegoImage.#ctor(System.Drawing.Bitmap,System.String,System.UInt32)">
+            <summary>
+            Constructor: Creates a <see cref="T:HFD_HideAndSeek.Steganography.DataStructures.StegoImage"/> object.
+            </summary>
+            <param name="image">The image itself</param>
+            <param name="name">The image's file name</param>
+            <param name="sizeInBytes">The file's size in bytes</param>
+        </member>
+        <member name="T:HFD_HideAndSeek.Steganography.DataStructures.StegoMessage">
+            <summary>
+            This class represents a message as it is used for Steganography
+            which means it can be any file.
+            It simply contains the message file itself along with its file name
+            and its file size in bytes.
+            </summary>
+        </member>
+        <member name="M:HFD_HideAndSeek.Steganography.DataStructures.StegoMessage.#ctor(System.String,System.Byte[])">
+            <summary>
+            Constructor:
+            Creates a new <see cref="T:HFD_HideAndSeek.Steganography.DataStructures.StegoMessage"/> object.
+            </summary>
+            <param name="name">The message's file name</param>
+            <param name="payload">The message itself</param>
+        </member>
+        <member name="T:HFD_HideAndSeek.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:HFD_HideAndSeek.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:HFD_HideAndSeek.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:HFD_HideAndSeek.Properties.Resources.binary_1">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:HFD_HideAndSeek.Properties.Resources.binary_2">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:HFD_HideAndSeek.Properties.Resources.clear">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:HFD_HideAndSeek.Properties.Resources.forbidden">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:HFD_HideAndSeek.Properties.Resources.help_1">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:HFD_HideAndSeek.Properties.Resources.help_2">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:HFD_HideAndSeek.Properties.Resources.HFD_Logo">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:HFD_HideAndSeek.Properties.Resources.leftArrow">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:HFD_HideAndSeek.Properties.Resources.load">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:HFD_HideAndSeek.Properties.Resources.logo">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:HFD_HideAndSeek.Properties.Resources.remove">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:HFD_HideAndSeek.Properties.Resources.rightArrow">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:HFD_HideAndSeek.Properties.Resources.save">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:HFD_HideAndSeek.Properties.Resources.star">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+    </members>
+</doc>

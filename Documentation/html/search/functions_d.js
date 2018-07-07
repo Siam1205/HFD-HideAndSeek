@@ -1,16 +1,18 @@
 var searchData=
 [
-  ['savemessagebutton_5fclick',['saveMessageButton_Click',['../class_h_s_f___hide_and_seek_1_1_forms_1_1_mainframe.html#a829ccd09fffda99baeb5d6265aedc39d',1,'HSF_HideAndSeek::Forms::Mainframe']]],
-  ['savestegoimage',['SaveStegoImage',['../class_h_s_f___hide_and_seek_1_1_forms_1_1_mainframe.html#abc6ab1a0b7634658c3dfeb39e6fe583d',1,'HSF_HideAndSeek::Forms::Mainframe']]],
-  ['savestegoimagebutton_5fclick',['saveStegoImageButton_Click',['../class_h_s_f___hide_and_seek_1_1_forms_1_1_mainframe.html#a14ab1ba98ad6d94f825a1cc234cbe412',1,'HSF_HideAndSeek::Forms::Mainframe']]],
-  ['scrambleone',['ScrambleOne',['../class_h_s_f___hide_and_seek_1_1_steganography_1_1_logic_1_1_image_scrambler.html#ae37813f1303addadbd9511a16c331634',1,'HSF_HideAndSeek::Steganography::Logic::ImageScrambler']]],
-  ['scramblethree',['ScrambleThree',['../class_h_s_f___hide_and_seek_1_1_steganography_1_1_logic_1_1_image_scrambler.html#aa23fbeaf278a7669f98387de37e6488e',1,'HSF_HideAndSeek::Steganography::Logic::ImageScrambler']]],
-  ['scrambletwo',['ScrambleTwo',['../class_h_s_f___hide_and_seek_1_1_steganography_1_1_logic_1_1_image_scrambler.html#a75c0d27ae7de65b988fb65ad6ff75932',1,'HSF_HideAndSeek::Steganography::Logic::ImageScrambler']]],
-  ['setbit',['SetBit',['../class_h_s_f___hide_and_seek_1_1_steganography_1_1_logic_1_1_embedder.html#a85f74d2cdb77851412a7f988e4882737',1,'HSF_HideAndSeek.Steganography.Logic.Embedder.SetBit(byte arbitraryByte, byte bit, byte bitPosition)'],['../class_h_s_f___hide_and_seek_1_1_steganography_1_1_logic_1_1_embedder.html#a67602e28c830c3e903f5a8c2d66c919f',1,'HSF_HideAndSeek.Steganography.Logic.Embedder.SetBit(byte arbitraryByte, string bit, byte bitPosition)']]],
-  ['showcarrierbitplanesbutton_5fclick',['showCarrierBitplanesButton_Click',['../class_h_s_f___hide_and_seek_1_1_forms_1_1_mainframe.html#a264b2e998b054e897e376e74a3eb2501',1,'HSF_HideAndSeek::Forms::Mainframe']]],
-  ['showstegoimagebitplanesbutton_5fclick',['showStegoImageBitplanesButton_Click',['../class_h_s_f___hide_and_seek_1_1_forms_1_1_mainframe.html#a2a276056b8471493523ecee98e1b433c',1,'HSF_HideAndSeek::Forms::Mainframe']]],
-  ['splittochunks',['SplitToChunks',['../class_h_s_f___hide_and_seek_1_1_helper_1_1_extensions.html#ad4f17708d05cc047260673dd0d48181e',1,'HSF_HideAndSeek::Helper::Extensions']]],
-  ['stegoimage',['StegoImage',['../class_h_s_f___hide_and_seek_1_1_steganography_1_1_data_structures_1_1_stego_image.html#a1add9ad1d03770bbdd5661526973c324',1,'HSF_HideAndSeek::Steganography::DataStructures::StegoImage']]],
-  ['stegomessage',['StegoMessage',['../class_h_s_f___hide_and_seek_1_1_steganography_1_1_data_structures_1_1_stego_message.html#a0a96ad294c1b45b8da99a7ac401360e0',1,'HSF_HideAndSeek::Steganography::DataStructures::StegoMessage']]],
-  ['stringtobinary',['StringToBinary',['../class_h_s_f___hide_and_seek_1_1_helper_1_1_converter.html#aee2ff10bf0330d174c569a3eae8a2ca1',1,'HSF_HideAndSeek::Helper::Converter']]]
+  ['savebitplanes',['SaveBitPlanes',['../class_h_f_d___hide_and_seek_1_1_forms_1_1_bit_plane_form.html#a8cbf805a4964f7054937c5828fbcc3df',1,'HFD_HideAndSeek::Forms::BitPlaneForm']]],
+  ['savebitplanesbutton_5fclick',['saveBitPlanesButton_Click',['../class_h_f_d___hide_and_seek_1_1_forms_1_1_bit_plane_form.html#a14d748a7f7f05aedf9217f5b0a29da80',1,'HFD_HideAndSeek::Forms::BitPlaneForm']]],
+  ['savemessagebutton_5fclick',['saveMessageButton_Click',['../class_h_f_d___hide_and_seek_1_1_forms_1_1_mainframe.html#a1df44afa10e84ae2ddc5334223776cf8',1,'HFD_HideAndSeek::Forms::Mainframe']]],
+  ['savestegoimage',['SaveStegoImage',['../class_h_f_d___hide_and_seek_1_1_forms_1_1_mainframe.html#a1b335e23be93cc4159f7e2d25f6b83a5',1,'HFD_HideAndSeek::Forms::Mainframe']]],
+  ['savestegoimagebutton_5fclick',['saveStegoImageButton_Click',['../class_h_f_d___hide_and_seek_1_1_forms_1_1_mainframe.html#a92ab4184c481491e30713f0354e65a2c',1,'HFD_HideAndSeek::Forms::Mainframe']]],
+  ['scrambleone',['ScrambleOne',['../class_h_f_d___hide_and_seek_1_1_steganography_1_1_logic_1_1_image_scrambler.html#a3ce626a14f79c8357ad8d3d05fa3d6b4',1,'HFD_HideAndSeek::Steganography::Logic::ImageScrambler']]],
+  ['scramblethree',['ScrambleThree',['../class_h_f_d___hide_and_seek_1_1_steganography_1_1_logic_1_1_image_scrambler.html#aa78f02070183a43e8ad6726a63231e13',1,'HFD_HideAndSeek::Steganography::Logic::ImageScrambler']]],
+  ['scrambletwo',['ScrambleTwo',['../class_h_f_d___hide_and_seek_1_1_steganography_1_1_logic_1_1_image_scrambler.html#ac05f708f5aa277d118ad35768bf7591e',1,'HFD_HideAndSeek::Steganography::Logic::ImageScrambler']]],
+  ['setbit',['SetBit',['../class_h_f_d___hide_and_seek_1_1_steganography_1_1_logic_1_1_embedder.html#a7ed3186b9120f08ad849006d541b3ed2',1,'HFD_HideAndSeek.Steganography.Logic.Embedder.SetBit(byte arbitraryByte, byte bit, byte bitPosition)'],['../class_h_f_d___hide_and_seek_1_1_steganography_1_1_logic_1_1_embedder.html#a06397616878600ac273223bb784eafd2',1,'HFD_HideAndSeek.Steganography.Logic.Embedder.SetBit(byte arbitraryByte, string bit, byte bitPosition)']]],
+  ['showcarrierbitplanesbutton_5fclick',['showCarrierBitplanesButton_Click',['../class_h_f_d___hide_and_seek_1_1_forms_1_1_mainframe.html#ae2710623207b66eb6d7692ba9f33752c',1,'HFD_HideAndSeek::Forms::Mainframe']]],
+  ['showstegoimagebitplanesbutton_5fclick',['showStegoImageBitplanesButton_Click',['../class_h_f_d___hide_and_seek_1_1_forms_1_1_mainframe.html#ac7a75ce14b201faf91168a43f9bdf4f7',1,'HFD_HideAndSeek::Forms::Mainframe']]],
+  ['splittochunks',['SplitToChunks',['../class_h_f_d___hide_and_seek_1_1_helper_1_1_extensions.html#adce6d7168b6b4c214a09e973026e6e84',1,'HFD_HideAndSeek::Helper::Extensions']]],
+  ['stegoimage',['StegoImage',['../class_h_f_d___hide_and_seek_1_1_steganography_1_1_data_structures_1_1_stego_image.html#afdb71f185ca616563cf4e4c49eab1d5b',1,'HFD_HideAndSeek::Steganography::DataStructures::StegoImage']]],
+  ['stegomessage',['StegoMessage',['../class_h_f_d___hide_and_seek_1_1_steganography_1_1_data_structures_1_1_stego_message.html#af4fd48d3b089053367c77b706d0d91d3',1,'HFD_HideAndSeek::Steganography::DataStructures::StegoMessage']]],
+  ['stringtobinary',['StringToBinary',['../class_h_f_d___hide_and_seek_1_1_helper_1_1_converter.html#a854bffee11d87ffeb719b661d1242e40',1,'HFD_HideAndSeek::Helper::Converter']]]
 ];

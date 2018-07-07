@@ -23,8 +23,7 @@ for the JavaScript code in this file
 */
 var NAVTREE =
 [
-  [ "HSF-HideAndSeek", "index.html", [
-    [ "HSF-HideAndSeek", "md__c_1__users_samel__desktop__h_s_f-_hide_and_seek__r_e_a_d_m_e.html", null ],
+  [ "HFD-HideAndSeek", "index.html", [
     [ "Packages", "namespaces.html", [
       [ "Packages", "namespaces.html", "namespaces_dup" ]
     ] ],
@@ -48,7 +47,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_a_e_s_8cs.html",
-"class_h_s_f___hide_and_seek_1_1_steganography_1_1_logic_1_1_embedder.html"
+"class_h_f_d___hide_and_seek_1_1_steganography_1_1_data_structures_1_1_stego_image.html#afdb71f185ca616563cf4e4c49eab1d5b"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
