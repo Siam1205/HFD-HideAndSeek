@@ -42,7 +42,7 @@ Even for a single steganographic technique, different modes of operation can be 
 HFD-HAS provides message embedding in all but the highest bit plane as well as in "bit planes first-mode" or in "pixels first-mode". In the former mode, the bit planes are filled completely before another one is used while in the latter mode the pixels are up to the maximum amount of allowed bit planes before the next pixel is used as it is shown in the previous images.
 
 ## HFD-HAS usage
-Upon starting the tool, the HFD-HAS mainframe appears:
+Upon starting the tool, the HFD-HAS main frame appears:
 <p align="center">
   <img src="https://github.com/Siam1205/HFD-HideAndSeek/blob/master/Example/GUI.png" alt="Example image: HFD-HAS Graphical User Interface (GUI)" width="90%"/>
 </p>
@@ -67,7 +67,7 @@ The following paragraph describes the function of the available controls:
 </ul>
 
 ## Private Comment
-This tool has been developed in 2018 - under no license - for "Cryptography - theory and practice" at the Fulda University of Applied Sciences hence for the purpose of teaching. It is <b>properly documented</b> in order to facilitate further changes and improvements by anyone or to provide maintainability in general.<br />
+This tool has been developed in 2018 for "Cryptography - theory and practice" at the Fulda University of Applied Sciences hence for the purpose of teaching. It is documented in order to facilitate further changes and improvements by anyone or to provide maintainability in general.<br />
 Although effective, the implemented algorithms are not necessarily efficient regarding the amount of time it takes to hide or extract messages.
 
 ## Contact
